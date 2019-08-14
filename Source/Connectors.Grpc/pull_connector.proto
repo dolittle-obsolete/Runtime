@@ -1,0 +1,16 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Dolittle. All rights reserved.
+ *  Licensed under the MIT License. See LICENSE in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+syntax = "proto3";
+
+import "system/guid.proto";
+
+package dolittle.timeseries.connectors;
+
+option csharp_namespace = "Dolittle.TimeSeries.Runtime.Connectors.Grpc";
+
+message PullConnector {
+    guid id = 1;
+    string name = 2;
+}

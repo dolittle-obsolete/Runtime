@@ -1,0 +1,11 @@
+{
+    "application": {
+        "port": 50053
+    },
+    "interaction": {
+        "port": 50051
+    },
+    "management": {
+        "port": 50052
+    },
+}

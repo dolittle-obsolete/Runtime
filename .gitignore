@@ -41,6 +41,10 @@ log.txt
 
 .buildsettings
 
+node_modules
+yarn.lock
+package-lock.json
+
 # OS generated files #
 ######################
 .DS_Store
