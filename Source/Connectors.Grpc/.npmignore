@@ -1,0 +1,5 @@
+Nuget
+obj
+bin
+*.csproj
+*.sh

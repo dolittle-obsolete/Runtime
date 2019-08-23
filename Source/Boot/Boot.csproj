@@ -17,5 +17,6 @@
         <PackageReference Include="Dolittle.DependencyInversion.Booting" Version="3.*" />
         <PackageReference Include="Dolittle.DependencyInversion.Autofac" Version="3.*" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="2.2.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.2.0" />
     </ItemGroup>
 </Project>

@@ -33,7 +33,7 @@ function deserialize_dolittle_timeseries_connectors_PullConnectorGetData(buffer_
 }
 
 
-// Represents the service for working with quantum tunnel
+// Represents the service for working with connectors that are pull based
 var PullConnectorsService = exports.PullConnectorsService = {
   register: {
     path: '/dolittle.timeseries.connectors.PullConnectors/Register',

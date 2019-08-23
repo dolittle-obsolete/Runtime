@@ -1,14 +1,16 @@
 {
     "name": "@dolittle/timeseries.runtime.connectors.grpc",
-    "description": "Grpc services for the runtime interaction",
-    "version": "1.0.0",
+    "description": "Grpc services for the TimeSeries Runtime interaction",
+    "version": "1.0.1",
     "publishConfig": {
         "access": "public"
     },
     "homepage": "https://dolittle.io",
     "author": "Dolittle",
     "license": "MIT",
-    "dependencies": {},
+    "dependencies": {
+        "grpc": "^1.23.2"
+    },
     "devDependencies": {
         "grpc-tools": "^1.7.3"
     }

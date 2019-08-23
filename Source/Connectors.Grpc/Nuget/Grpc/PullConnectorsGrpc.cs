@@ -15,7 +15,7 @@ using grpc = global::Grpc.Core;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc {
   /// <summary>
-  /// Represents the service for working with quantum tunnel
+  /// Represents the service for working with connectors that are pull based
   /// </summary>
   public static partial class PullConnectors
   {
