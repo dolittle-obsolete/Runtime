@@ -4,14 +4,15 @@
  *--------------------------------------------------------------------------------------------*/
 syntax = "proto3";
 
-import "dolittle/timeseries/connectors/pull_connector_get_data.proto";
-import "dolittle/timeseries/connectors/pull_connector_data.proto";
+import "dolittle/timeseries/connectors/server/pull_connector.proto";
+import "dolittle/timeseries/connectors/server/register_result.proto";
 
-package dolittle.timeseries.connectors;
+package dolittle.timeseries.connectors.server;
 
-option csharp_namespace = "Dolittle.TimeSeries.Runtime.Connectors.Grpc";
+option csharp_namespace = "Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc";
+
 
 // Represents the service for working with connectors that are pull based
 service PullConnectors {
-    rpc Register(stream PullConnectorGetData) returns (stream PullConnectorData) {}
+    rpc Register(PullConnector) returns(RegisterResult) {}
 }

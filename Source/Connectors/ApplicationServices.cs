@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 using Dolittle.Logging;
-using Dolittle.Runtime.Server;
+using Dolittle.Runtime.Grpc;
 using Grpc.Core;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
@@ -31,7 +31,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         {
             var service = new PullConnectorsService(_logger);
             return new ServerServiceDefinition[] {
-                Grpc.PullConnectors.BindService(service)
+                Server.Grpc.PullConnectors.BindService(service)
             };
         }
     }

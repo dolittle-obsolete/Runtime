@@ -4,13 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 syntax = "proto3";
 
-import "system/guid.proto";
+package dolittle.timeseries.connectors.server;
 
-package dolittle.timeseries.connectors;
+option csharp_namespace = "Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc";
 
-option csharp_namespace = "Dolittle.TimeSeries.Runtime.Connectors.Grpc";
-
-message PullConnector {
-    guid id = 1;
-    string name = 2;
+message RegisterResult {
+    
 }

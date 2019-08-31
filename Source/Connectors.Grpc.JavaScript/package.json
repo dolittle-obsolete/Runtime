@@ -1,7 +1,7 @@
 {
     "name": "@dolittle/timeseries.runtime.connectors.grpc",
     "description": "Grpc services for the TimeSeries Runtime interaction",
-    "version": "1.0.7",
+    "version": "1.1.1",
     "publishConfig": {
         "access": "public"
     },
