@@ -4,12 +4,12 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Threading.Tasks;
 using Dolittle.Booting;
+using Dolittle.Resilience;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace Boot
 {
-
     class Program
     {
         static async Task Main(string[] args)
@@ -28,7 +28,7 @@ namespace Boot
                 _.UseLoggerFactory(loggerFactory);
                 _.Development();
             }).Start();
-
+            
             await host.RunAsync();
         }
     }

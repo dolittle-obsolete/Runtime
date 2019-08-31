@@ -1,0 +1,17 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Dolittle. All rights reserved.
+ *  Licensed under the MIT License. See LICENSE in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+syntax = "proto3";
+
+import "dolittle/timeseries/connectors/pull_connector_get_data.proto";
+import "dolittle/timeseries/connectors/pull_connector_data.proto";
+
+package dolittle.timeseries.connectors;
+
+option csharp_namespace = "Dolittle.TimeSeries.Runtime.Connectors.Grpc";
+
+// Represents the service for working with connectors that are pull based
+service PullConnectors {
+    rpc Register(stream PullConnectorGetData) returns (stream PullConnectorData) {}
+}

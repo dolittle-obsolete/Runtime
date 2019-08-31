@@ -25,6 +25,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
         public PullConnectorsService(ILogger logger)
         {
+            
             _logger = logger;
         }
 
