@@ -10,6 +10,8 @@ using Dolittle.Lifecycle;
 using Dolittle.Logging;
 using static Dolittle.TimeSeries.Runtime.Connectors.Client.Grpc.PullConnector;
 using grpc = Dolittle.TimeSeries.Runtime.Connectors.Client.Grpc;
+using Google.Protobuf;
+using System.Protobuf;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
@@ -62,7 +64,12 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
                         if (connector != null)
                         {
                             _logger.Information($"Call connector '{source}' - '{connector.Id}'");
-                            _pullConnectorClient.Instance.Pull(new grpc.PullRequest());
+                            var request = new grpc.PullRequest {
+                                ConnectorId = new guid {
+                                    Value = ByteString.CopyFrom(connector.Id.Value.ToByteArray())
+                                }
+                            };
+                            _pullConnectorClient.Instance.Pull(request);
                         }
                         else
                         {

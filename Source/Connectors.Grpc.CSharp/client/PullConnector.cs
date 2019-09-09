@@ -26,17 +26,18 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Client.Grpc {
           string.Concat(
             "Cjpkb2xpdHRsZS90aW1lc2VyaWVzL2Nvbm5lY3RvcnMvY2xpZW50L3B1bGxf",
             "Y29ubmVjdG9yLnByb3RvEiVkb2xpdHRsZS50aW1lc2VyaWVzLmNvbm5lY3Rv",
-            "cnMuY2xpZW50IgwKClB1bGxSZXN1bHQiDQoLUHVsbFJlcXVlc3QygAEKDVB1",
-            "bGxDb25uZWN0b3ISbwoEUHVsbBIyLmRvbGl0dGxlLnRpbWVzZXJpZXMuY29u",
-            "bmVjdG9ycy5jbGllbnQuUHVsbFJlcXVlc3QaMS5kb2xpdHRsZS50aW1lc2Vy",
-            "aWVzLmNvbm5lY3RvcnMuY2xpZW50LlB1bGxSZXN1bHQiAEI1qgIyRG9saXR0",
-            "bGUuVGltZVNlcmllcy5SdW50aW1lLkNvbm5lY3RvcnMuQ2xpZW50LkdycGNi",
-            "BnByb3RvMw=="));
+            "cnMuY2xpZW50GhFzeXN0ZW0vZ3VpZC5wcm90byIMCgpQdWxsUmVzdWx0IjIK",
+            "C1B1bGxSZXF1ZXN0EiMKC2Nvbm5lY3RvcklkGAEgASgLMg4uZG9saXR0bGUu",
+            "Z3VpZDKAAQoNUHVsbENvbm5lY3RvchJvCgRQdWxsEjIuZG9saXR0bGUudGlt",
+            "ZXNlcmllcy5jb25uZWN0b3JzLmNsaWVudC5QdWxsUmVxdWVzdBoxLmRvbGl0",
+            "dGxlLnRpbWVzZXJpZXMuY29ubmVjdG9ycy5jbGllbnQuUHVsbFJlc3VsdCIA",
+            "QjWqAjJEb2xpdHRsZS5UaW1lU2VyaWVzLlJ1bnRpbWUuQ29ubmVjdG9ycy5D",
+            "bGllbnQuR3JwY2IGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { },
+          new pbr::FileDescriptor[] { global::System.Protobuf.GuidReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Dolittle.TimeSeries.Runtime.Connectors.Client.Grpc.PullResult), global::Dolittle.TimeSeries.Runtime.Connectors.Client.Grpc.PullResult.Parser, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Dolittle.TimeSeries.Runtime.Connectors.Client.Grpc.PullRequest), global::Dolittle.TimeSeries.Runtime.Connectors.Client.Grpc.PullRequest.Parser, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Dolittle.TimeSeries.Runtime.Connectors.Client.Grpc.PullRequest), global::Dolittle.TimeSeries.Runtime.Connectors.Client.Grpc.PullRequest.Parser, new[]{ "ConnectorId" }, null, null, null)
           }));
     }
     #endregion
@@ -169,12 +170,24 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Client.Grpc {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public PullRequest(PullRequest other) : this() {
+      connectorId_ = other.connectorId_ != null ? other.connectorId_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public PullRequest Clone() {
       return new PullRequest(this);
+    }
+
+    /// <summary>Field number for the "connectorId" field.</summary>
+    public const int ConnectorIdFieldNumber = 1;
+    private global::System.Protobuf.guid connectorId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::System.Protobuf.guid ConnectorId {
+      get { return connectorId_; }
+      set {
+        connectorId_ = value;
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -190,12 +203,14 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Client.Grpc {
       if (ReferenceEquals(other, this)) {
         return true;
       }
+      if (!object.Equals(ConnectorId, other.ConnectorId)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
+      if (connectorId_ != null) hash ^= ConnectorId.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -209,6 +224,10 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Client.Grpc {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
+      if (connectorId_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(ConnectorId);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -217,6 +236,9 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Client.Grpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
+      if (connectorId_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ConnectorId);
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -227,6 +249,12 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Client.Grpc {
     public void MergeFrom(PullRequest other) {
       if (other == null) {
         return;
+      }
+      if (other.connectorId_ != null) {
+        if (connectorId_ == null) {
+          ConnectorId = new global::System.Protobuf.guid();
+        }
+        ConnectorId.MergeFrom(other.ConnectorId);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -239,6 +267,13 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Client.Grpc {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
+          case 10: {
+            if (connectorId_ == null) {
+              ConnectorId = new global::System.Protobuf.guid();
+            }
+            input.ReadMessage(ConnectorId);
+            break;
+          }
         }
       }
     }

@@ -4,13 +4,19 @@
  *--------------------------------------------------------------------------------------------*/
 syntax = "proto3";
 
+import "system/guid.proto";
+
 package dolittle.timeseries.connectors.client;
 
 option csharp_namespace = "Dolittle.TimeSeries.Runtime.Connectors.Client.Grpc";
 
-message PullResult {}
+message PullResult {
 
-message PullRequest {}
+}
+
+message PullRequest {
+    guid connectorId = 1;
+}
 
 // Represents the service for working with connectors that are pull based
 service PullConnector {
