@@ -11,7 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Dolittle.Runtime.Grpc" Version="3.*"/>
+        <PackageReference Include="Dolittle.Runtime.Application" Version="3.*"/>
     </ItemGroup>
 
 </Project>

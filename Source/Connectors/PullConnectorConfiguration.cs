@@ -2,22 +2,26 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
     /// <summary>
-    /// Defines a system for working with all available pull connectors
+    /// Represents the configuration for a single pull connector
     /// </summary>
-    public interface IPullConnectors
+    public class PullConnectorConfiguration
     {
         /// <summary>
-        /// Register a pull connector
+        /// Initializes a new instance of <see cref="PullConnectorConfiguration"/>
         /// </summary>
-        /// <param name="pullConnector"><see cref="PullConnector"/> to register</param>
-        void Register(PullConnector pullConnector);
+        /// <param name="interval">Interval in milliseconds for the pulling</param>
+        public PullConnectorConfiguration(int interval)
+        {
+            Interval = interval;
+        }
 
         /// <summary>
-        /// Start all pull connectors
+        /// Gets or sets the pull interval in milliseconds used for the connector
         /// </summary>
-        void Start();
+        public int Interval { get; }
     }
 }

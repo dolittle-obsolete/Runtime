@@ -2,11 +2,13 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+using System;
 using System.Threading.Tasks;
 using Dolittle.Logging;
 using Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc;
 using Grpc.Core;
 using static Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc.PullConnectors;
+using grpc = Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
@@ -16,25 +18,27 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
     public class PullConnectorsService : PullConnectorsBase
     {
         readonly ILogger _logger;
+        readonly IPullConnectors _pullConnectors;
 
         /// <summary>
         /// Initializes a new instance of <see cref="PullConnectorsService"/>
         /// </summary>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
-        public PullConnectorsService(ILogger logger)
-        {
-            
+        /// <param name="pullConnectors">Actual <see cref="IPullConnectors"/></param>
+        public PullConnectorsService(ILogger logger, IPullConnectors pullConnectors)
+        {           
             _logger = logger;
+            _pullConnectors = pullConnectors;
         }
 
         /// <inheritdoc/>
-        public override async Task<RegisterResult> Register(PullConnector pullConnector, ServerCallContext context)
+        public override Task<RegisterResult> Register(grpc.PullConnector pullConnector, ServerCallContext context)
         {
-            _logger.Information($"Application client connected");
+            var id = new Guid(pullConnector.Id.Value.ToByteArray());
+            _logger.Information($"Register connector : '{pullConnector.Name}' with Id: '{id}'");
+            _pullConnectors.Register(new PullConnector(id, pullConnector.Name));
 
-            await Task.CompletedTask;
-            
-            return new RegisterResult();
+            return Task.FromResult(new RegisterResult());
         }
     }
 }

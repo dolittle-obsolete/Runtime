@@ -2,22 +2,20 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+using System;
+using Dolittle.Concepts;
+
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
     /// <summary>
-    /// Defines a system for working with all available pull connectors
+    /// Defines the concept of a unique identifier for any type of connectors
     /// </summary>
-    public interface IPullConnectors
+    public class ConnectorId : ConceptAs<Guid>
     {
         /// <summary>
-        /// Register a pull connector
+        /// Implicitly convert from <see cref="Guid"/> to <see cref="ConnectorId"/>
         /// </summary>
-        /// <param name="pullConnector"><see cref="PullConnector"/> to register</param>
-        void Register(PullConnector pullConnector);
-
-        /// <summary>
-        /// Start all pull connectors
-        /// </summary>
-        void Start();
+        /// <param name="value"><see cref="ConnectorId"/> as <see cref="Guid"/></param>
+        public static implicit operator ConnectorId(Guid value) => new ConnectorId { Value = value };
     }
 }

@@ -14,5 +14,6 @@
 
     <ItemGroup>
         <PackageReference Include="Dolittle.Runtime.Server" Version="3.*" />
+        <PackageReference Include="Dolittle.DependencyInversion.Management" Version="3.*" />
     </ItemGroup>
 </Project>
