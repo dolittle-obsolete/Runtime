@@ -2,17 +2,22 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+using Dolittle.Concepts;
+
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
     /// <summary>
-    /// Defines a system for working with all available pull connectors
+    /// Represents the concept of an System
     /// </summary>
-    public interface IPullConnectors
+    public class Tag : ConceptAs<string>
     {
         /// <summary>
-        /// Register a pull connector
+        /// Implicitly convert from <see cref="string"/> to <see cref="Tag"/>
         /// </summary>
-        /// <param name="pullConnector"><see cref="PullConnector"/> to register</param>
-        void Register(PullConnector pullConnector);
-    }
+        /// <param name="value">Tag as string</param>
+        public static implicit operator Tag(string value)
+        {
+            return new Tag {Value = value};
+        }
+    }    
 }

@@ -5,17 +5,19 @@
 syntax = "proto3";
 
 import "system/guid.proto";
+import "dolittle/timeseries/datatypes/tag_data_point.proto";
 
 package dolittle.timeseries.connectors.client;
 
-option csharp_namespace = "Dolittle.TimeSeries.Runtime.Connectors.Client.Grpc";
+option csharp_namespace = "Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client";
 
 message PullResult {
-
+    repeated dolittle.timeseries.datatypes.TagDataPoint Data = 1;
 }
 
 message PullRequest {
     guid connectorId = 1;
+    repeated string tags = 2;
 }
 
 // Represents the service for working with connectors that are pull based

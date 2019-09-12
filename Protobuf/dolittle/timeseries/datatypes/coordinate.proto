@@ -4,10 +4,13 @@
  *--------------------------------------------------------------------------------------------*/
 syntax = "proto3";
 
-package dolittle.timeseries.connectors.server;
+import "dolittle/timeseries/datatypes/measurement.proto";
 
-option csharp_namespace = "Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server";
+package dolittle.timeseries.datatypes;
 
-message RegisterResult {
-    
+option csharp_namespace = "Dolittle.TimeSeries.DataTypes";
+
+message Coordinate {
+    Measurement longitude = 1;
+    Measurement latitude = 2;
 }

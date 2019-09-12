@@ -8,9 +8,11 @@ import "system/guid.proto";
 
 package dolittle.timeseries.connectors.server;
 
-option csharp_namespace = "Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc";
+option csharp_namespace = "Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server";
 
 message PullConnector {
     guid id = 1;
     string name = 2;
+    int32 interval = 3;
+    repeated string tags = 4;
 }

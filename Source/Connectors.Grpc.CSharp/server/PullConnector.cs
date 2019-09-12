@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc {
+namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server {
 
   /// <summary>Holder for reflection information generated from dolittle/timeseries/connectors/server/pull_connector.proto</summary>
   public static partial class PullConnectorReflection {
@@ -26,14 +26,15 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc {
           string.Concat(
             "Cjpkb2xpdHRsZS90aW1lc2VyaWVzL2Nvbm5lY3RvcnMvc2VydmVyL3B1bGxf",
             "Y29ubmVjdG9yLnByb3RvEiVkb2xpdHRsZS50aW1lc2VyaWVzLmNvbm5lY3Rv",
-            "cnMuc2VydmVyGhFzeXN0ZW0vZ3VpZC5wcm90byI5Cg1QdWxsQ29ubmVjdG9y",
-            "EhoKAmlkGAEgASgLMg4uZG9saXR0bGUuZ3VpZBIMCgRuYW1lGAIgASgJQjWq",
-            "AjJEb2xpdHRsZS5UaW1lU2VyaWVzLlJ1bnRpbWUuQ29ubmVjdG9ycy5TZXJ2",
-            "ZXIuR3JwY2IGcHJvdG8z"));
+            "cnMuc2VydmVyGhFzeXN0ZW0vZ3VpZC5wcm90byJZCg1QdWxsQ29ubmVjdG9y",
+            "EhoKAmlkGAEgASgLMg4uZG9saXR0bGUuZ3VpZBIMCgRuYW1lGAIgASgJEhAK",
+            "CGludGVydmFsGAMgASgFEgwKBHRhZ3MYBCADKAlCNaoCMkRvbGl0dGxlLlRp",
+            "bWVTZXJpZXMuUnVudGltZS5Db25uZWN0b3JzLkdycGMuU2VydmVyYgZwcm90",
+            "bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::System.Protobuf.GuidReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc.PullConnector), global::Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc.PullConnector.Parser, new[]{ "Id", "Name" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullConnector), global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullConnector.Parser, new[]{ "Id", "Name", "Interval", "Tags" }, null, null, null)
           }));
     }
     #endregion
@@ -48,7 +49,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc.PullConnectorReflection.Descriptor.MessageTypes[0]; }
+      get { return global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullConnectorReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -67,6 +68,8 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc {
     public PullConnector(PullConnector other) : this() {
       id_ = other.id_ != null ? other.id_.Clone() : null;
       name_ = other.name_;
+      interval_ = other.interval_;
+      tags_ = other.tags_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -97,6 +100,27 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc {
       }
     }
 
+    /// <summary>Field number for the "interval" field.</summary>
+    public const int IntervalFieldNumber = 3;
+    private int interval_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Interval {
+      get { return interval_; }
+      set {
+        interval_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "tags" field.</summary>
+    public const int TagsFieldNumber = 4;
+    private static readonly pb::FieldCodec<string> _repeated_tags_codec
+        = pb::FieldCodec.ForString(34);
+    private readonly pbc::RepeatedField<string> tags_ = new pbc::RepeatedField<string>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<string> Tags {
+      get { return tags_; }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as PullConnector);
@@ -112,6 +136,8 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc {
       }
       if (!object.Equals(Id, other.Id)) return false;
       if (Name != other.Name) return false;
+      if (Interval != other.Interval) return false;
+      if(!tags_.Equals(other.tags_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -120,6 +146,8 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc {
       int hash = 1;
       if (id_ != null) hash ^= Id.GetHashCode();
       if (Name.Length != 0) hash ^= Name.GetHashCode();
+      if (Interval != 0) hash ^= Interval.GetHashCode();
+      hash ^= tags_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -141,6 +169,11 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc {
         output.WriteRawTag(18);
         output.WriteString(Name);
       }
+      if (Interval != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(Interval);
+      }
+      tags_.WriteTo(output, _repeated_tags_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -155,6 +188,10 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc {
       if (Name.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
       }
+      if (Interval != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Interval);
+      }
+      size += tags_.CalculateSize(_repeated_tags_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -175,6 +212,10 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc {
       if (other.Name.Length != 0) {
         Name = other.Name;
       }
+      if (other.Interval != 0) {
+        Interval = other.Interval;
+      }
+      tags_.Add(other.tags_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -195,6 +236,14 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc {
           }
           case 18: {
             Name = input.ReadString();
+            break;
+          }
+          case 24: {
+            Interval = input.ReadInt32();
+            break;
+          }
+          case 34: {
+            tags_.AddEntriesFrom(input, _repeated_tags_codec);
             break;
           }
         }

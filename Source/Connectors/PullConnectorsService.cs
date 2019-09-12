@@ -4,11 +4,12 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Threading.Tasks;
+using System.Linq;
 using Dolittle.Logging;
-using Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc;
+using Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server;
 using Grpc.Core;
-using static Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc.PullConnectors;
-using grpc = Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc;
+using static Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullConnectors;
+using grpc = Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
@@ -36,7 +37,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         {
             var id = new Guid(pullConnector.Id.Value.ToByteArray());
             _logger.Information($"Register connector : '{pullConnector.Name}' with Id: '{id}'");
-            _pullConnectors.Register(new PullConnector(id, pullConnector.Name));
+            _pullConnectors.Register(new PullConnector(id, pullConnector.Name, pullConnector.Interval, pullConnector.Tags.Select(_ => (Tag)_)));
 
             return Task.FromResult(new RegisterResult());
         }

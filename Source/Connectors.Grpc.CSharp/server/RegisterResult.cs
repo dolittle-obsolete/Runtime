@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc {
+namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server {
 
   /// <summary>Holder for reflection information generated from dolittle/timeseries/connectors/server/register_result.proto</summary>
   public static partial class RegisterResultReflection {
@@ -27,12 +27,12 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc {
             "Cjtkb2xpdHRsZS90aW1lc2VyaWVzL2Nvbm5lY3RvcnMvc2VydmVyL3JlZ2lz",
             "dGVyX3Jlc3VsdC5wcm90bxIlZG9saXR0bGUudGltZXNlcmllcy5jb25uZWN0",
             "b3JzLnNlcnZlciIQCg5SZWdpc3RlclJlc3VsdEI1qgIyRG9saXR0bGUuVGlt",
-            "ZVNlcmllcy5SdW50aW1lLkNvbm5lY3RvcnMuU2VydmVyLkdycGNiBnByb3Rv",
+            "ZVNlcmllcy5SdW50aW1lLkNvbm5lY3RvcnMuR3JwYy5TZXJ2ZXJiBnByb3Rv",
             "Mw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc.RegisterResult), global::Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc.RegisterResult.Parser, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.RegisterResult), global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.RegisterResult.Parser, null, null, null, null)
           }));
     }
     #endregion
@@ -47,7 +47,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc.RegisterResultReflection.Descriptor.MessageTypes[0]; }
+      get { return global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.RegisterResultReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

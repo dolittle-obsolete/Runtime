@@ -4,10 +4,13 @@
  *--------------------------------------------------------------------------------------------*/
 syntax = "proto3";
 
-package dolittle.timeseries.connectors.server;
+import "google/protobuf/any.proto";
 
-option csharp_namespace = "Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server";
+package dolittle.timeseries.datatypes;
 
-message RegisterResult {
-    
+option csharp_namespace = "Dolittle.TimeSeries.DataTypes";
+
+message Measurement {
+    google.protobuf.Any value = 1;
+    google.protobuf.Any error = 2;
 }

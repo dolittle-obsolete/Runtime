@@ -5,13 +5,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
-using Dolittle.Runtime.Application;
 using Dolittle.Lifecycle;
 using Dolittle.Logging;
-using static Dolittle.TimeSeries.Runtime.Connectors.Client.Grpc.PullConnector;
-using grpc = Dolittle.TimeSeries.Runtime.Connectors.Client.Grpc;
-using Google.Protobuf;
-using System.Protobuf;
+using Dolittle.Runtime.Application;
+using static Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client.PullConnector;
+using grpc = Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client;
+using System.Threading;
+using Dolittle.Protobuf;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
@@ -22,23 +22,20 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
     public class PullConnectors : IPullConnectors
     {
         readonly List<PullConnector> _connectors = new List<PullConnector>();
+        readonly Dictionary<PullConnector, CancellationToken> _cancelletionTokens = new Dictionary<PullConnector, CancellationToken>();
 
-        readonly PullConnectorsConfiguration _configuration;
         readonly ILogger _logger;
         readonly IClientFor<PullConnectorClient> _pullConnectorClient;
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="configuration"></param>
         /// <param name="pullConnectorClient"></param>
         /// <param name="logger"></param>
         public PullConnectors(
-            PullConnectorsConfiguration configuration,
             IClientFor<PullConnectorClient> pullConnectorClient,
             ILogger logger)
         {
-            _configuration = configuration;
             _logger = logger;
             _pullConnectorClient = pullConnectorClient;
         }
@@ -46,56 +43,56 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         /// <inheritdoc/>
         public void Register(PullConnector pullConnector)
         {
-            lock(_connectors) _connectors.Add(pullConnector);
-        }
-
-        /// <inheritdoc/>
-        public void Start()
-        {
             lock(_connectors)
             {
-                foreach ((Source source, PullConnectorConfiguration configuration) in _configuration)
-                {
-                    _logger.Information($"Starting '{source}'");
-                    var timer = new Timer(configuration.Interval);
-                    timer.Elapsed += (s, e) =>
-                    {
-                        var connector = _connectors.SingleOrDefault(_ => _.Name == source);
-                        if (connector != null)
-                        {
-                            _logger.Information($"Call connector '{source}' - '{connector.Id}'");
-                            var request = new grpc.PullRequest {
-                                ConnectorId = new guid {
-                                    Value = ByteString.CopyFrom(connector.Id.Value.ToByteArray())
-                                }
-                            };
-                            _pullConnectorClient.Instance.Pull(request);
-                        }
-                        else
-                        {
-                            _logger.Information($"Connector '{source}' has not been registered yet");
-                       }
-
-                       
-
-                        /*
-                        var data = _connectors[source].GetAllData();
-                        data.ForEach(dataPoint => 
-                        {
-                            _communicationClient.SendAsJson("output", new TagDataPoint<object>
-                            {
-                                Source = source,
-                                Tag = dataPoint.Tag,
-                                Value = dataPoint.Data,
-                                Timestamp = Timestamp.UtcNow
-                            });
-                        });
-                        */
-                    };
-                    timer.AutoReset = true;
-                    timer.Enabled = true;
-                }
+                _connectors.Add(pullConnector);
+                var cancellationToken = new CancellationToken();
+                Process(pullConnector, cancellationToken);
             }
+        }
+
+        void Process(PullConnector pullConnector, CancellationToken cancellationToken)
+        {
+            if( pullConnector.Tags.Count() == 0 ) 
+            {
+                _logger.Warning($"Connector '{pullConnector.Name}' does not have any tags - ignoring it completely");
+                return;
+            }
+            _logger.Information($"Starting '{pullConnector.Name}'");
+
+            var timer = new System.Timers.Timer(pullConnector.Interval);
+            timer.Elapsed += (s, e) =>
+            {
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    timer.Stop();
+                    return;
+                }
+                
+                _logger.Information($"Call connector '{pullConnector.Name}' - '{pullConnector.Id}'");
+                var request = new grpc.PullRequest
+                {
+                    ConnectorId = pullConnector.Id.ToProtobuf(),
+                };
+                request.Tags.Add(pullConnector.Tags.Select(_ => _.Value));
+                _pullConnectorClient.Instance.Pull(request);
+
+                /*
+                var data = _connectors[source].GetAllData();
+                data.ForEach(dataPoint => 
+                {
+                    _communicationClient.SendAsJson("output", new TagDataPoint<object>
+                    {
+                        Source = source,
+                        Tag = dataPoint.Tag,
+                        Value = dataPoint.Data,
+                        Timestamp = Timestamp.UtcNow
+                    });
+                });
+                */
+            };
+            timer.AutoReset = true;
+            timer.Enabled = true;
         }
     }
 }

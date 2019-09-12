@@ -9,7 +9,7 @@ import "dolittle/timeseries/connectors/server/register_result.proto";
 
 package dolittle.timeseries.connectors.server;
 
-option csharp_namespace = "Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc";
+option csharp_namespace = "Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server";
 
 
 // Represents the service for working with connectors that are pull based

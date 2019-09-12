@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc {
+namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server {
 
   /// <summary>Holder for reflection information generated from dolittle/timeseries/connectors/server/pull_connectors.proto</summary>
   public static partial class PullConnectorsReflection {
@@ -33,9 +33,9 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc {
             "cmllcy5jb25uZWN0b3JzLnNlcnZlci5QdWxsQ29ubmVjdG9yGjUuZG9saXR0",
             "bGUudGltZXNlcmllcy5jb25uZWN0b3JzLnNlcnZlci5SZWdpc3RlclJlc3Vs",
             "dCIAQjWqAjJEb2xpdHRsZS5UaW1lU2VyaWVzLlJ1bnRpbWUuQ29ubmVjdG9y",
-            "cy5TZXJ2ZXIuR3JwY2IGcHJvdG8z"));
+            "cy5HcnBjLlNlcnZlcmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc.PullConnectorReflection.Descriptor, global::Dolittle.TimeSeries.Runtime.Connectors.Server.Grpc.RegisterResultReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullConnectorReflection.Descriptor, global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.RegisterResultReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null));
     }
     #endregion

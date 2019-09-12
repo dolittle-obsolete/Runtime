@@ -29,7 +29,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         public IEnumerable<Service> BindServices()
         {
             return new Service[] {
-                new Service(Server.Grpc.PullConnectors.BindService(_pullConnectorsService), Server.Grpc.PullConnectors.Descriptor)
+                new Service(Grpc.Server.PullConnectors.BindService(_pullConnectorsService), Grpc.Server.PullConnectors.Descriptor)
             };
         }
     }

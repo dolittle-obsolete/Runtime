@@ -3,13 +3,9 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <AssemblyName>Dolittle.TimeSeries.Runtime.Connectors.Grpc</AssemblyName>
+        <AssemblyName>Dolittle.TimeSeries.DataTypes</AssemblyName>
         <IncludeSource>False</IncludeSource>
     </PropertyGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="../DataTypes.CSharp/DataTypes.CSharp.csproj"/>
-    </ItemGroup>
 
     
     <ItemGroup>
@@ -22,7 +18,7 @@
 
 
     <ItemGroup>
-        <Protobuf Include="../../Protobuf/dolittle/timeseries/connectors/**/*.proto" 
+        <Protobuf Include="../../Protobuf/dolittle/timeseries/datatypes/**/*.proto" 
                   ProtoRoot="../../Protobuf"
                   OutputDir="%(RecursiveDir)" 
                   GrpcServices="Both" 
