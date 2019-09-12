@@ -69,7 +69,9 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
                 var stream = _streamConnectorClient.Instance.Connect(request);
                 while (await stream.ResponseStream.MoveNext(cancellationToken))
                 {
-                    _logger.Information("Data received");
+                    var dataPointTags = string.Join(", ", stream.ResponseStream.Current.DataPoints.Select(_ => _.Tag));
+
+                    _logger.Information($"Data received for tags {dataPointTags}");
                 }
 
                 _logger.Information("Stream disconnected");

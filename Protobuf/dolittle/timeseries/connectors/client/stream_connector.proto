@@ -16,7 +16,11 @@ message StreamRequest {
     repeated string tags = 2;
 }
 
+message StreamTagDataPoints {
+    repeated dolittle.timeseries.datatypes.TagDataPoint DataPoints=1;
+}
+
 // Represents the service for working with a connector that is stream based
 service StreamConnector {
-    rpc Connect(StreamRequest) returns(stream dolittle.timeseries.datatypes.TagDataPoint) {}
+    rpc Connect(StreamRequest) returns(stream StreamTagDataPoints) {}
 }
