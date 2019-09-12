@@ -9,24 +9,21 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
     /// <summary>
     /// Defines a pull connector
     /// </summary>
-    public class PullConnector
+    public class StreamConnector
     {
         /// <summary>
         /// Initializes a new instance of <see cref="PullConnector"/>
         /// </summary>
         /// <param name="id">Unique <see cref="ConnectorId"/></param>
         /// <param name="name">Name of the connector</param>
-        /// <param name="interval">Interval to pull in milliseconds</param>
         /// <param name="tags">Collection of <see cref="Tag">tags</see> the connector has</param>
-        public PullConnector(
+        public StreamConnector(
             ConnectorId id,
             string name,
-            int interval,
             IEnumerable<Tag> tags)
         {
             Id = id;
             Name = name;
-            Interval = interval;
             Tags = tags;
         }
 
@@ -39,11 +36,6 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         /// Gets the name of the <see cref="PullConnector"/>
         /// </summary>
         public string Name { get; }
-
-        /// <summary>
-        /// Interval to pull in milliseconds
-        /// </summary>
-        public int Interval { get; }
 
         /// <summary>
         /// Gets the collection of <see cref="Tag">tags</see> this connector exposes

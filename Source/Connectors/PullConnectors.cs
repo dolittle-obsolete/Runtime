@@ -22,8 +22,6 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
     public class PullConnectors : IPullConnectors
     {
         readonly List<PullConnector> _connectors = new List<PullConnector>();
-        readonly Dictionary<PullConnector, CancellationToken> _cancelletionTokens = new Dictionary<PullConnector, CancellationToken>();
-
         readonly ILogger _logger;
         readonly IClientFor<PullConnectorClient> _pullConnectorClient;
 

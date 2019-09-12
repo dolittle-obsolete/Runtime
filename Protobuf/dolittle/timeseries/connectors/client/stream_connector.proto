@@ -11,16 +11,12 @@ package dolittle.timeseries.connectors.client;
 
 option csharp_namespace = "Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client";
 
-message PullResult {
-    repeated dolittle.timeseries.datatypes.TagDataPoint Data = 1;
-}
-
-message PullRequest {
+message StreamRequest {
     guid connectorId = 1;
     repeated string tags = 2;
 }
 
-// Represents the service for working with a connector that is pull based
-service PullConnector {
-    rpc Pull(PullRequest) returns(PullResult) {}
+// Represents the service for working with a connector that is stream based
+service StreamConnector {
+    rpc Connect(StreamRequest) returns(stream dolittle.timeseries.datatypes.TagDataPoint) {}
 }

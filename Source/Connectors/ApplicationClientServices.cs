@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
 using Dolittle.Runtime.Application;
-using static Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client.PullConnector;
+using grpc = Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
@@ -19,7 +19,8 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         public ApplicationClientServices()
         {
             Services = new [] {
-                new ClientServiceDefinition(typeof(PullConnectorClient), Descriptor)
+                new ClientServiceDefinition(typeof(grpc.PullConnector.PullConnectorClient), grpc.PullConnector.Descriptor),
+                new ClientServiceDefinition(typeof(grpc.StreamConnector.StreamConnectorClient), grpc.StreamConnector.Descriptor),
             };
         }
 

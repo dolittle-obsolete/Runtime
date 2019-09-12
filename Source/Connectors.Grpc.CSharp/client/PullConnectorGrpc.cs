@@ -14,7 +14,7 @@ using grpc = global::Grpc.Core;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client {
   /// <summary>
-  /// Represents the service for working with connectors that are pull based
+  /// Represents the service for working with a connector that is pull based
   /// </summary>
   public static partial class PullConnector
   {
