@@ -26,18 +26,18 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client {
           string.Concat(
             "Cjpkb2xpdHRsZS90aW1lc2VyaWVzL2Nvbm5lY3RvcnMvY2xpZW50L3B1bGxf",
             "Y29ubmVjdG9yLnByb3RvEiVkb2xpdHRsZS50aW1lc2VyaWVzLmNvbm5lY3Rv",
-            "cnMuY2xpZW50GhFzeXN0ZW0vZ3VpZC5wcm90bxoyZG9saXR0bGUvdGltZXNl",
-            "cmllcy9kYXRhdHlwZXMvdGFnX2RhdGFfcG9pbnQucHJvdG8iRwoKUHVsbFJl",
-            "c3VsdBI5CgREYXRhGAEgAygLMisuZG9saXR0bGUudGltZXNlcmllcy5kYXRh",
-            "dHlwZXMuVGFnRGF0YVBvaW50IkAKC1B1bGxSZXF1ZXN0EiMKC2Nvbm5lY3Rv",
-            "cklkGAEgASgLMg4uZG9saXR0bGUuZ3VpZBIMCgR0YWdzGAIgAygJMoABCg1Q",
-            "dWxsQ29ubmVjdG9yEm8KBFB1bGwSMi5kb2xpdHRsZS50aW1lc2VyaWVzLmNv",
-            "bm5lY3RvcnMuY2xpZW50LlB1bGxSZXF1ZXN0GjEuZG9saXR0bGUudGltZXNl",
-            "cmllcy5jb25uZWN0b3JzLmNsaWVudC5QdWxsUmVzdWx0IgBCNaoCMkRvbGl0",
-            "dGxlLlRpbWVTZXJpZXMuUnVudGltZS5Db25uZWN0b3JzLkdycGMuQ2xpZW50",
-            "YgZwcm90bzM="));
+            "cnMuY2xpZW50GhFzeXN0ZW0vZ3VpZC5wcm90bxozZG9saXR0bGUvdGltZXNl",
+            "cmllcy9kYXRhcG9pbnRzL3RhZ19kYXRhX3BvaW50LnByb3RvIkgKClB1bGxS",
+            "ZXN1bHQSOgoERGF0YRgBIAMoCzIsLmRvbGl0dGxlLnRpbWVzZXJpZXMuZGF0",
+            "YXBvaW50cy5UYWdEYXRhUG9pbnQiQAoLUHVsbFJlcXVlc3QSIwoLY29ubmVj",
+            "dG9ySWQYASABKAsyDi5kb2xpdHRsZS5ndWlkEgwKBHRhZ3MYAiADKAkygAEK",
+            "DVB1bGxDb25uZWN0b3ISbwoEUHVsbBIyLmRvbGl0dGxlLnRpbWVzZXJpZXMu",
+            "Y29ubmVjdG9ycy5jbGllbnQuUHVsbFJlcXVlc3QaMS5kb2xpdHRsZS50aW1l",
+            "c2VyaWVzLmNvbm5lY3RvcnMuY2xpZW50LlB1bGxSZXN1bHQiAEI1qgIyRG9s",
+            "aXR0bGUuVGltZVNlcmllcy5SdW50aW1lLkNvbm5lY3RvcnMuR3JwYy5DbGll",
+            "bnRiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::System.Protobuf.GuidReflection.Descriptor, global::Dolittle.TimeSeries.DataTypes.TagDataPointReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::System.Protobuf.GuidReflection.Descriptor, global::Dolittle.TimeSeries.DataPoints.TagDataPointReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client.PullResult), global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client.PullResult.Parser, new[]{ "Data" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client.PullRequest), global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client.PullRequest.Parser, new[]{ "ConnectorId", "Tags" }, null, null, null)
@@ -83,11 +83,11 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client {
 
     /// <summary>Field number for the "Data" field.</summary>
     public const int DataFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::Dolittle.TimeSeries.DataTypes.TagDataPoint> _repeated_data_codec
-        = pb::FieldCodec.ForMessage(10, global::Dolittle.TimeSeries.DataTypes.TagDataPoint.Parser);
-    private readonly pbc::RepeatedField<global::Dolittle.TimeSeries.DataTypes.TagDataPoint> data_ = new pbc::RepeatedField<global::Dolittle.TimeSeries.DataTypes.TagDataPoint>();
+    private static readonly pb::FieldCodec<global::Dolittle.TimeSeries.DataPoints.TagDataPoint> _repeated_data_codec
+        = pb::FieldCodec.ForMessage(10, global::Dolittle.TimeSeries.DataPoints.TagDataPoint.Parser);
+    private readonly pbc::RepeatedField<global::Dolittle.TimeSeries.DataPoints.TagDataPoint> data_ = new pbc::RepeatedField<global::Dolittle.TimeSeries.DataPoints.TagDataPoint>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Dolittle.TimeSeries.DataTypes.TagDataPoint> Data {
+    public pbc::RepeatedField<global::Dolittle.TimeSeries.DataPoints.TagDataPoint> Data {
       get { return data_; }
     }
 

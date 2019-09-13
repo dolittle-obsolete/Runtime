@@ -5,7 +5,7 @@
 syntax = "proto3";
 
 import "system/guid.proto";
-import "dolittle/timeseries/datatypes/tag_data_point.proto";
+import "dolittle/timeseries/datapoints/tag_data_point.proto";
 
 package dolittle.timeseries.connectors.client;
 
@@ -17,7 +17,7 @@ message StreamRequest {
 }
 
 message StreamTagDataPoints {
-    repeated dolittle.timeseries.datatypes.TagDataPoint DataPoints=1;
+    repeated dolittle.timeseries.datapoints.TagDataPoint DataPoints=1;
 }
 
 // Represents the service for working with a connector that is stream based

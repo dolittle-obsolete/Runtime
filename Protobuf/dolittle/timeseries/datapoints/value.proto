@@ -1,0 +1,36 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Dolittle. All rights reserved.
+ *  Licensed under the MIT License. See LICENSE in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+syntax = "proto3";
+
+package dolittle.timeseries.datapoints;
+
+option csharp_namespace = "Dolittle.TimeSeries.DataPoints";
+
+/*
+Represents a value.
+
+A value consist of the following:
+
+** TYPE ** 
+Type is the actual type, such as a primitive; float, int32, int64 - or a more complex type.
+This says what to expect in the content property and is important for the serialization.
+
+** ORIGIN **
+Origin represents the actual origin that generated the value. It is an integer that is meant to
+be used as a lookup for resolving its actual origin.
+
+** UNIT **
+Unit is based on the internal System of Units (https://en.wikipedia.org/wiki/International_System_of_Units).
+This indicate what to expect as unit for the content.
+
+** CONTENT **
+Content is the actual protobuf serialized binary of the content based on the type.
+*/
+message Value {
+    int32 type = 1;
+    int32 origin = 2;
+    int32 unit = 3;
+    bytes content = 4;
+}

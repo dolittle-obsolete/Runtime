@@ -10,9 +10,15 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
     public interface IPullConnectors
     {
         /// <summary>
-        /// Register a pull connector
+        /// Register a <see cref="PullConnector"/>
         /// </summary>
         /// <param name="pullConnector"><see cref="PullConnector"/> to register</param>
         void Register(PullConnector pullConnector);
+
+        /// <summary>
+        /// Unregister a <see cref="PullConnector"/>
+        /// </summary>
+        /// <param name="pullConnector"><see cref="PullConnector"/> to unregister</param>
+        void Unregister(PullConnector pullConnector);
     }
 }

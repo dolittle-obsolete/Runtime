@@ -9,9 +9,8 @@ using Dolittle.Lifecycle;
 using Dolittle.Logging;
 using Dolittle.Runtime.Application;
 using static Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client.PullConnector;
-using grpc = Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client;
+using System.Collections.Concurrent;
 using System.Threading;
-using Dolittle.Protobuf;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
@@ -21,7 +20,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
     [Singleton]
     public class PullConnectors : IPullConnectors
     {
-        readonly List<PullConnector> _connectors = new List<PullConnector>();
+        readonly ConcurrentDictionary<PullConnector, PullConnectorProcessor> _connectorProcessorsByConnector = new ConcurrentDictionary<PullConnector, PullConnectorProcessor>();
         readonly ILogger _logger;
         readonly IClientFor<PullConnectorClient> _pullConnectorClient;
 
@@ -41,56 +40,21 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         /// <inheritdoc/>
         public void Register(PullConnector pullConnector)
         {
-            lock(_connectors)
-            {
-                _connectors.Add(pullConnector);
-                var cancellationToken = new CancellationToken();
-                Process(pullConnector, cancellationToken);
-            }
+            _logger.Information($"Register '{pullConnector.Id}'");
+            _connectorProcessorsByConnector[pullConnector] = new PullConnectorProcessor(pullConnector,_pullConnectorClient, _logger);
         }
 
-        void Process(PullConnector pullConnector, CancellationToken cancellationToken)
+        /// <inheritdoc/>
+        public void Unregister(PullConnector pullConnector)
         {
-            if( pullConnector.Tags.Count() == 0 ) 
+            if( _connectorProcessorsByConnector.ContainsKey(pullConnector) )
             {
-                _logger.Warning($"Connector '{pullConnector.Name}' does not have any tags - ignoring it completely");
-                return;
-            }
-            _logger.Information($"Starting '{pullConnector.Name}'");
-
-            var timer = new System.Timers.Timer(pullConnector.Interval);
-            timer.Elapsed += (s, e) =>
-            {
-                if (cancellationToken.IsCancellationRequested)
+                if (_connectorProcessorsByConnector.TryRemove(pullConnector, out PullConnectorProcessor processor))
                 {
-                    timer.Stop();
-                    return;
+                    processor.Stop();
+                    processor.Dispose();
                 }
-                
-                _logger.Information($"Call connector '{pullConnector.Name}' - '{pullConnector.Id}'");
-                var request = new grpc.PullRequest
-                {
-                    ConnectorId = pullConnector.Id.ToProtobuf(),
-                };
-                request.Tags.Add(pullConnector.Tags.Select(_ => _.Value));
-                _pullConnectorClient.Instance.Pull(request);
-
-                /*
-                var data = _connectors[source].GetAllData();
-                data.ForEach(dataPoint => 
-                {
-                    _communicationClient.SendAsJson("output", new TagDataPoint<object>
-                    {
-                        Source = source,
-                        Tag = dataPoint.Tag,
-                        Value = dataPoint.Data,
-                        Timestamp = Timestamp.UtcNow
-                    });
-                });
-                */
-            };
-            timer.AutoReset = true;
-            timer.Enabled = true;
+            }
         }
     }
 }

@@ -26,18 +26,19 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client {
           string.Concat(
             "Cjxkb2xpdHRsZS90aW1lc2VyaWVzL2Nvbm5lY3RvcnMvY2xpZW50L3N0cmVh",
             "bV9jb25uZWN0b3IucHJvdG8SJWRvbGl0dGxlLnRpbWVzZXJpZXMuY29ubmVj",
-            "dG9ycy5jbGllbnQaEXN5c3RlbS9ndWlkLnByb3RvGjJkb2xpdHRsZS90aW1l",
-            "c2VyaWVzL2RhdGF0eXBlcy90YWdfZGF0YV9wb2ludC5wcm90byJCCg1TdHJl",
-            "YW1SZXF1ZXN0EiMKC2Nvbm5lY3RvcklkGAEgASgLMg4uZG9saXR0bGUuZ3Vp",
-            "ZBIMCgR0YWdzGAIgAygJIlYKE1N0cmVhbVRhZ0RhdGFQb2ludHMSPwoKRGF0",
-            "YVBvaW50cxgBIAMoCzIrLmRvbGl0dGxlLnRpbWVzZXJpZXMuZGF0YXR5cGVz",
-            "LlRhZ0RhdGFQb2ludDKSAQoPU3RyZWFtQ29ubmVjdG9yEn8KB0Nvbm5lY3QS",
-            "NC5kb2xpdHRsZS50aW1lc2VyaWVzLmNvbm5lY3RvcnMuY2xpZW50LlN0cmVh",
-            "bVJlcXVlc3QaOi5kb2xpdHRsZS50aW1lc2VyaWVzLmNvbm5lY3RvcnMuY2xp",
-            "ZW50LlN0cmVhbVRhZ0RhdGFQb2ludHMiADABQjWqAjJEb2xpdHRsZS5UaW1l",
-            "U2VyaWVzLlJ1bnRpbWUuQ29ubmVjdG9ycy5HcnBjLkNsaWVudGIGcHJvdG8z"));
+            "dG9ycy5jbGllbnQaEXN5c3RlbS9ndWlkLnByb3RvGjNkb2xpdHRsZS90aW1l",
+            "c2VyaWVzL2RhdGFwb2ludHMvdGFnX2RhdGFfcG9pbnQucHJvdG8iQgoNU3Ry",
+            "ZWFtUmVxdWVzdBIjCgtjb25uZWN0b3JJZBgBIAEoCzIOLmRvbGl0dGxlLmd1",
+            "aWQSDAoEdGFncxgCIAMoCSJXChNTdHJlYW1UYWdEYXRhUG9pbnRzEkAKCkRh",
+            "dGFQb2ludHMYASADKAsyLC5kb2xpdHRsZS50aW1lc2VyaWVzLmRhdGFwb2lu",
+            "dHMuVGFnRGF0YVBvaW50MpIBCg9TdHJlYW1Db25uZWN0b3ISfwoHQ29ubmVj",
+            "dBI0LmRvbGl0dGxlLnRpbWVzZXJpZXMuY29ubmVjdG9ycy5jbGllbnQuU3Ry",
+            "ZWFtUmVxdWVzdBo6LmRvbGl0dGxlLnRpbWVzZXJpZXMuY29ubmVjdG9ycy5j",
+            "bGllbnQuU3RyZWFtVGFnRGF0YVBvaW50cyIAMAFCNaoCMkRvbGl0dGxlLlRp",
+            "bWVTZXJpZXMuUnVudGltZS5Db25uZWN0b3JzLkdycGMuQ2xpZW50YgZwcm90",
+            "bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::System.Protobuf.GuidReflection.Descriptor, global::Dolittle.TimeSeries.DataTypes.TagDataPointReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::System.Protobuf.GuidReflection.Descriptor, global::Dolittle.TimeSeries.DataPoints.TagDataPointReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client.StreamRequest), global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client.StreamRequest.Parser, new[]{ "ConnectorId", "Tags" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client.StreamTagDataPoints), global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client.StreamTagDataPoints.Parser, new[]{ "DataPoints" }, null, null, null)
@@ -238,11 +239,11 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client {
 
     /// <summary>Field number for the "DataPoints" field.</summary>
     public const int DataPointsFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::Dolittle.TimeSeries.DataTypes.TagDataPoint> _repeated_dataPoints_codec
-        = pb::FieldCodec.ForMessage(10, global::Dolittle.TimeSeries.DataTypes.TagDataPoint.Parser);
-    private readonly pbc::RepeatedField<global::Dolittle.TimeSeries.DataTypes.TagDataPoint> dataPoints_ = new pbc::RepeatedField<global::Dolittle.TimeSeries.DataTypes.TagDataPoint>();
+    private static readonly pb::FieldCodec<global::Dolittle.TimeSeries.DataPoints.TagDataPoint> _repeated_dataPoints_codec
+        = pb::FieldCodec.ForMessage(10, global::Dolittle.TimeSeries.DataPoints.TagDataPoint.Parser);
+    private readonly pbc::RepeatedField<global::Dolittle.TimeSeries.DataPoints.TagDataPoint> dataPoints_ = new pbc::RepeatedField<global::Dolittle.TimeSeries.DataPoints.TagDataPoint>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Dolittle.TimeSeries.DataTypes.TagDataPoint> DataPoints {
+    public pbc::RepeatedField<global::Dolittle.TimeSeries.DataPoints.TagDataPoint> DataPoints {
       get { return dataPoints_; }
     }
 
