@@ -6,7 +6,7 @@
         "access": "public"
     },
     "scripts": {
-        "prepublish": "cp -R ../../Protobuf/ proto && npx protoc -I./ -I../../Protobuf/ --js_out=import_style=commonjs,binary:./ ../../Protobuf/**/*.proto --plugin=protoc-gen-grpc=$PLUGIN",
+        "prepublish": "cp -R ../../Protobuf/dolittle/connectors proto && npx protoc -I./ -I../../Protobuf/ --js_out=import_style=commonjs,binary:./ ../../Protobuf/**/*.proto --plugin=protoc-gen-grpc=$PLUGIN",
         "postpublish": "rm -rf ./proto"
     },
     "homepage": "https://dolittle.io",

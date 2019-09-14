@@ -9,7 +9,7 @@
 
     <ItemGroup>
         <ProjectReference Include="../DataTypes.CSharp/DataTypes.CSharp.csproj"/>
-        <ProjectReference Include="../DataPoints.CSharp/DataPoints.CSharp.csproj"/>
+        <ProjectReference Include="../DataPoints.Grpc.CSharp/DataPoints.Grpc.CSharp.csproj"/>
     </ItemGroup>
 
     

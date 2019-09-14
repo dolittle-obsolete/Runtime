@@ -3,7 +3,7 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <AssemblyName>Dolittle.TimeSeries.DataPoints</AssemblyName>
+        <AssemblyName>Dolittle.TimeSeries.Runtime.DataPoints.Grpc</AssemblyName>
         <IncludeSource>False</IncludeSource>
     </PropertyGroup>
 
