@@ -12,7 +12,7 @@
 
 using grpc = global::Grpc.Core;
 
-namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server {
+namespace Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server {
   /// <summary>
   /// Represents the service for working with data point processors that are stream based
   /// </summary>
@@ -21,9 +21,9 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server {
     static readonly string __ServiceName = "dolittle.timeseries.datapoints.server.DataPointProcessors";
 
     static readonly grpc::Marshaller<global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.DataPointProcessor> __Marshaller_dolittle_timeseries_datapoints_server_DataPointProcessor = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.DataPointProcessor.Parser.ParseFrom);
-    static readonly grpc::Marshaller<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.RegisterResult> __Marshaller_dolittle_timeseries_datapoints_server_RegisterResult = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.RegisterResult.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.RegisterResult> __Marshaller_dolittle_timeseries_datapoints_server_RegisterResult = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.RegisterResult.Parser.ParseFrom);
 
-    static readonly grpc::Method<global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.DataPointProcessor, global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.RegisterResult> __Method_Register = new grpc::Method<global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.DataPointProcessor, global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.RegisterResult>(
+    static readonly grpc::Method<global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.DataPointProcessor, global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.RegisterResult> __Method_Register = new grpc::Method<global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.DataPointProcessor, global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.RegisterResult>(
         grpc::MethodType.Unary,
         __ServiceName,
         "Register",
@@ -33,14 +33,14 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server {
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
     {
-      get { return global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.DataPointProcessorsReflection.Descriptor.Services[0]; }
+      get { return global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.DataPointProcessorsReflection.Descriptor.Services[0]; }
     }
 
     /// <summary>Base class for server-side implementations of DataPointProcessors</summary>
     [grpc::BindServiceMethod(typeof(DataPointProcessors), "BindService")]
     public abstract partial class DataPointProcessorsBase
     {
-      public virtual global::System.Threading.Tasks.Task<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.RegisterResult> Register(global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.DataPointProcessor request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task<global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.RegisterResult> Register(global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.DataPointProcessor request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -70,19 +70,19 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server {
       {
       }
 
-      public virtual global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.RegisterResult Register(global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.DataPointProcessor request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.RegisterResult Register(global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.DataPointProcessor request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return Register(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.RegisterResult Register(global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.DataPointProcessor request, grpc::CallOptions options)
+      public virtual global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.RegisterResult Register(global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.DataPointProcessor request, grpc::CallOptions options)
       {
         return CallInvoker.BlockingUnaryCall(__Method_Register, null, options, request);
       }
-      public virtual grpc::AsyncUnaryCall<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.RegisterResult> RegisterAsync(global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.DataPointProcessor request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncUnaryCall<global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.RegisterResult> RegisterAsync(global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.DataPointProcessor request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return RegisterAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual grpc::AsyncUnaryCall<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.RegisterResult> RegisterAsync(global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.DataPointProcessor request, grpc::CallOptions options)
+      public virtual grpc::AsyncUnaryCall<global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.RegisterResult> RegisterAsync(global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.DataPointProcessor request, grpc::CallOptions options)
       {
         return CallInvoker.AsyncUnaryCall(__Method_Register, null, options, request);
       }
@@ -107,7 +107,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server {
     /// <param name="serviceImpl">An object implementing the server-side handling logic.</param>
     public static void BindService(grpc::ServiceBinderBase serviceBinder, DataPointProcessorsBase serviceImpl)
     {
-      serviceBinder.AddMethod(__Method_Register, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.DataPointProcessor, global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.RegisterResult>(serviceImpl.Register));
+      serviceBinder.AddMethod(__Method_Register, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.DataPointProcessor, global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.RegisterResult>(serviceImpl.Register));
     }
 
   }
