@@ -7,7 +7,7 @@ syntax = "proto3";
 
 import "dolittle/timeseries/datapoints/server/data_point_processor.proto";
 
-package dolittle.timeseries.connectors.server;
+package dolittle.timeseries.datapoints.server;
 
 option csharp_namespace = "Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server";
 
