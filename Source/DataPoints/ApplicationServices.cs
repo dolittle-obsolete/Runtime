@@ -15,21 +15,27 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
     public class ApplicationServices : ICanBindApplicationServices
     {
         readonly DataPointProcessorsService _dataPointProcessorsService;
+        readonly DataPointStreamService _dataPointStreamService;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="dataPointProcessorsService"></param>
-        public ApplicationServices(DataPointProcessorsService dataPointProcessorsService)
+        /// <param name="dataPointStreamService"></param>
+        public ApplicationServices(
+            DataPointProcessorsService dataPointProcessorsService,
+            DataPointStreamService dataPointStreamService)
         {
             _dataPointProcessorsService = dataPointProcessorsService;
+            _dataPointStreamService = dataPointStreamService;
         }        
         
         /// <inheritdoc/>
         public IEnumerable<Service> BindServices()
         {
             return new Service[] {
-                new Service(_dataPointProcessorsService, Grpc.Server.DataPointProcessors.BindService(_dataPointProcessorsService), Grpc.Server.DataPointProcessors.Descriptor)
+                new Service(_dataPointProcessorsService, Grpc.Server.DataPointProcessors.BindService(_dataPointProcessorsService), Grpc.Server.DataPointProcessors.Descriptor),
+                new Service(_dataPointStreamService, Grpc.Server.DataPointStream.BindService(_dataPointStreamService), Grpc.Server.DataPointStream.Descriptor),
             };
         }
     }
