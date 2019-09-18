@@ -9,8 +9,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="../Connectors/Connectors.csproj"/>
-        <ProjectReference Include="../DataPoints/DataPoints.csproj"/>
+        <ProjectReference Include="../../Source/Connectors/Connectors.csproj"/>
+        <ProjectReference Include="../../Source/DataPoints/DataPoints.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
