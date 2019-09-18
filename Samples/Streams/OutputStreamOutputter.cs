@@ -11,6 +11,7 @@ using m = Dolittle.TimeSeries.DataTypes.Protobuf.Measurement;
 using static Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.OutputStream;
 using System;
 using Newtonsoft.Json;
+using Dolittle.Protobuf;
 
 namespace Streams
 {
@@ -44,7 +45,7 @@ namespace Streams
                         {
                             if (dataPoint.Value.MeasurementValue.ValueCase == m.ValueOneofCase.FloatValue)
                             {
-                                _logger.Information($"DataPoint with value '{dataPoint.Value.MeasurementValue.FloatValue}' received");
+                                _logger.Information($"DataPoint for timeseries '{dataPoint.TimeSeries.ToGuid()}' with value '{dataPoint.Value.MeasurementValue.FloatValue}' generated @ '{dataPoint.Timestamp.ToDateTimeOffset()}'");
                             }
                             else
                             {

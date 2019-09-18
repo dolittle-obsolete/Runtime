@@ -11,8 +11,9 @@ using static Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client.PullConnector;
 using System;
 using Dolittle.Collections;
 using Dolittle.Runtime.Application;
-using Dolittle.TimeSeries.Runtime.DataPoints;
 using Dolittle.TimeSeries.DataTypes.Protobuf;
+using Dolittle.TimeSeries.Runtime.DataPoints;
+using Dolittle.TimeSeries.Runtime.Identity;
 using Google.Protobuf.WellKnownTypes;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
@@ -26,6 +27,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         readonly IClientFor<PullConnectorClient> _client;
         readonly ILogger _logger;
         readonly IOutputStreams _outputStreams;
+        readonly ITimeSeriesMapper _timeSeriesMapper;
         CancellationTokenSource _cancellationTokenSource;
         System.Timers.Timer _timer;
 
@@ -35,17 +37,23 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         /// <param name="connector"><see cref="PullConnector"/> to process for</param>
         /// <param name="client"><see cref="IClientFor{T}">Client for</see> <see cref="PullConnectorClient"/></param>
         /// <param name="outputStreams">All <see cref="IOutputStreams"/></param>
+        /// <param name="timeSeriesMapper"><see cref="ITimeSeriesMapper"/> for mapping data points</param>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
         public PullConnectorProcessor(
             PullConnector connector,
             IClientFor<PullConnectorClient> client,
             IOutputStreams outputStreams,
+            ITimeSeriesMapper timeSeriesMapper,
             ILogger logger)
         {
             _logger = logger;
             _connector = connector;
             _cancellationTokenSource = new CancellationTokenSource();
             _cancellationTokenSource.Token.ThrowIfCancellationRequested();
+            _timeSeriesMapper = timeSeriesMapper;
+            _client = client;
+            _outputStreams = outputStreams;
+
             _timer = new System.Timers.Timer(connector.Interval);
             _timer.AutoReset = true;
             _timer.Enabled = true;
@@ -54,9 +62,6 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
             _logger.Information($"Starting '{_connector.Name}'");
 
             _timer.Start();
-
-            _client = client;
-            _outputStreams = outputStreams;
         }
 
         /// <inheritdoc/>
@@ -105,30 +110,20 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
             var result = _client.Instance.Pull(request);
             result.Data.ForEach(tagDataPoint =>
             {
-                var dataPoint = new DataPoint
+                if (!_timeSeriesMapper.HasTimeSeriesFor(_connector.Name, tagDataPoint.Tag))
+                    _logger.Information($"Unidentified tag '{tagDataPoint.Tag}' from '{_connector.Name}'");
+                else
                 {
-                    Value = tagDataPoint.Value,
-                    Timestamp = Timestamp.FromDateTimeOffset(DateTimeOffset.UtcNow)
-                };
-                _outputStreams.Write(dataPoint);
-            });
 
-            /*
-            var data = _connectors[source].GetAllData();
-            data.ForEach(dataPoint => 
-            {
-                _communicationClient.SendAsJson("output", new TagDataPoint<object>
-                {
-                    Source = source,
-                    Tag = dataPoint.Tag,
-                    Value = dataPoint.Data,
-                    Timestamp = Timestamp.UtcNow
-                });
+                    var dataPoint = new DataPoint
+                    {
+                        TimeSeries = _timeSeriesMapper.GetTimeSeriesFor(_connector.Name, tagDataPoint.Tag).ToProtobuf(),
+                        Value = tagDataPoint.Value,
+                        Timestamp = Timestamp.FromDateTimeOffset(DateTimeOffset.UtcNow)
+                    };
+                    _outputStreams.Write(dataPoint);
+                }
             });
-            */
-
         }
-
     }
-
 }

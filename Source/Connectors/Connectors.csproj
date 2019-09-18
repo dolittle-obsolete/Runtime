@@ -7,8 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="../DataPoints/DataPoints.csproj"/>
         <ProjectReference Include="../Connectors.Grpc.CSharp/Connectors.Grpc.CSharp.csproj"/>
+        <ProjectReference Include="../DataPoints/DataPoints.csproj"/>
+        <ProjectReference Include="../Identity/Identity.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

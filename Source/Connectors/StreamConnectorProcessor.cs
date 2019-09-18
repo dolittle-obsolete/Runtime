@@ -14,6 +14,7 @@ using Dolittle.Collections;
 using Dolittle.Protobuf;
 using Dolittle.TimeSeries.DataTypes.Protobuf;
 using Dolittle.TimeSeries.Runtime.DataPoints;
+using Dolittle.TimeSeries.Runtime.Identity;
 using Google.Protobuf.WellKnownTypes;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
@@ -27,6 +28,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         readonly IClientFor<StreamConnectorClient> _client;
         readonly ILogger _logger;
         readonly IOutputStreams _outputStreams;
+        readonly ITimeSeriesMapper _timeSeriesMapper;
         CancellationTokenSource _cancellationTokenSource;
 
         /// <summary>
@@ -35,20 +37,23 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         /// <param name="connector"><see cref="StreamConnector"/> to process for</param>
         /// <param name="client"><see cref="IClientFor{T}">Client for</see> <see cref="StreamConnectorClient"/></param>
         /// <param name="outputStreams">All <see cref="IOutputStreams"/></param>
+        /// <param name="timeSeriesMapper"><see cref="ITimeSeriesMapper"/> for mapping data points</param>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
         public StreamConnectorProcessor(
             StreamConnector connector,
             IClientFor<StreamConnectorClient> client,
             IOutputStreams outputStreams,
+            ITimeSeriesMapper timeSeriesMapper,
             ILogger logger)
         {
             _connector = connector;
             _client = client;
             _logger = logger;
             _cancellationTokenSource = new CancellationTokenSource();
-
-            Process();
             _outputStreams = outputStreams;
+            _timeSeriesMapper = timeSeriesMapper;
+            
+            Process();
         }
 
         /// <inheritdoc/>
@@ -93,12 +98,18 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
 
                     stream.ResponseStream.Current.DataPoints.ForEach(tagDataPoint =>
                     {
-                        var dataPoint = new DataPoint
+                        if (!_timeSeriesMapper.HasTimeSeriesFor(_connector.Name, tagDataPoint.Tag))
+                            _logger.Information($"Unidentified tag '{tagDataPoint.Tag}' from '{_connector.Name}'");
+                        else
                         {
-                            Value = tagDataPoint.Value,
-                            Timestamp = Timestamp.FromDateTimeOffset(DateTimeOffset.UtcNow)
-                        };
-                        _outputStreams.Write(dataPoint);
+                            var dataPoint = new DataPoint
+                            {
+                                TimeSeries = _timeSeriesMapper.GetTimeSeriesFor(_connector.Name, tagDataPoint.Tag).ToProtobuf(),
+                                Value = tagDataPoint.Value,
+                                Timestamp = Timestamp.FromDateTimeOffset(DateTimeOffset.UtcNow)
+                            };
+                            _outputStreams.Write(dataPoint);
+                        }
                     });
                 }
 

@@ -1,0 +1,12 @@
+{
+    "MyPullConnector": {
+        "first": "9592772e-5ac6-406f-bcf6-01de2f4a1c7c",
+        "second": "1c89215e-a333-453c-a2ed-c2fb347f0e2f",
+        "third": "3202969d-38be-4941-b97e-657bbba3ae34"
+    },
+    "MyStreamConnector": {
+        "first": "b00ef8b8-a4e1-4778-b302-b89fb427621d",
+        "second": "5f6229fc-c941-4b05-8f5d-baf48d04ff6e",
+        "third": "ec10595a-b82e-420e-8eca-b06963b1c38c"
+    }
+}
