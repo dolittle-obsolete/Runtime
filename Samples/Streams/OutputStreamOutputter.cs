@@ -10,8 +10,8 @@ using v = Dolittle.TimeSeries.DataTypes.Protobuf.Value;
 using m = Dolittle.TimeSeries.DataTypes.Protobuf.Measurement;
 using static Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.OutputStream;
 using System;
-using Newtonsoft.Json;
 using Dolittle.Protobuf;
+using Newtonsoft.Json;
 
 namespace Streams
 {
@@ -41,30 +41,47 @@ namespace Streams
 
                     try
                     {
-                        if (dataPoint.Value.ValueCase == v.ValueOneofCase.MeasurementValue)
+                        switch (dataPoint.Value.ValueCase)
                         {
-                            if (dataPoint.Value.MeasurementValue.ValueCase == m.ValueOneofCase.FloatValue)
-                            {
-                                _logger.Information($"DataPoint for timeseries '{dataPoint.TimeSeries.ToGuid()}' with value '{dataPoint.Value.MeasurementValue.FloatValue}' generated @ '{dataPoint.Timestamp.ToDateTimeOffset()}'");
-                            }
-                            else
-                            {
-                                _logger.Information($"Non float measurement DataPoint received");
+                            case v.ValueOneofCase.MeasurementValue:
+                                {
+                                    object value = "NaN";
 
-                            }
-                        }
-                        else
-                        {
-                            _logger.Information($"Non measurement DataPoint received");
+                                    switch (dataPoint.Value.MeasurementValue.ValueCase)
+                                    {
+                                        case m.ValueOneofCase.FloatValue:
+                                            value = dataPoint.Value.MeasurementValue.FloatValue;
+                                            break;
+                                        case m.ValueOneofCase.DoubleValue:
+                                            value = dataPoint.Value.MeasurementValue.DoubleValue;
+                                            break;
+                                        case m.ValueOneofCase.Int32Value:
+                                            value = dataPoint.Value.MeasurementValue.Int32Value;
+                                            break;
+                                        case m.ValueOneofCase.Int64Value:
+                                            value = dataPoint.Value.MeasurementValue.Int64Value;
+                                            break;
+                                    }
 
+                                    _logger.Information($"DataPoint for timeseries '{dataPoint.TimeSeries.ToGuid()}' with value '{value}' generated @ '{dataPoint.Timestamp.ToDateTimeOffset()}'");
+
+                                }
+                                break;
+                            case v.ValueOneofCase.Vector2Value: 
+                            {
+                                _logger.Information($"DataPoint for timeseries '{dataPoint.TimeSeries.ToGuid()}' with value '{dataPoint.Value.Vector2Value.X.FloatValue}, {dataPoint.Value.Vector2Value.Y.FloatValue}' generated @ '{dataPoint.Timestamp.ToDateTimeOffset()}'");
+                            } break;
+                            case v.ValueOneofCase.Vector3Value: 
+                            {
+                                _logger.Information($"DataPoint for timeseries '{dataPoint.TimeSeries.ToGuid()}' with value '{dataPoint.Value.Vector3Value.X.FloatValue}, {dataPoint.Value.Vector3Value.Y.FloatValue}, {dataPoint.Value.Vector3Value.Z.FloatValue}' generated @ '{dataPoint.Timestamp.ToDateTimeOffset()}'");
+                            } break;
                         }
                     }
                     catch (Exception ex)
                     {
-                        _logger.Error(ex,"Error interpreting datapoint");
+                        _logger.Error(ex, "Error interpreting datapoint");
 
                     }
-
                 }
             });
         }

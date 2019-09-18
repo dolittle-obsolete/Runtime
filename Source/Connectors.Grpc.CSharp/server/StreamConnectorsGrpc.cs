@@ -20,15 +20,15 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server {
   {
     static readonly string __ServiceName = "dolittle.timeseries.connectors.server.StreamConnectors";
 
-    static readonly grpc::Marshaller<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.StreamConnector> __Marshaller_dolittle_timeseries_connectors_server_StreamConnector = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.StreamConnector.Parser.ParseFrom);
-    static readonly grpc::Marshaller<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.RegisterResult> __Marshaller_dolittle_timeseries_connectors_server_RegisterResult = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.RegisterResult.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.StreamTagDataPoints> __Marshaller_dolittle_timeseries_connectors_server_StreamTagDataPoints = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.StreamTagDataPoints.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Google.Protobuf.WellKnownTypes.Empty> __Marshaller_google_protobuf_Empty = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Google.Protobuf.WellKnownTypes.Empty.Parser.ParseFrom);
 
-    static readonly grpc::Method<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.StreamConnector, global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.RegisterResult> __Method_Register = new grpc::Method<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.StreamConnector, global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.RegisterResult>(
-        grpc::MethodType.Unary,
+    static readonly grpc::Method<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.StreamTagDataPoints, global::Google.Protobuf.WellKnownTypes.Empty> __Method_Open = new grpc::Method<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.StreamTagDataPoints, global::Google.Protobuf.WellKnownTypes.Empty>(
+        grpc::MethodType.ClientStreaming,
         __ServiceName,
-        "Register",
-        __Marshaller_dolittle_timeseries_connectors_server_StreamConnector,
-        __Marshaller_dolittle_timeseries_connectors_server_RegisterResult);
+        "Open",
+        __Marshaller_dolittle_timeseries_connectors_server_StreamTagDataPoints,
+        __Marshaller_google_protobuf_Empty);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -40,7 +40,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server {
     [grpc::BindServiceMethod(typeof(StreamConnectors), "BindService")]
     public abstract partial class StreamConnectorsBase
     {
-      public virtual global::System.Threading.Tasks.Task<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.RegisterResult> Register(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.StreamConnector request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task<global::Google.Protobuf.WellKnownTypes.Empty> Open(grpc::IAsyncStreamReader<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.StreamTagDataPoints> requestStream, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -70,21 +70,13 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server {
       {
       }
 
-      public virtual global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.RegisterResult Register(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.StreamConnector request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncClientStreamingCall<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.StreamTagDataPoints, global::Google.Protobuf.WellKnownTypes.Empty> Open(grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return Register(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return Open(new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.RegisterResult Register(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.StreamConnector request, grpc::CallOptions options)
+      public virtual grpc::AsyncClientStreamingCall<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.StreamTagDataPoints, global::Google.Protobuf.WellKnownTypes.Empty> Open(grpc::CallOptions options)
       {
-        return CallInvoker.BlockingUnaryCall(__Method_Register, null, options, request);
-      }
-      public virtual grpc::AsyncUnaryCall<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.RegisterResult> RegisterAsync(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.StreamConnector request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
-      {
-        return RegisterAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-      }
-      public virtual grpc::AsyncUnaryCall<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.RegisterResult> RegisterAsync(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.StreamConnector request, grpc::CallOptions options)
-      {
-        return CallInvoker.AsyncUnaryCall(__Method_Register, null, options, request);
+        return CallInvoker.AsyncClientStreamingCall(__Method_Open, null, options);
       }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       protected override StreamConnectorsClient NewInstance(ClientBaseConfiguration configuration)
@@ -98,7 +90,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server {
     public static grpc::ServerServiceDefinition BindService(StreamConnectorsBase serviceImpl)
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
-          .AddMethod(__Method_Register, serviceImpl.Register).Build();
+          .AddMethod(__Method_Open, serviceImpl.Open).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the  service binding logic.
@@ -107,7 +99,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server {
     /// <param name="serviceImpl">An object implementing the server-side handling logic.</param>
     public static void BindService(grpc::ServiceBinderBase serviceBinder, StreamConnectorsBase serviceImpl)
     {
-      serviceBinder.AddMethod(__Method_Register, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.StreamConnector, global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.RegisterResult>(serviceImpl.Register));
+      serviceBinder.AddMethod(__Method_Open, serviceImpl == null ? null : new grpc::ClientStreamingServerMethod<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.StreamTagDataPoints, global::Google.Protobuf.WellKnownTypes.Empty>(serviceImpl.Open));
     }
 
   }

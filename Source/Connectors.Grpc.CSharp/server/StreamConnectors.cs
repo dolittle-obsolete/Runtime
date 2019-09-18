@@ -26,21 +26,148 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server {
           string.Concat(
             "Cj1kb2xpdHRsZS90aW1lc2VyaWVzL2Nvbm5lY3RvcnMvc2VydmVyL3N0cmVh",
             "bV9jb25uZWN0b3JzLnByb3RvEiVkb2xpdHRsZS50aW1lc2VyaWVzLmNvbm5l",
-            "Y3RvcnMuc2VydmVyGjxkb2xpdHRsZS90aW1lc2VyaWVzL2Nvbm5lY3RvcnMv",
-            "c2VydmVyL3N0cmVhbV9jb25uZWN0b3IucHJvdG8aO2RvbGl0dGxlL3RpbWVz",
-            "ZXJpZXMvY29ubmVjdG9ycy9zZXJ2ZXIvcmVnaXN0ZXJfcmVzdWx0LnByb3Rv",
-            "Mo8BChBTdHJlYW1Db25uZWN0b3JzEnsKCFJlZ2lzdGVyEjYuZG9saXR0bGUu",
-            "dGltZXNlcmllcy5jb25uZWN0b3JzLnNlcnZlci5TdHJlYW1Db25uZWN0b3Ia",
-            "NS5kb2xpdHRsZS50aW1lc2VyaWVzLmNvbm5lY3RvcnMuc2VydmVyLlJlZ2lz",
-            "dGVyUmVzdWx0IgBCNaoCMkRvbGl0dGxlLlRpbWVTZXJpZXMuUnVudGltZS5D",
-            "b25uZWN0b3JzLkdycGMuU2VydmVyYgZwcm90bzM="));
+            "Y3RvcnMuc2VydmVyGhtnb29nbGUvcHJvdG9idWYvRW1wdHkucHJvdG8aM2Rv",
+            "bGl0dGxlL3RpbWVzZXJpZXMvZGF0YXBvaW50cy90YWdfZGF0YV9wb2ludC5w",
+            "cm90byJXChNTdHJlYW1UYWdEYXRhUG9pbnRzEkAKCkRhdGFQb2ludHMYASAD",
+            "KAsyLC5kb2xpdHRsZS50aW1lc2VyaWVzLmRhdGFwb2ludHMuVGFnRGF0YVBv",
+            "aW50MnIKEFN0cmVhbUNvbm5lY3RvcnMSXgoET3BlbhI6LmRvbGl0dGxlLnRp",
+            "bWVzZXJpZXMuY29ubmVjdG9ycy5zZXJ2ZXIuU3RyZWFtVGFnRGF0YVBvaW50",
+            "cxoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eSIAKAFCNaoCMkRvbGl0dGxlLlRp",
+            "bWVTZXJpZXMuUnVudGltZS5Db25uZWN0b3JzLkdycGMuU2VydmVyYgZwcm90",
+            "bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.StreamConnectorReflection.Descriptor, global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.RegisterResultReflection.Descriptor, },
-          new pbr::GeneratedClrTypeInfo(null, null));
+          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.TagDataPointReflection.Descriptor, },
+          new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.StreamTagDataPoints), global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.StreamTagDataPoints.Parser, new[]{ "DataPoints" }, null, null, null)
+          }));
     }
     #endregion
 
   }
+  #region Messages
+  public sealed partial class StreamTagDataPoints : pb::IMessage<StreamTagDataPoints> {
+    private static readonly pb::MessageParser<StreamTagDataPoints> _parser = new pb::MessageParser<StreamTagDataPoints>(() => new StreamTagDataPoints());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<StreamTagDataPoints> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.StreamConnectorsReflection.Descriptor.MessageTypes[0]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public StreamTagDataPoints() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public StreamTagDataPoints(StreamTagDataPoints other) : this() {
+      dataPoints_ = other.dataPoints_.Clone();
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public StreamTagDataPoints Clone() {
+      return new StreamTagDataPoints(this);
+    }
+
+    /// <summary>Field number for the "DataPoints" field.</summary>
+    public const int DataPointsFieldNumber = 1;
+    private static readonly pb::FieldCodec<global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.TagDataPoint> _repeated_dataPoints_codec
+        = pb::FieldCodec.ForMessage(10, global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.TagDataPoint.Parser);
+    private readonly pbc::RepeatedField<global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.TagDataPoint> dataPoints_ = new pbc::RepeatedField<global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.TagDataPoint>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.TagDataPoint> DataPoints {
+      get { return dataPoints_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as StreamTagDataPoints);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(StreamTagDataPoints other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!dataPoints_.Equals(other.dataPoints_)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= dataPoints_.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      dataPoints_.WriteTo(output, _repeated_dataPoints_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      size += dataPoints_.CalculateSize(_repeated_dataPoints_codec);
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(StreamTagDataPoints other) {
+      if (other == null) {
+        return;
+      }
+      dataPoints_.Add(other.dataPoints_);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            dataPoints_.AddEntriesFrom(input, _repeated_dataPoints_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  #endregion
+
 }
 
 #endregion Designer generated code

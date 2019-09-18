@@ -26,16 +26,15 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server {
           string.Concat(
             "Cjtkb2xpdHRsZS90aW1lc2VyaWVzL2Nvbm5lY3RvcnMvc2VydmVyL3B1bGxf",
             "Y29ubmVjdG9ycy5wcm90bxIlZG9saXR0bGUudGltZXNlcmllcy5jb25uZWN0",
-            "b3JzLnNlcnZlcho6ZG9saXR0bGUvdGltZXNlcmllcy9jb25uZWN0b3JzL3Nl",
-            "cnZlci9wdWxsX2Nvbm5lY3Rvci5wcm90bxo7ZG9saXR0bGUvdGltZXNlcmll",
-            "cy9jb25uZWN0b3JzL3NlcnZlci9yZWdpc3Rlcl9yZXN1bHQucHJvdG8yiwEK",
-            "DlB1bGxDb25uZWN0b3JzEnkKCFJlZ2lzdGVyEjQuZG9saXR0bGUudGltZXNl",
-            "cmllcy5jb25uZWN0b3JzLnNlcnZlci5QdWxsQ29ubmVjdG9yGjUuZG9saXR0",
-            "bGUudGltZXNlcmllcy5jb25uZWN0b3JzLnNlcnZlci5SZWdpc3RlclJlc3Vs",
-            "dCIAQjWqAjJEb2xpdHRsZS5UaW1lU2VyaWVzLlJ1bnRpbWUuQ29ubmVjdG9y",
-            "cy5HcnBjLlNlcnZlcmIGcHJvdG8z"));
+            "b3JzLnNlcnZlchobZ29vZ2xlL3Byb3RvYnVmL0VtcHR5LnByb3RvGjpkb2xp",
+            "dHRsZS90aW1lc2VyaWVzL2Nvbm5lY3RvcnMvc2VydmVyL3B1bGxfY29ubmVj",
+            "dG9yLnByb3RvMmwKDlB1bGxDb25uZWN0b3JzEloKCFJlZ2lzdGVyEjQuZG9s",
+            "aXR0bGUudGltZXNlcmllcy5jb25uZWN0b3JzLnNlcnZlci5QdWxsQ29ubmVj",
+            "dG9yGhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5IgBCNaoCMkRvbGl0dGxlLlRp",
+            "bWVTZXJpZXMuUnVudGltZS5Db25uZWN0b3JzLkdycGMuU2VydmVyYgZwcm90",
+            "bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullConnectorReflection.Descriptor, global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.RegisterResultReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullConnectorReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null));
     }
     #endregion

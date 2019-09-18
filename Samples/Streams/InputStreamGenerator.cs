@@ -10,6 +10,7 @@ using Dolittle.TimeSeries.Runtime.DataPoints.Grpc;
 using static Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.InputStream;
 using Dolittle.TimeSeries.DataTypes.Protobuf;
 using Google.Protobuf.WellKnownTypes;
+using Dolittle.Protobuf;
 
 namespace Streams
 {
@@ -38,6 +39,7 @@ namespace Streams
 
                 var dataPoint = new DataPoint
                 {
+                    TimeSeries = Guid.NewGuid().ToProtobuf(),
                     Timestamp = Timestamp.FromDateTimeOffset(DateTimeOffset.UtcNow),
 
                     Value = new Dolittle.TimeSeries.DataTypes.Protobuf.Value

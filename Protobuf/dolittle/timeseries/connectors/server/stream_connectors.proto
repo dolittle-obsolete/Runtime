@@ -5,14 +5,18 @@
  *--------------------------------------------------------------------------------------------*/
 syntax = "proto3";
 
-import "dolittle/timeseries/connectors/server/stream_connector.proto";
-import "dolittle/timeseries/connectors/server/register_result.proto";
+import "google/protobuf/Empty.proto";
+import "dolittle/timeseries/datapoints/tag_data_point.proto";
 
 package dolittle.timeseries.connectors.server;
 
 option csharp_namespace = "Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server";
 
+message StreamTagDataPoints {
+    repeated dolittle.timeseries.datapoints.TagDataPoint DataPoints=1;
+}
+
 // Represents the service for working with connectors that are stream based
 service StreamConnectors {
-    rpc Register(StreamConnector) returns(RegisterResult) {}
+    rpc Open(stream StreamTagDataPoints) returns(google.protobuf.Empty) {}
 }

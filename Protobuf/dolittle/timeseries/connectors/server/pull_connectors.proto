@@ -4,15 +4,14 @@
  *--------------------------------------------------------------------------------------------*/
 syntax = "proto3";
 
+import "google/protobuf/Empty.proto";
 import "dolittle/timeseries/connectors/server/pull_connector.proto";
-import "dolittle/timeseries/connectors/server/register_result.proto";
 
 package dolittle.timeseries.connectors.server;
 
 option csharp_namespace = "Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server";
 
-
 // Represents the service for working with connectors that are pull based
 service PullConnectors {
-    rpc Register(PullConnector) returns(RegisterResult) {}
+    rpc Register(PullConnector) returns(google.protobuf.Empty) {}
 }

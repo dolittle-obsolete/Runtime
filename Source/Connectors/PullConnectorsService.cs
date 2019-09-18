@@ -12,6 +12,7 @@ using grpc = Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server;
 using Dolittle.Protobuf;
 using Dolittle.Runtime.Application;
 using System;
+using Google.Protobuf.WellKnownTypes;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
@@ -35,7 +36,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         }
 
         /// <inheritdoc/>
-        public override Task<RegisterResult> Register(grpc.PullConnector pullConnector, ServerCallContext context)
+        public override Task<Empty> Register(grpc.PullConnector pullConnector, ServerCallContext context)
         {
             var id = pullConnector.Id.ToGuid();
             var pullConnectorInstance = new PullConnector(id, pullConnector.Name, pullConnector.Interval, pullConnector.Tags.Select(_ => (Tag) _));
@@ -43,7 +44,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
 
             context.OnDisconnected(_ => _pullConnectors.Unregister(pullConnectorInstance));
             
-            return Task.FromResult(new RegisterResult());
+            return Task.FromResult(new Empty());
         }
     }
 }

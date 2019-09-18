@@ -19,8 +19,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         public ApplicationClientServices()
         {
             Services = new [] {
-                new ClientServiceDefinition(typeof(grpc.PullConnector.PullConnectorClient), grpc.PullConnector.Descriptor),
-                new ClientServiceDefinition(typeof(grpc.StreamConnector.StreamConnectorClient), grpc.StreamConnector.Descriptor),
+                new ClientServiceDefinition(typeof(grpc.PullConnector.PullConnectorClient), grpc.PullConnector.Descriptor)
             };
         }
 

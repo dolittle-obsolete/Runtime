@@ -5,8 +5,8 @@
 using System.Threading.Tasks;
 using Dolittle.Logging;
 using Dolittle.Protobuf;
-using Dolittle.Runtime.Application;
-using Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server;
+using Dolittle.TimeSeries.DataTypes.Protobuf;
+using grpc = Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server;
 using Grpc.Core;
 using static Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.DataPointProcessors;
 
@@ -19,31 +19,59 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
     {
         readonly IDataPointProcessors _dataPointProcessors;
         readonly ILogger _logger;
+        private readonly IInputStreams _inputStreams;
 
         /// <summary>
         /// Initializes a new instance of <see cref="DataPointProcessorsService"/>
         /// </summary>
         /// <param name="dataPointProcessors">Actual <see cref="IDataPointProcessors"/></param>
+        /// <param name="inputStreams"></param>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
-        public DataPointProcessorsService(IDataPointProcessors dataPointProcessors, ILogger logger)
+        public DataPointProcessorsService(
+            IDataPointProcessors dataPointProcessors,
+            IInputStreams inputStreams,
+            ILogger logger)
         {
             _dataPointProcessors = dataPointProcessors;
             _logger = logger;
+            _inputStreams = inputStreams;
         }
 
         /// <inheritdoc/>
-        public override Task<RegisterResult> Register(Grpc.Server.DataPointProcessor processor, ServerCallContext context)
+        public override Task Open(grpc.DataPointProcessor request, IServerStreamWriter<DataPoint> responseStream, ServerCallContext context)
         {
-            var result = new RegisterResult();
+            DataPointProcessor dataPointProcessor = null;
+            var id = request.Id.To<DataPointProcessorId>();
 
-            var id = processor.Id.ToGuid();
-            _logger.Information($"Register processor witd identifier '{id}'");
+            void received(DataPoint dataPoint) => Process(responseStream, dataPoint);
 
-            var dataPointProcessor = new DataPointProcessor(id);
-            _dataPointProcessors.Register(dataPointProcessor);
-            context.OnDisconnected(_ => _dataPointProcessors.Unregister(dataPointProcessor));
+            try
+            {
+                _logger.Information($"Register processor witd identifier '{id}'");
+                dataPointProcessor = new DataPointProcessor(id);
+                _dataPointProcessors.Register(dataPointProcessor);
 
-            return Task.FromResult(result);
+                _inputStreams.DataPointReceived += received;
+
+                context.CancellationToken.ThrowIfCancellationRequested();
+                context.CancellationToken.WaitHandle.WaitOne();
+            }
+            finally
+            {
+                _inputStreams.DataPointReceived -= received;
+                if (dataPointProcessor != null)
+                {
+                    _logger.Information($"Unregister processor witd identifier '{id}'");
+                    _dataPointProcessors.Unregister(dataPointProcessor);
+                }
+            }
+
+            return Task.CompletedTask;
+        }
+
+        void Process(IServerStreamWriter<DataPoint> responseStream, DataPoint dataPoint)
+        {
+            responseStream.WriteAsync(dataPoint);
         }
     }
 }

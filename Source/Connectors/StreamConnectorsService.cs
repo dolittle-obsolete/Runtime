@@ -7,43 +7,94 @@ using System.Threading.Tasks;
 using Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server;
 using Grpc.Core;
 using static Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.StreamConnectors;
-using grpc = Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server;
+using System;
 using Dolittle.Logging;
+using Google.Protobuf.WellKnownTypes;
+using Dolittle.Collections;
+using Dolittle.TimeSeries.Runtime.Identity;
+using Dolittle.TimeSeries.Runtime.DataPoints;
+using Dolittle.TimeSeries.DataTypes.Protobuf;
 using Dolittle.Protobuf;
-using Dolittle.Runtime.Application;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
+
     /// <summary>
     /// Represents an implementation of <see cref="StreamConnectorsBase"/>
     /// </summary>
     public class StreamConnectorsService : StreamConnectorsBase
     {
-        readonly ILogger _logger;
+        readonly ITimeSeriesMapper _timeSeriesMapper;
         readonly IStreamConnectors _streamConnectors;
+        readonly IOutputStreams _outputStreams;
+        readonly ILogger _logger;
+        
 
         /// <summary>
         /// Initializes a new instance of <see cref="PullConnectorsService"/>
         /// </summary>
         /// <param name="streamConnectors">Actual <see cref="IStreamConnectors"/></param>
+        /// <param name="timeSeriesMapper"><see cref="ITimeSeriesMapper"/> for mapping data points</param>
+        /// <param name="outputStreams">All <see cref="IOutputStreams"/></param>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
-        public StreamConnectorsService(IStreamConnectors streamConnectors, ILogger logger)
+        public StreamConnectorsService(
+            IStreamConnectors streamConnectors,
+            ITimeSeriesMapper timeSeriesMapper,
+            IOutputStreams outputStreams,
+            ILogger logger)
         {
             _logger = logger;
             _streamConnectors = streamConnectors;
+            _timeSeriesMapper = timeSeriesMapper;
+            _outputStreams = outputStreams;
         }
 
         /// <inheritdoc/>
-        public override Task<RegisterResult> Register(grpc.StreamConnector streamConnector, ServerCallContext context)
+        public override async Task<Empty> Open(IAsyncStreamReader<StreamTagDataPoints> requestStream, ServerCallContext context)
         {
-            var id = streamConnector.Id.ToGuid();
-            _logger.Information($"Register connector : '{streamConnector.Name}' with Id: '{id}'");
-            var streamConnectorInstance = new StreamConnector(id, streamConnector.Name, streamConnector.Tags.Select(_ => (Tag) _));
-            _streamConnectors.Register(streamConnectorInstance);
+            var streamConnectorIdAsString = context.RequestHeaders.SingleOrDefault(_ => _.Key.ToLowerInvariant() == "streamconnectorid")?.Value;
+            if (string.IsNullOrEmpty(streamConnectorIdAsString)) throw new MissingConnectorIdentifierOnRequestHeader();
+            var streamConnectorName = context.RequestHeaders.SingleOrDefault(_ => _.Key.ToLowerInvariant() == "streamconnectorname")?.Value;
+            if (string.IsNullOrEmpty(streamConnectorName)) throw new MissingConnectorNameOnRequestHeader();
+            var tagsString = context.RequestHeaders.SingleOrDefault(_ => _.Key.ToLowerInvariant() == "tags")?.Value;
+            if (string.IsNullOrEmpty(tagsString)) throw new MissingConnectorNameOnRequestHeader();
+            var tags = tagsString.Split(',');
+            var id = (ConnectorId) Guid.Parse(streamConnectorIdAsString);
 
-            context.OnDisconnected(_ => _streamConnectors.Unregister(streamConnectorInstance));
+            StreamConnector streamConnector = null;
+            try
+            {
+                _logger.Information($"Register connector : '{streamConnectorName}' with Id: '{id}'");
+                streamConnector = new StreamConnector(id, streamConnectorName, tags.Select(_ => (Tag) _));
+                _streamConnectors.Register(streamConnector);
 
-            return Task.FromResult(new RegisterResult());
+                while (await requestStream.MoveNext())
+                {
+                    requestStream.Current.DataPoints.ForEach(tagDataPoint =>
+                    {
+                        if (!_timeSeriesMapper.HasTimeSeriesFor(streamConnectorName, tagDataPoint.Tag))
+                            _logger.Information($"Unidentified tag '{tagDataPoint.Tag}' from '{streamConnectorName}'");
+                        else
+                        {
+                            _logger.Information("DataPoint received");
+
+                            var dataPoint = new DataPoint
+                            {
+                                TimeSeries = _timeSeriesMapper.GetTimeSeriesFor(streamConnectorName, tagDataPoint.Tag).ToProtobuf(),
+                                Value = tagDataPoint.Value,
+                                Timestamp = Timestamp.FromDateTimeOffset(DateTimeOffset.UtcNow)
+                            };
+                            _outputStreams.Write(dataPoint);
+                        }
+                    });
+               }
+            }
+            finally
+            {
+                if( streamConnector != null ) _streamConnectors.Unregister(streamConnector);
+            }
+
+            return new Empty();
         }
     }
 }
