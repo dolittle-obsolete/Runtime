@@ -7,6 +7,10 @@
         <IncludeSource>False</IncludeSource>
     </PropertyGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="../DataTypes.Protobuf.CSharp/DataTypes.Protobuf.CSharp.csproj"/>
+    </ItemGroup>
+
     
     <ItemGroup>
         <PackageReference Include="Google.Protobuf" Version="3.5.1" />
@@ -24,6 +28,7 @@
                   GrpcServices="Both" 
                   CompileOutputs="False" />
     </ItemGroup>
+    
 
     <PropertyGroup>
         <Protobuf_NoWarnMissingExpected>true</Protobuf_NoWarnMissingExpected>

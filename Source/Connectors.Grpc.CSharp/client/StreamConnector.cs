@@ -38,7 +38,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client {
             "bWVTZXJpZXMuUnVudGltZS5Db25uZWN0b3JzLkdycGMuQ2xpZW50YgZwcm90",
             "bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::System.Protobuf.GuidReflection.Descriptor, global::Dolittle.TimeSeries.DataPoints.TagDataPointReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::System.Protobuf.GuidReflection.Descriptor, global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.TagDataPointReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client.StreamRequest), global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client.StreamRequest.Parser, new[]{ "ConnectorId", "Tags" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client.StreamTagDataPoints), global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client.StreamTagDataPoints.Parser, new[]{ "DataPoints" }, null, null, null)
@@ -239,11 +239,11 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client {
 
     /// <summary>Field number for the "DataPoints" field.</summary>
     public const int DataPointsFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::Dolittle.TimeSeries.DataPoints.TagDataPoint> _repeated_dataPoints_codec
-        = pb::FieldCodec.ForMessage(10, global::Dolittle.TimeSeries.DataPoints.TagDataPoint.Parser);
-    private readonly pbc::RepeatedField<global::Dolittle.TimeSeries.DataPoints.TagDataPoint> dataPoints_ = new pbc::RepeatedField<global::Dolittle.TimeSeries.DataPoints.TagDataPoint>();
+    private static readonly pb::FieldCodec<global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.TagDataPoint> _repeated_dataPoints_codec
+        = pb::FieldCodec.ForMessage(10, global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.TagDataPoint.Parser);
+    private readonly pbc::RepeatedField<global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.TagDataPoint> dataPoints_ = new pbc::RepeatedField<global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.TagDataPoint>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Dolittle.TimeSeries.DataPoints.TagDataPoint> DataPoints {
+    public pbc::RepeatedField<global::Dolittle.TimeSeries.Runtime.DataPoints.Grpc.TagDataPoint> DataPoints {
       get { return dataPoints_; }
     }
 

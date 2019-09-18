@@ -10,6 +10,7 @@
 
     <ItemGroup>
         <ProjectReference Include="../Connectors/Connectors.csproj"/>
+        <ProjectReference Include="../DataPoints/DataPoints.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

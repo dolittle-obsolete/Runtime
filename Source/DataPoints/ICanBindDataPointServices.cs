@@ -2,17 +2,16 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-syntax = "proto3";
 
-import "system/guid.proto";
-import "dolittle/timeseries/datapoints/value.proto";
+using Dolittle.Services;
 
-package dolittle.timeseries.datapoints;
+namespace Dolittle.TimeSeries.Runtime.DataPoints
+{
+    /// <summary>
+    /// Defines a system that can bind a gRPC service for data point purpose
+    /// </summary>
+    public interface ICanBindDataPointServices : ICanBindServices
+    {
 
-option csharp_namespace = "Dolittle.TimeSeries.DataPoints";
-
-message DataPoint {
-    guid timeSeries = 1;
-    Value value = 2;
-    int32 timestamp = 3;
+    }
 }

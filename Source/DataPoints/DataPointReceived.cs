@@ -2,14 +2,13 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-syntax = "proto3";
+using Dolittle.TimeSeries.DataTypes.Protobuf;
 
-import "system/guid.proto";
-
-package dolittle.timeseries.datapoints.server;
-
-option csharp_namespace = "Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server";
-
-message DataPointProcessor {
-    guid id = 1;
+namespace Dolittle.TimeSeries.Runtime.DataPoints
+{
+    /// <summary>
+    /// Delegate that represents the callback for when a <see cref="DataPoint"/> has received
+    /// </summary>
+    /// <param name="dataPoint"></param>
+    public delegate void DataPointReceived(DataPoint dataPoint);
 }

@@ -14,5 +14,11 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         /// </summary>
         /// <param name="streamConnector"><see cref="StreamConnector"/> to register</param>
         void Register(StreamConnector streamConnector);
+
+        /// <summary>
+        /// Unregister a stream connector
+        /// </summary>
+        /// <param name="streamConnector"><see cref="StreamConnector"/> to unregister</param>
+        void Unregister(StreamConnector streamConnector);
     }
 }

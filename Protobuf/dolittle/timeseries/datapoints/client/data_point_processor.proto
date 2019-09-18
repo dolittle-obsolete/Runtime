@@ -1,0 +1,23 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Dolittle. All rights reserved.
+ *  Licensed under the MIT License. See LICENSE in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+syntax = "proto3";
+
+import "system/guid.proto";
+import "google/protobuf/empty.proto";
+import "dolittle/timeseries/datatypes/data_point.proto";
+
+package dolittle.timeseries.datapoints.client;
+
+option csharp_namespace = "Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Client";
+
+message DataPointMessage {
+    guid id=1;
+    dolittle.timeseries.datatypes.DataPoint dataPoint = 2;
+}
+
+// Represents the client service for processing data points
+service DataPointProcessor {
+    rpc Process(stream DataPointMessage) returns(google.protobuf.Empty) {}
+}

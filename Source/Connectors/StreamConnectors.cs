@@ -2,80 +2,65 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using System.Collections.Generic;
-using System.Linq;
 using Dolittle.Lifecycle;
 using Dolittle.Logging;
 using Dolittle.Runtime.Application;
 using static Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client.StreamConnector;
-using grpc = Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client;
-using System.Threading;
-using Dolittle.Protobuf;
-using System.Threading.Tasks;
+using System.Collections.Concurrent;
+using Dolittle.TimeSeries.Runtime.DataPoints;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
+
     /// <summary>
     /// Represent an implementation of <see cref="IStreamConnectors"/>
     /// </summary>
     [Singleton]
     public class StreamConnectors : IStreamConnectors
     {
-        readonly List<StreamConnector> _connectors = new List<StreamConnector>();
+        readonly ConcurrentDictionary<StreamConnector, StreamConnectorProcessor> _connectors = new ConcurrentDictionary<StreamConnector, StreamConnectorProcessor>();
         readonly ILogger _logger;
         readonly IClientFor<StreamConnectorClient> _streamConnectorClient;
+        readonly IOutputStreams _outputStreams;
 
         /// <summary>
         /// Initializes a new instance of <see cref="StreamConnectors"/>
         /// </summary>
         /// <param name="streamConnectorClient"></param>
+        /// <param name="outputStreams">All <see cref="IOutputStreams"/></param>
         /// <param name="logger"></param>
         public StreamConnectors(
             IClientFor<StreamConnectorClient> streamConnectorClient,
+            IOutputStreams outputStreams,
             ILogger logger)
         {
             _logger = logger;
             _streamConnectorClient = streamConnectorClient;
+            _outputStreams = outputStreams;
         }
 
         /// <inheritdoc/>
-        public void Register(StreamConnector streamConnector)
+        public void Register(StreamConnector connector)
         {
-            lock(_connectors)
-            {
-                _connectors.Add(streamConnector);
-                var cancellationToken = new CancellationToken();
-                Process(streamConnector, cancellationToken);
-            }
+            _logger.Information($"Register '{connector.Id}'");
+            _connectors[connector] = new StreamConnectorProcessor(
+                                            connector, 
+                                            _streamConnectorClient, 
+                                            _outputStreams,
+                                            _logger);
         }
 
-        void Process(StreamConnector streamConnector, CancellationToken cancellationToken)
+        /// <inheritdoc/>
+        public void Unregister(StreamConnector connector)
         {
-            if (streamConnector.Tags.Count() == 0)
+            if( _connectors.ContainsKey(connector))
             {
-                _logger.Warning($"Connector '{streamConnector.Name}' does not have any tags - ignoring it completely");
-                return;
-            }
-            _logger.Information($"Connecting to '{streamConnector.Name}' - {streamConnector.Id}");
-
-            var request = new grpc.StreamRequest
-            {
-                ConnectorId = streamConnector.Id.ToProtobuf(),
-            };
-            request.Tags.Add(streamConnector.Tags.Select(_ => _.Value));
-
-            Task.Run(async() =>
-            {
-                var stream = _streamConnectorClient.Instance.Connect(request);
-                while (await stream.ResponseStream.MoveNext(cancellationToken))
+                if(_connectors.TryRemove(connector, out StreamConnectorProcessor processor))
                 {
-                    var dataPointTags = string.Join(", ", stream.ResponseStream.Current.DataPoints.Select(_ => _.Tag));
-
-                    _logger.Information($"Data received for tags {dataPointTags}");
+                    processor.Stop();
+                    processor.Dispose();
                 }
-
-                _logger.Information("Stream disconnected");
-            });
+            }
         }
     }
 }

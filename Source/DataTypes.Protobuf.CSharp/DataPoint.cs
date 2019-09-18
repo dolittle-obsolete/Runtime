@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace Dolittle.TimeSeries.DataTypes {
+namespace Dolittle.TimeSeries.DataTypes.Protobuf {
 
   /// <summary>Holder for reflection information generated from dolittle/timeseries/datatypes/data_point.proto</summary>
   public static partial class DataPointReflection {
@@ -26,15 +26,17 @@ namespace Dolittle.TimeSeries.DataTypes {
           string.Concat(
             "Ci5kb2xpdHRsZS90aW1lc2VyaWVzL2RhdGF0eXBlcy9kYXRhX3BvaW50LnBy",
             "b3RvEh1kb2xpdHRsZS50aW1lc2VyaWVzLmRhdGF0eXBlcxoRc3lzdGVtL2d1",
-            "aWQucHJvdG8aGWdvb2dsZS9wcm90b2J1Zi9hbnkucHJvdG8iZwoJRGF0YVBv",
-            "aW50EiIKCnRpbWVTZXJpZXMYASABKAsyDi5kb2xpdHRsZS5ndWlkEiMKBXZh",
-            "bHVlGAIgASgLMhQuZ29vZ2xlLnByb3RvYnVmLkFueRIRCgl0aW1lc3RhbXAY",
-            "AyABKAVCIKoCHURvbGl0dGxlLlRpbWVTZXJpZXMuRGF0YVR5cGVzYgZwcm90",
-            "bzM="));
+            "aWQucHJvdG8aH2dvb2dsZS9wcm90b2J1Zi90aW1lc3RhbXAucHJvdG8aKWRv",
+            "bGl0dGxlL3RpbWVzZXJpZXMvZGF0YXR5cGVzL3ZhbHVlLnByb3RvIpMBCglE",
+            "YXRhUG9pbnQSIgoKdGltZVNlcmllcxgBIAEoCzIOLmRvbGl0dGxlLmd1aWQS",
+            "MwoFdmFsdWUYAiABKAsyJC5kb2xpdHRsZS50aW1lc2VyaWVzLmRhdGF0eXBl",
+            "cy5WYWx1ZRItCgl0aW1lc3RhbXAYAyABKAsyGi5nb29nbGUucHJvdG9idWYu",
+            "VGltZXN0YW1wQimqAiZEb2xpdHRsZS5UaW1lU2VyaWVzLkRhdGFUeXBlcy5Q",
+            "cm90b2J1ZmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::System.Protobuf.GuidReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.AnyReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::System.Protobuf.GuidReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::Dolittle.TimeSeries.DataTypes.Protobuf.ValueReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Dolittle.TimeSeries.DataTypes.DataPoint), global::Dolittle.TimeSeries.DataTypes.DataPoint.Parser, new[]{ "TimeSeries", "Value", "Timestamp" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Dolittle.TimeSeries.DataTypes.Protobuf.DataPoint), global::Dolittle.TimeSeries.DataTypes.Protobuf.DataPoint.Parser, new[]{ "TimeSeries", "Value", "Timestamp" }, null, null, null)
           }));
     }
     #endregion
@@ -49,7 +51,7 @@ namespace Dolittle.TimeSeries.DataTypes {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Dolittle.TimeSeries.DataTypes.DataPointReflection.Descriptor.MessageTypes[0]; }
+      get { return global::Dolittle.TimeSeries.DataTypes.Protobuf.DataPointReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -68,7 +70,7 @@ namespace Dolittle.TimeSeries.DataTypes {
     public DataPoint(DataPoint other) : this() {
       timeSeries_ = other.timeSeries_ != null ? other.timeSeries_.Clone() : null;
       value_ = other.value_ != null ? other.value_.Clone() : null;
-      timestamp_ = other.timestamp_;
+      timestamp_ = other.timestamp_ != null ? other.timestamp_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -90,9 +92,9 @@ namespace Dolittle.TimeSeries.DataTypes {
 
     /// <summary>Field number for the "value" field.</summary>
     public const int ValueFieldNumber = 2;
-    private global::Google.Protobuf.WellKnownTypes.Any value_;
+    private global::Dolittle.TimeSeries.DataTypes.Protobuf.Value value_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Google.Protobuf.WellKnownTypes.Any Value {
+    public global::Dolittle.TimeSeries.DataTypes.Protobuf.Value Value {
       get { return value_; }
       set {
         value_ = value;
@@ -101,9 +103,9 @@ namespace Dolittle.TimeSeries.DataTypes {
 
     /// <summary>Field number for the "timestamp" field.</summary>
     public const int TimestampFieldNumber = 3;
-    private int timestamp_;
+    private global::Google.Protobuf.WellKnownTypes.Timestamp timestamp_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Timestamp {
+    public global::Google.Protobuf.WellKnownTypes.Timestamp Timestamp {
       get { return timestamp_; }
       set {
         timestamp_ = value;
@@ -125,7 +127,7 @@ namespace Dolittle.TimeSeries.DataTypes {
       }
       if (!object.Equals(TimeSeries, other.TimeSeries)) return false;
       if (!object.Equals(Value, other.Value)) return false;
-      if (Timestamp != other.Timestamp) return false;
+      if (!object.Equals(Timestamp, other.Timestamp)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -134,7 +136,7 @@ namespace Dolittle.TimeSeries.DataTypes {
       int hash = 1;
       if (timeSeries_ != null) hash ^= TimeSeries.GetHashCode();
       if (value_ != null) hash ^= Value.GetHashCode();
-      if (Timestamp != 0) hash ^= Timestamp.GetHashCode();
+      if (timestamp_ != null) hash ^= Timestamp.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -156,9 +158,9 @@ namespace Dolittle.TimeSeries.DataTypes {
         output.WriteRawTag(18);
         output.WriteMessage(Value);
       }
-      if (Timestamp != 0) {
-        output.WriteRawTag(24);
-        output.WriteInt32(Timestamp);
+      if (timestamp_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(Timestamp);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -174,8 +176,8 @@ namespace Dolittle.TimeSeries.DataTypes {
       if (value_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Value);
       }
-      if (Timestamp != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Timestamp);
+      if (timestamp_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Timestamp);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -196,12 +198,15 @@ namespace Dolittle.TimeSeries.DataTypes {
       }
       if (other.value_ != null) {
         if (value_ == null) {
-          Value = new global::Google.Protobuf.WellKnownTypes.Any();
+          Value = new global::Dolittle.TimeSeries.DataTypes.Protobuf.Value();
         }
         Value.MergeFrom(other.Value);
       }
-      if (other.Timestamp != 0) {
-        Timestamp = other.Timestamp;
+      if (other.timestamp_ != null) {
+        if (timestamp_ == null) {
+          Timestamp = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+        }
+        Timestamp.MergeFrom(other.Timestamp);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -223,13 +228,16 @@ namespace Dolittle.TimeSeries.DataTypes {
           }
           case 18: {
             if (value_ == null) {
-              Value = new global::Google.Protobuf.WellKnownTypes.Any();
+              Value = new global::Dolittle.TimeSeries.DataTypes.Protobuf.Value();
             }
             input.ReadMessage(Value);
             break;
           }
-          case 24: {
-            Timestamp = input.ReadInt32();
+          case 26: {
+            if (timestamp_ == null) {
+              Timestamp = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(Timestamp);
             break;
           }
         }

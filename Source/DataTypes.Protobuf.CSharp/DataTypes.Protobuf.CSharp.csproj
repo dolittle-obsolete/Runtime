@@ -3,7 +3,7 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <AssemblyName>Dolittle.TimeSeries.DataTypes</AssemblyName>
+        <AssemblyName>Dolittle.TimeSeries.DataTypes.Protobuf</AssemblyName>
         <IncludeSource>False</IncludeSource>
     </PropertyGroup>
 

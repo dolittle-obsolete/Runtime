@@ -11,6 +11,7 @@ using Dolittle.Runtime.Application;
 using static Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client.PullConnector;
 using System.Collections.Concurrent;
 using System.Threading;
+using Dolittle.TimeSeries.Runtime.DataPoints;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
@@ -20,36 +21,44 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
     [Singleton]
     public class PullConnectors : IPullConnectors
     {
-        readonly ConcurrentDictionary<PullConnector, PullConnectorProcessor> _connectorProcessorsByConnector = new ConcurrentDictionary<PullConnector, PullConnectorProcessor>();
+        readonly ConcurrentDictionary<PullConnector, PullConnectorProcessor> _connectors = new ConcurrentDictionary<PullConnector, PullConnectorProcessor>();
         readonly ILogger _logger;
-        readonly IClientFor<PullConnectorClient> _pullConnectorClient;
+        readonly IClientFor<PullConnectorClient> _client;
+        readonly IOutputStreams _outputStreams;
 
         /// <summary>
-        /// 
+        /// Initalizes a new instance of <see cref="PullConnectors"/>
         /// </summary>
-        /// <param name="pullConnectorClient"></param>
-        /// <param name="logger"></param>
+        /// <param name="client">Client for <see cref="PullConnectorClient"/></param>
+        /// <param name="outputStreams">All <see cref="IOutputStreams"/></param>
+        /// <param name="logger"><see cref="ILogger"/> for logging</param>
         public PullConnectors(
-            IClientFor<PullConnectorClient> pullConnectorClient,
+            IClientFor<PullConnectorClient> client,
+            IOutputStreams outputStreams,
             ILogger logger)
         {
             _logger = logger;
-            _pullConnectorClient = pullConnectorClient;
+            _client = client;
+            _outputStreams = outputStreams;
         }
 
         /// <inheritdoc/>
-        public void Register(PullConnector pullConnector)
+        public void Register(PullConnector connector)
         {
-            _logger.Information($"Register '{pullConnector.Id}'");
-            _connectorProcessorsByConnector[pullConnector] = new PullConnectorProcessor(pullConnector,_pullConnectorClient, _logger);
+            _logger.Information($"Register '{connector.Id}'");
+            _connectors[connector] = new PullConnectorProcessor(
+                                            connector,
+                                            _client,
+                                            _outputStreams,
+                                            _logger);
         }
 
         /// <inheritdoc/>
-        public void Unregister(PullConnector pullConnector)
+        public void Unregister(PullConnector connector)
         {
-            if( _connectorProcessorsByConnector.ContainsKey(pullConnector) )
+            if( _connectors.ContainsKey(connector) )
             {
-                if (_connectorProcessorsByConnector.TryRemove(pullConnector, out PullConnectorProcessor processor))
+                if (_connectors.TryRemove(connector, out PullConnectorProcessor processor))
                 {
                     processor.Stop();
                     processor.Dispose();

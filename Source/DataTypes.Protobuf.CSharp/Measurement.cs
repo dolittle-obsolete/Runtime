@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace Dolittle.TimeSeries.DataTypes {
+namespace Dolittle.TimeSeries.DataTypes.Protobuf {
 
   /// <summary>Holder for reflection information generated from dolittle/timeseries/datatypes/measurement.proto</summary>
   public static partial class MeasurementReflection {
@@ -25,16 +25,17 @@ namespace Dolittle.TimeSeries.DataTypes {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "Ci9kb2xpdHRsZS90aW1lc2VyaWVzL2RhdGF0eXBlcy9tZWFzdXJlbWVudC5w",
-            "cm90bxIdZG9saXR0bGUudGltZXNlcmllcy5kYXRhdHlwZXMiqQEKC01lYXN1",
-            "cmVtZW50EhUKC2Zsb2F0X3ZhbHVlGAEgASgCSAASFQoLaW50MzJfdmFsdWUY",
-            "AiABKAVIABIVCgtpbnQ2NF92YWx1ZRgDIAEoA0gAEhUKC2Zsb2F0X2Vycm9y",
-            "GAQgASgCSAESFQoLaW50MzJfZXJyb3IYBSABKAVIARIVCgtpbnQ2NF9lcnJv",
-            "chgGIAEoA0gBQgcKBXZhbHVlQgcKBWVycm9yQiCqAh1Eb2xpdHRsZS5UaW1l",
-            "U2VyaWVzLkRhdGFUeXBlc2IGcHJvdG8z"));
+            "cm90bxIdZG9saXR0bGUudGltZXNlcmllcy5kYXRhdHlwZXMi2QEKC01lYXN1",
+            "cmVtZW50EhUKC2Zsb2F0X3ZhbHVlGAEgASgCSAASFgoMZG91YmxlX3ZhbHVl",
+            "GAIgASgBSAASFQoLaW50MzJfdmFsdWUYAyABKAVIABIVCgtpbnQ2NF92YWx1",
+            "ZRgEIAEoA0gAEhUKC2Zsb2F0X2Vycm9yGAUgASgCSAESFgoMZG91YmxlX2Vy",
+            "cm9yGAYgASgBSAESFQoLaW50MzJfZXJyb3IYByABKAVIARIVCgtpbnQ2NF9l",
+            "cnJvchgIIAEoA0gBQgcKBXZhbHVlQgcKBWVycm9yQimqAiZEb2xpdHRsZS5U",
+            "aW1lU2VyaWVzLkRhdGFUeXBlcy5Qcm90b2J1ZmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Dolittle.TimeSeries.DataTypes.Measurement), global::Dolittle.TimeSeries.DataTypes.Measurement.Parser, new[]{ "FloatValue", "Int32Value", "Int64Value", "FloatError", "Int32Error", "Int64Error" }, new[]{ "Value", "Error" }, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Dolittle.TimeSeries.DataTypes.Protobuf.Measurement), global::Dolittle.TimeSeries.DataTypes.Protobuf.Measurement.Parser, new[]{ "FloatValue", "DoubleValue", "Int32Value", "Int64Value", "FloatError", "DoubleError", "Int32Error", "Int64Error" }, new[]{ "Value", "Error" }, null, null)
           }));
     }
     #endregion
@@ -49,7 +50,7 @@ namespace Dolittle.TimeSeries.DataTypes {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Dolittle.TimeSeries.DataTypes.MeasurementReflection.Descriptor.MessageTypes[0]; }
+      get { return global::Dolittle.TimeSeries.DataTypes.Protobuf.MeasurementReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -70,6 +71,9 @@ namespace Dolittle.TimeSeries.DataTypes {
         case ValueOneofCase.FloatValue:
           FloatValue = other.FloatValue;
           break;
+        case ValueOneofCase.DoubleValue:
+          DoubleValue = other.DoubleValue;
+          break;
         case ValueOneofCase.Int32Value:
           Int32Value = other.Int32Value;
           break;
@@ -81,6 +85,9 @@ namespace Dolittle.TimeSeries.DataTypes {
       switch (other.ErrorCase) {
         case ErrorOneofCase.FloatError:
           FloatError = other.FloatError;
+          break;
+        case ErrorOneofCase.DoubleError:
+          DoubleError = other.DoubleError;
           break;
         case ErrorOneofCase.Int32Error:
           Int32Error = other.Int32Error;
@@ -109,8 +116,19 @@ namespace Dolittle.TimeSeries.DataTypes {
       }
     }
 
+    /// <summary>Field number for the "double_value" field.</summary>
+    public const int DoubleValueFieldNumber = 2;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public double DoubleValue {
+      get { return valueCase_ == ValueOneofCase.DoubleValue ? (double) value_ : 0D; }
+      set {
+        value_ = value;
+        valueCase_ = ValueOneofCase.DoubleValue;
+      }
+    }
+
     /// <summary>Field number for the "int32_value" field.</summary>
-    public const int Int32ValueFieldNumber = 2;
+    public const int Int32ValueFieldNumber = 3;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Int32Value {
       get { return valueCase_ == ValueOneofCase.Int32Value ? (int) value_ : 0; }
@@ -121,7 +139,7 @@ namespace Dolittle.TimeSeries.DataTypes {
     }
 
     /// <summary>Field number for the "int64_value" field.</summary>
-    public const int Int64ValueFieldNumber = 3;
+    public const int Int64ValueFieldNumber = 4;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public long Int64Value {
       get { return valueCase_ == ValueOneofCase.Int64Value ? (long) value_ : 0L; }
@@ -132,7 +150,7 @@ namespace Dolittle.TimeSeries.DataTypes {
     }
 
     /// <summary>Field number for the "float_error" field.</summary>
-    public const int FloatErrorFieldNumber = 4;
+    public const int FloatErrorFieldNumber = 5;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public float FloatError {
       get { return errorCase_ == ErrorOneofCase.FloatError ? (float) error_ : 0F; }
@@ -142,8 +160,19 @@ namespace Dolittle.TimeSeries.DataTypes {
       }
     }
 
+    /// <summary>Field number for the "double_error" field.</summary>
+    public const int DoubleErrorFieldNumber = 6;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public double DoubleError {
+      get { return errorCase_ == ErrorOneofCase.DoubleError ? (double) error_ : 0D; }
+      set {
+        error_ = value;
+        errorCase_ = ErrorOneofCase.DoubleError;
+      }
+    }
+
     /// <summary>Field number for the "int32_error" field.</summary>
-    public const int Int32ErrorFieldNumber = 5;
+    public const int Int32ErrorFieldNumber = 7;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Int32Error {
       get { return errorCase_ == ErrorOneofCase.Int32Error ? (int) error_ : 0; }
@@ -154,7 +183,7 @@ namespace Dolittle.TimeSeries.DataTypes {
     }
 
     /// <summary>Field number for the "int64_error" field.</summary>
-    public const int Int64ErrorFieldNumber = 6;
+    public const int Int64ErrorFieldNumber = 8;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public long Int64Error {
       get { return errorCase_ == ErrorOneofCase.Int64Error ? (long) error_ : 0L; }
@@ -169,8 +198,9 @@ namespace Dolittle.TimeSeries.DataTypes {
     public enum ValueOneofCase {
       None = 0,
       FloatValue = 1,
-      Int32Value = 2,
-      Int64Value = 3,
+      DoubleValue = 2,
+      Int32Value = 3,
+      Int64Value = 4,
     }
     private ValueOneofCase valueCase_ = ValueOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -188,9 +218,10 @@ namespace Dolittle.TimeSeries.DataTypes {
     /// <summary>Enum of possible cases for the "error" oneof.</summary>
     public enum ErrorOneofCase {
       None = 0,
-      FloatError = 4,
-      Int32Error = 5,
-      Int64Error = 6,
+      FloatError = 5,
+      DoubleError = 6,
+      Int32Error = 7,
+      Int64Error = 8,
     }
     private ErrorOneofCase errorCase_ = ErrorOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -218,9 +249,11 @@ namespace Dolittle.TimeSeries.DataTypes {
         return true;
       }
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(FloatValue, other.FloatValue)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.Equals(DoubleValue, other.DoubleValue)) return false;
       if (Int32Value != other.Int32Value) return false;
       if (Int64Value != other.Int64Value) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(FloatError, other.FloatError)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.Equals(DoubleError, other.DoubleError)) return false;
       if (Int32Error != other.Int32Error) return false;
       if (Int64Error != other.Int64Error) return false;
       if (ValueCase != other.ValueCase) return false;
@@ -232,9 +265,11 @@ namespace Dolittle.TimeSeries.DataTypes {
     public override int GetHashCode() {
       int hash = 1;
       if (valueCase_ == ValueOneofCase.FloatValue) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(FloatValue);
+      if (valueCase_ == ValueOneofCase.DoubleValue) hash ^= pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.GetHashCode(DoubleValue);
       if (valueCase_ == ValueOneofCase.Int32Value) hash ^= Int32Value.GetHashCode();
       if (valueCase_ == ValueOneofCase.Int64Value) hash ^= Int64Value.GetHashCode();
       if (errorCase_ == ErrorOneofCase.FloatError) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(FloatError);
+      if (errorCase_ == ErrorOneofCase.DoubleError) hash ^= pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.GetHashCode(DoubleError);
       if (errorCase_ == ErrorOneofCase.Int32Error) hash ^= Int32Error.GetHashCode();
       if (errorCase_ == ErrorOneofCase.Int64Error) hash ^= Int64Error.GetHashCode();
       hash ^= (int) valueCase_;
@@ -256,24 +291,32 @@ namespace Dolittle.TimeSeries.DataTypes {
         output.WriteRawTag(13);
         output.WriteFloat(FloatValue);
       }
+      if (valueCase_ == ValueOneofCase.DoubleValue) {
+        output.WriteRawTag(17);
+        output.WriteDouble(DoubleValue);
+      }
       if (valueCase_ == ValueOneofCase.Int32Value) {
-        output.WriteRawTag(16);
+        output.WriteRawTag(24);
         output.WriteInt32(Int32Value);
       }
       if (valueCase_ == ValueOneofCase.Int64Value) {
-        output.WriteRawTag(24);
+        output.WriteRawTag(32);
         output.WriteInt64(Int64Value);
       }
       if (errorCase_ == ErrorOneofCase.FloatError) {
-        output.WriteRawTag(37);
+        output.WriteRawTag(45);
         output.WriteFloat(FloatError);
       }
+      if (errorCase_ == ErrorOneofCase.DoubleError) {
+        output.WriteRawTag(49);
+        output.WriteDouble(DoubleError);
+      }
       if (errorCase_ == ErrorOneofCase.Int32Error) {
-        output.WriteRawTag(40);
+        output.WriteRawTag(56);
         output.WriteInt32(Int32Error);
       }
       if (errorCase_ == ErrorOneofCase.Int64Error) {
-        output.WriteRawTag(48);
+        output.WriteRawTag(64);
         output.WriteInt64(Int64Error);
       }
       if (_unknownFields != null) {
@@ -287,6 +330,9 @@ namespace Dolittle.TimeSeries.DataTypes {
       if (valueCase_ == ValueOneofCase.FloatValue) {
         size += 1 + 4;
       }
+      if (valueCase_ == ValueOneofCase.DoubleValue) {
+        size += 1 + 8;
+      }
       if (valueCase_ == ValueOneofCase.Int32Value) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(Int32Value);
       }
@@ -295,6 +341,9 @@ namespace Dolittle.TimeSeries.DataTypes {
       }
       if (errorCase_ == ErrorOneofCase.FloatError) {
         size += 1 + 4;
+      }
+      if (errorCase_ == ErrorOneofCase.DoubleError) {
+        size += 1 + 8;
       }
       if (errorCase_ == ErrorOneofCase.Int32Error) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(Int32Error);
@@ -317,6 +366,9 @@ namespace Dolittle.TimeSeries.DataTypes {
         case ValueOneofCase.FloatValue:
           FloatValue = other.FloatValue;
           break;
+        case ValueOneofCase.DoubleValue:
+          DoubleValue = other.DoubleValue;
+          break;
         case ValueOneofCase.Int32Value:
           Int32Value = other.Int32Value;
           break;
@@ -328,6 +380,9 @@ namespace Dolittle.TimeSeries.DataTypes {
       switch (other.ErrorCase) {
         case ErrorOneofCase.FloatError:
           FloatError = other.FloatError;
+          break;
+        case ErrorOneofCase.DoubleError:
+          DoubleError = other.DoubleError;
           break;
         case ErrorOneofCase.Int32Error:
           Int32Error = other.Int32Error;
@@ -352,23 +407,31 @@ namespace Dolittle.TimeSeries.DataTypes {
             FloatValue = input.ReadFloat();
             break;
           }
-          case 16: {
-            Int32Value = input.ReadInt32();
+          case 17: {
+            DoubleValue = input.ReadDouble();
             break;
           }
           case 24: {
+            Int32Value = input.ReadInt32();
+            break;
+          }
+          case 32: {
             Int64Value = input.ReadInt64();
             break;
           }
-          case 37: {
+          case 45: {
             FloatError = input.ReadFloat();
             break;
           }
-          case 40: {
+          case 49: {
+            DoubleError = input.ReadDouble();
+            break;
+          }
+          case 56: {
             Int32Error = input.ReadInt32();
             break;
           }
-          case 48: {
+          case 64: {
             Int64Error = input.ReadInt64();
             break;
           }

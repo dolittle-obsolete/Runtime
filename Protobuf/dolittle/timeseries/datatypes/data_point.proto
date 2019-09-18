@@ -4,13 +4,16 @@
  *--------------------------------------------------------------------------------------------*/
 syntax = "proto3";
 
-import "dolittle/timeseries/datatypes/measurement.proto";
+import "system/guid.proto";
+import "google/protobuf/timestamp.proto";
+import "dolittle/timeseries/datatypes/value.proto";
 
 package dolittle.timeseries.datatypes;
 
-option csharp_namespace = "Dolittle.TimeSeries.DataTypes";
+option csharp_namespace = "Dolittle.TimeSeries.DataTypes.Protobuf";
 
-message Coordinate {
-    Measurement longitude = 1;
-    Measurement latitude = 2;
+message DataPoint {
+    guid timeSeries = 1;
+    Value value = 2;
+    google.protobuf.Timestamp timestamp = 3;
 }

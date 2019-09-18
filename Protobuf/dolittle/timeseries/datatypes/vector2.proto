@@ -4,13 +4,13 @@
  *--------------------------------------------------------------------------------------------*/
 syntax = "proto3";
 
-import "dolittle/timeseries/datatypes/value.proto";
+import "dolittle/timeseries/datatypes/measurement.proto";
 
-package dolittle.timeseries.datapoints;
+package dolittle.timeseries.datatypes;
 
-option csharp_namespace = "Dolittle.TimeSeries.Runtime.DataPoints.Grpc";
+option csharp_namespace = "Dolittle.TimeSeries.DataTypes.Protobuf";
 
-message TagDataPoint {
-    string tag = 1;
-    dolittle.timeseries.datatypes.Value value = 2;
+message Vector2 {
+    Measurement x = 1;
+    Measurement y = 2;
 }

@@ -10,6 +10,7 @@ using static Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.StreamConnectors
 using grpc = Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server;
 using Dolittle.Logging;
 using Dolittle.Protobuf;
+using Dolittle.Runtime.Application;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
@@ -24,9 +25,9 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         /// <summary>
         /// Initializes a new instance of <see cref="PullConnectorsService"/>
         /// </summary>
-        /// <param name="logger"><see cref="ILogger"/> for logging</param>
         /// <param name="streamConnectors">Actual <see cref="IStreamConnectors"/></param>
-        public StreamConnectorsService(ILogger logger, IStreamConnectors streamConnectors)
+        /// <param name="logger"><see cref="ILogger"/> for logging</param>
+        public StreamConnectorsService(IStreamConnectors streamConnectors, ILogger logger)
         {
             _logger = logger;
             _streamConnectors = streamConnectors;
@@ -37,7 +38,10 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         {
             var id = streamConnector.Id.ToGuid();
             _logger.Information($"Register connector : '{streamConnector.Name}' with Id: '{id}'");
-            _streamConnectors.Register(new StreamConnector(id, streamConnector.Name, streamConnector.Tags.Select(_ => (Tag) _)));
+            var streamConnectorInstance = new StreamConnector(id, streamConnector.Name, streamConnector.Tags.Select(_ => (Tag) _));
+            _streamConnectors.Register(streamConnectorInstance);
+
+            context.OnDisconnected(_ => _streamConnectors.Unregister(streamConnectorInstance));
 
             return Task.FromResult(new RegisterResult());
         }

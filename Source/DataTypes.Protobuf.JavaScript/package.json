@@ -1,5 +1,5 @@
 {
-    "name": "@dolittle/timeseries.runtime.datatypes",
+    "name": "@dolittle/timeseries.protobuf.datatypes",
     "description": "Grpc services for the TimeSeries Runtime interaction",
     "version": "1.1.1",
     "publishConfig": {

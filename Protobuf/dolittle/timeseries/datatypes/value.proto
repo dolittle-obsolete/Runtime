@@ -4,21 +4,18 @@
  *--------------------------------------------------------------------------------------------*/
 syntax = "proto3";
 
+import "dolittle/timeseries/datatypes/measurement.proto";
+import "dolittle/timeseries/datatypes/vector2.proto";
+import "dolittle/timeseries/datatypes/vector3.proto";
+
 package dolittle.timeseries.datatypes;
 
 option csharp_namespace = "Dolittle.TimeSeries.DataTypes.Protobuf";
 
-message Measurement {
+message Value {
     oneof value {
-        float float_value = 1;
-        double double_value = 2;
-        int32 int32_value = 3;
-        int64 int64_value = 4;
-    }
-    oneof error {
-        float float_error = 5;
-        double double_error = 6;
-        int32 int32_error = 7;
-        int64 int64_error = 8;
+        Measurement measurement_value = 1;
+        Vector2 vector2_value = 2;
+        Vector3 vector3_value = 3;
     }
 }

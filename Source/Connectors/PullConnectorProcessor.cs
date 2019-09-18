@@ -9,7 +9,11 @@ using Dolittle.Logging;
 using Dolittle.Protobuf;
 using static Dolittle.TimeSeries.Runtime.Connectors.Grpc.Client.PullConnector;
 using System;
+using Dolittle.Collections;
 using Dolittle.Runtime.Application;
+using Dolittle.TimeSeries.Runtime.DataPoints;
+using Dolittle.TimeSeries.DataTypes.Protobuf;
+using Google.Protobuf.WellKnownTypes;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
@@ -18,39 +22,47 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
     /// </summary>
     public class PullConnectorProcessor : IDisposable
     {
-        readonly PullConnector _pullConnector;
-        readonly IClientFor<PullConnectorClient> _pullConnectorClient;
+        readonly PullConnector _connector;
+        readonly IClientFor<PullConnectorClient> _client;
         readonly ILogger _logger;
+        readonly IOutputStreams _outputStreams;
         CancellationTokenSource _cancellationTokenSource;
         System.Timers.Timer _timer;
 
         /// <summary>
         /// Initializes a new instance of <see cref="PullConnectorProcessor"/>
         /// </summary>
-        /// <param name="pullConnector"><see cref="PullConnector"/> to process</param>
-        /// <param name="pullConnectorClient"></param>
-        /// <param name="logger"></param>
-        public PullConnectorProcessor(PullConnector pullConnector, IClientFor<PullConnectorClient> pullConnectorClient, ILogger logger)
+        /// <param name="connector"><see cref="PullConnector"/> to process for</param>
+        /// <param name="client"><see cref="IClientFor{T}">Client for</see> <see cref="PullConnectorClient"/></param>
+        /// <param name="outputStreams">All <see cref="IOutputStreams"/></param>
+        /// <param name="logger"><see cref="ILogger"/> for logging</param>
+        public PullConnectorProcessor(
+            PullConnector connector,
+            IClientFor<PullConnectorClient> client,
+            IOutputStreams outputStreams,
+            ILogger logger)
         {
             _logger = logger;
-            _pullConnector = pullConnector;
+            _connector = connector;
             _cancellationTokenSource = new CancellationTokenSource();
-            _timer = new System.Timers.Timer(1000);
+            _cancellationTokenSource.Token.ThrowIfCancellationRequested();
+            _timer = new System.Timers.Timer(connector.Interval);
             _timer.AutoReset = true;
             _timer.Enabled = true;
             _timer.Elapsed += (s, e) => Process();
 
-            _logger.Information($"Starting '{_pullConnector.Name}'");
-            
+            _logger.Information($"Starting '{_connector.Name}'");
+
             _timer.Start();
 
-            _pullConnectorClient = pullConnectorClient;
+            _client = client;
+            _outputStreams = outputStreams;
         }
 
         /// <inheritdoc/>
         public void Dispose()
         {
-            _logger.Information($"Disposing processor for '{_pullConnector.Id}'");
+            _logger.Information($"Disposing processor for '{_connector.Id}'");
             if (_timer != null) Stop();
             _timer?.Dispose();
             _cancellationTokenSource?.Dispose();
@@ -63,7 +75,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         /// </summary>
         public void Stop()
         {
-            _logger.Information($"Stopping processor for '{_pullConnector.Id}'");
+            _logger.Information($"Stopping processor for '{_connector.Id}'");
             _timer?.Stop();
             _cancellationTokenSource?.Cancel();
             _timer = null;
@@ -72,12 +84,11 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
 
         void Process()
         {
-            if (_pullConnector.Tags.Count() == 0)
+            if (_connector.Tags.Count() == 0)
             {
-                _logger.Warning($"Connector '{_pullConnector.Name}' does not have any tags - ignoring it completely");
+                _logger.Warning($"Connector '{_connector.Name}' does not have any tags - ignoring it completely");
                 return;
             }
-            
 
             if (_cancellationTokenSource.Token.IsCancellationRequested)
             {
@@ -85,13 +96,22 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
                 return;
             }
 
-            _logger.Information($"Call connector '{_pullConnector.Name}' - '{_pullConnector.Id}'");
+            _logger.Information($"Call connector '{_connector.Name}' - '{_connector.Id}'");
             var request = new grpc.PullRequest
             {
-                ConnectorId = _pullConnector.Id.ToProtobuf(),
+                ConnectorId = _connector.Id.ToProtobuf(),
             };
-            request.Tags.Add(_pullConnector.Tags.Select(_ => _.Value));
-            _pullConnectorClient.Instance.Pull(request);
+            request.Tags.Add(_connector.Tags.Select(_ => _.Value));
+            var result = _client.Instance.Pull(request);
+            result.Data.ForEach(tagDataPoint =>
+            {
+                var dataPoint = new DataPoint
+                {
+                    Value = tagDataPoint.Value,
+                    Timestamp = Timestamp.FromDateTimeOffset(DateTimeOffset.UtcNow)
+                };
+                _outputStreams.Write(dataPoint);
+            });
 
             /*
             var data = _connectors[source].GetAllData();
