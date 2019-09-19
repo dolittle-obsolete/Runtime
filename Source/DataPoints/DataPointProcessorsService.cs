@@ -47,7 +47,7 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
 
             try
             {
-                _logger.Information($"Register processor witd identifier '{id}'");
+                _logger.Information($"Register processor with identifier '{id}'");
                 dataPointProcessor = new DataPointProcessor(id);
                 _dataPointProcessors.Register(dataPointProcessor);
 
@@ -61,7 +61,7 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
                 _inputStreams.DataPointReceived -= received;
                 if (dataPointProcessor != null)
                 {
-                    _logger.Information($"Unregister processor witd identifier '{id}'");
+                    _logger.Information($"Unregister processor with identifier '{id}'");
                     _dataPointProcessors.Unregister(dataPointProcessor);
                 }
             }
@@ -71,6 +71,8 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
 
         void Process(IServerStreamWriter<DataPoint> responseStream, DataPoint dataPoint)
         {
+            _logger.Information("Process datapoint");
+
             responseStream.WriteAsync(dataPoint);
         }
     }

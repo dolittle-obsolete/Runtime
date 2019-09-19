@@ -16,6 +16,20 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         void Register(PullConnector pullConnector);
 
         /// <summary>
+        /// Check if is registered <see cref="PullConnector"/> by its identifier
+        /// </summary>
+        /// <param name="connectorId"><see cref="ConnectorId"/> to check</param>
+        /// <returns>True if it is registered, false if not</returns>
+        bool Has(ConnectorId connectorId);
+
+        /// <summary>
+        /// Get a <see cref="PullConnector"/> by its identifier
+        /// </summary>
+        /// <param name="connectorId"><see cref="ConnectorId"/> to get</param>
+        /// <returns><see cref="PullConnector"/></returns>
+        PullConnector GetById(ConnectorId connectorId);
+
+        /// <summary>
         /// Unregister a <see cref="PullConnector"/>
         /// </summary>
         /// <param name="pullConnector"><see cref="PullConnector"/> to unregister</param>

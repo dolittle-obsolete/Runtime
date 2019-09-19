@@ -21,13 +21,22 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server {
     static readonly string __ServiceName = "dolittle.timeseries.connectors.server.PullConnectors";
 
     static readonly grpc::Marshaller<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullConnector> __Marshaller_dolittle_timeseries_connectors_server_PullConnector = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullConnector.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullRequest> __Marshaller_dolittle_timeseries_connectors_server_PullRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullRequest.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.WriteMessage> __Marshaller_dolittle_timeseries_connectors_server_WriteMessage = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.WriteMessage.Parser.ParseFrom);
     static readonly grpc::Marshaller<global::Google.Protobuf.WellKnownTypes.Empty> __Marshaller_google_protobuf_Empty = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Google.Protobuf.WellKnownTypes.Empty.Parser.ParseFrom);
 
-    static readonly grpc::Method<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullConnector, global::Google.Protobuf.WellKnownTypes.Empty> __Method_Register = new grpc::Method<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullConnector, global::Google.Protobuf.WellKnownTypes.Empty>(
+    static readonly grpc::Method<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullConnector, global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullRequest> __Method_Connect = new grpc::Method<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullConnector, global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullRequest>(
+        grpc::MethodType.ServerStreaming,
+        __ServiceName,
+        "Connect",
+        __Marshaller_dolittle_timeseries_connectors_server_PullConnector,
+        __Marshaller_dolittle_timeseries_connectors_server_PullRequest);
+
+    static readonly grpc::Method<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.WriteMessage, global::Google.Protobuf.WellKnownTypes.Empty> __Method_Write = new grpc::Method<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.WriteMessage, global::Google.Protobuf.WellKnownTypes.Empty>(
         grpc::MethodType.Unary,
         __ServiceName,
-        "Register",
-        __Marshaller_dolittle_timeseries_connectors_server_PullConnector,
+        "Write",
+        __Marshaller_dolittle_timeseries_connectors_server_WriteMessage,
         __Marshaller_google_protobuf_Empty);
 
     /// <summary>Service descriptor</summary>
@@ -40,7 +49,12 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server {
     [grpc::BindServiceMethod(typeof(PullConnectors), "BindService")]
     public abstract partial class PullConnectorsBase
     {
-      public virtual global::System.Threading.Tasks.Task<global::Google.Protobuf.WellKnownTypes.Empty> Register(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullConnector request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task Connect(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullConnector request, grpc::IServerStreamWriter<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullRequest> responseStream, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      public virtual global::System.Threading.Tasks.Task<global::Google.Protobuf.WellKnownTypes.Empty> Write(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.WriteMessage request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -70,21 +84,29 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server {
       {
       }
 
-      public virtual global::Google.Protobuf.WellKnownTypes.Empty Register(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullConnector request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncServerStreamingCall<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullRequest> Connect(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullConnector request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return Register(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return Connect(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual global::Google.Protobuf.WellKnownTypes.Empty Register(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullConnector request, grpc::CallOptions options)
+      public virtual grpc::AsyncServerStreamingCall<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullRequest> Connect(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullConnector request, grpc::CallOptions options)
       {
-        return CallInvoker.BlockingUnaryCall(__Method_Register, null, options, request);
+        return CallInvoker.AsyncServerStreamingCall(__Method_Connect, null, options, request);
       }
-      public virtual grpc::AsyncUnaryCall<global::Google.Protobuf.WellKnownTypes.Empty> RegisterAsync(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullConnector request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual global::Google.Protobuf.WellKnownTypes.Empty Write(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.WriteMessage request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return RegisterAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return Write(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual grpc::AsyncUnaryCall<global::Google.Protobuf.WellKnownTypes.Empty> RegisterAsync(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullConnector request, grpc::CallOptions options)
+      public virtual global::Google.Protobuf.WellKnownTypes.Empty Write(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.WriteMessage request, grpc::CallOptions options)
       {
-        return CallInvoker.AsyncUnaryCall(__Method_Register, null, options, request);
+        return CallInvoker.BlockingUnaryCall(__Method_Write, null, options, request);
+      }
+      public virtual grpc::AsyncUnaryCall<global::Google.Protobuf.WellKnownTypes.Empty> WriteAsync(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.WriteMessage request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return WriteAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual grpc::AsyncUnaryCall<global::Google.Protobuf.WellKnownTypes.Empty> WriteAsync(global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.WriteMessage request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_Write, null, options, request);
       }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       protected override PullConnectorsClient NewInstance(ClientBaseConfiguration configuration)
@@ -98,7 +120,8 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server {
     public static grpc::ServerServiceDefinition BindService(PullConnectorsBase serviceImpl)
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
-          .AddMethod(__Method_Register, serviceImpl.Register).Build();
+          .AddMethod(__Method_Connect, serviceImpl.Connect)
+          .AddMethod(__Method_Write, serviceImpl.Write).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the  service binding logic.
@@ -107,7 +130,8 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server {
     /// <param name="serviceImpl">An object implementing the server-side handling logic.</param>
     public static void BindService(grpc::ServiceBinderBase serviceBinder, PullConnectorsBase serviceImpl)
     {
-      serviceBinder.AddMethod(__Method_Register, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullConnector, global::Google.Protobuf.WellKnownTypes.Empty>(serviceImpl.Register));
+      serviceBinder.AddMethod(__Method_Connect, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullConnector, global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullRequest>(serviceImpl.Connect));
+      serviceBinder.AddMethod(__Method_Write, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.WriteMessage, global::Google.Protobuf.WellKnownTypes.Empty>(serviceImpl.Write));
     }
 
   }

@@ -4,14 +4,26 @@
  *--------------------------------------------------------------------------------------------*/
 syntax = "proto3";
 
+import "system/guid.proto";
 import "google/protobuf/Empty.proto";
 import "dolittle/timeseries/connectors/server/pull_connector.proto";
+import "dolittle/timeseries/datapoints/tag_data_point.proto";
 
 package dolittle.timeseries.connectors.server;
 
 option csharp_namespace = "Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server";
 
+message WriteMessage {
+    guid connectorId = 1;
+    repeated dolittle.timeseries.datapoints.TagDataPoint Data = 2;
+}
+
+message PullRequest {
+    repeated string tags = 1;
+}
+
 // Represents the service for working with connectors that are pull based
 service PullConnectors {
-    rpc Register(PullConnector) returns(google.protobuf.Empty) {}
+    rpc Connect(PullConnector) returns(stream PullRequest) {}
+    rpc Write(WriteMessage) returns(google.protobuf.Empty) {}
 }
