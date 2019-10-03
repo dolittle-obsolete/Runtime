@@ -7,12 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="../DataPoints.Grpc.CSharp/DataPoints.Grpc.CSharp.csproj"/>
-    </ItemGroup>
-
-    <ItemGroup>
         <PackageReference Include="Dolittle.Runtime.Application" Version="3.*"/>
         <PackageReference Include="Dolittle.Protobuf" Version="3.*"/>
+        <PackageReference Include="Dolittle.TimeSeries.Runtime.DataPoints.Grpc" Version="1.*"/>
     </ItemGroup>
 
 </Project>
