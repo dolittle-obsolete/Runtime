@@ -2,16 +2,16 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Dolittle.Logging;
 using Grpc.Core;
 using static Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullConnectors;
 using grpc = Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server;
-using System;
-using System.Timers;
 using Dolittle.Collections;
 using Dolittle.Protobuf;
+using Dolittle.Scheduling;
 using Dolittle.TimeSeries.DataTypes.Protobuf;
 using Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server;
 using Dolittle.TimeSeries.Runtime.DataPoints;
@@ -29,6 +29,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         readonly IPullConnectors _pullConnectors;
         readonly ITimeSeriesMapper _timeSeriesMapper;
         readonly IOutputStreams _outputStreams;
+        readonly ITimers _timers;
 
         /// <summary>
         /// Initializes a new instance of <see cref="PullConnectorsService"/>
@@ -36,17 +37,20 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         /// <param name="pullConnectors">Actual <see cref="IPullConnectors"/></param>
         /// <param name="timeSeriesMapper"><see cref="ITimeSeriesMapper"/> for mapping data points</param>
         /// <param name="outputStreams">All <see cref="IOutputStreams"/></param>
+        /// <param name="timers"><see cref="ITimers"/> system</param>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
         public PullConnectorsService(
             IPullConnectors pullConnectors,
             ITimeSeriesMapper timeSeriesMapper,
             IOutputStreams outputStreams,
+            ITimers timers,
             ILogger logger)
         {
             _logger = logger;
             _pullConnectors = pullConnectors;
             _timeSeriesMapper = timeSeriesMapper;
             _outputStreams = outputStreams;
+            _timers = timers;
         }
 
         /// <inheritdoc/>
@@ -55,24 +59,18 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
             var id = request.Id.ToGuid();
             var pullConnector = new PullConnector(id, request.Name, request.Interval, request.Tags.Select(_ => (Tag) _));
 
-            Timer timer = null;
+            ITimer timer = null;
 
             try
             {
                 _pullConnectors.Register(pullConnector);
 
-                timer = new Timer(pullConnector.Interval)
+                timer = _timers.Every(pullConnector.Interval, () =>
                 {
-                    Enabled = true,
-                    AutoReset = true
-                };
-                timer.Elapsed += (s, e) => 
-                { 
                     var pullRequest = new PullRequest();
-                    pullRequest.Tags.Add(pullConnector.Tags.Select(_ => (string)_));
+                    pullRequest.Tags.Add(pullConnector.Tags.Select(_ => (string) _));
                     responseStream.WriteAsync(pullRequest);
-                };
-                timer.Start();
+                });
 
                 context.CancellationToken.ThrowIfCancellationRequested();
                 context.CancellationToken.WaitHandle.WaitOne();
