@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using Dolittle.Lifecycle;
 using Dolittle.Logging;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
@@ -15,7 +16,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
     [Singleton]
     public class StreamConnectors : IStreamConnectors
     {
-        readonly List<StreamConnector> _connectors = new List<StreamConnector>();
+        readonly ConcurrentDictionary<ConnectorId, StreamConnector> _connectors = new ConcurrentDictionary<ConnectorId, StreamConnector>();
         readonly ILogger _logger;
 
         /// <summary>
@@ -31,14 +32,34 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         public void Register(StreamConnector connector)
         {
             _logger.Information($"Register '{connector.Id}'");
-            lock( _connectors ) _connectors.Add(connector);
+            _connectors[connector.Id] = connector;
         }
+
+        /// <inheritdoc/>
+        public bool Has(ConnectorId connectorId)
+        {
+            return _connectors.ContainsKey(connectorId);
+        }
+
+        /// <inheritdoc/>
+        public StreamConnector GetById(ConnectorId connectorId)
+        {
+            return _connectors[connectorId];
+        }
+
 
         /// <inheritdoc/>
         public void Unregister(StreamConnector connector)
         {
-             _logger.Information($"Unregister '{connector.Id}'");
-           lock( _connectors ) _connectors.Remove(connector);
-        }
+             if (_connectors.ContainsKey(connector.Id))
+            {
+                _logger.Information($"Unregister '{connector.Id}'");
+                _connectors.TryRemove(connector.Id, out StreamConnector _);
+            }
+            else
+            {
+                _logger.Warning($"Connector with id '{connector.Id}' is not registered");
+            }
+       }
     }
 }
