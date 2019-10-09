@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="../../Build/MSBuild/specs.props"></Import>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <AssemblyName>Dolittle.TimeSeries.Runtime.Connectors.Specs</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../Source/Connectors/Connectors.csproj"/>
+  </ItemGroup>
+
+</Project>
