@@ -57,7 +57,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         public override Task Connect(grpc.PullConnector request, IServerStreamWriter<PullRequest> responseStream, ServerCallContext context)
         {
             var id = request.Id.ToGuid();
-            var pullConnector = new PullConnector(id, request.Name, request.Interval, request.Tags.Select(_ => (Tag) _));
+            var pullConnector = new PullConnector(id, request.Name, request.Interval);
 
             ITimer timer = null;
 
@@ -68,7 +68,6 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
                 timer = _timers.Every(pullConnector.Interval, () =>
                 {
                     var pullRequest = new PullRequest();
-                    pullRequest.Tags.Add(pullConnector.Tags.Select(_ => (string) _));
                     responseStream.WriteAsync(pullRequest);
                 });
 

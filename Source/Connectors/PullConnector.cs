@@ -17,17 +17,14 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         /// <param name="id">Unique <see cref="ConnectorId"/></param>
         /// <param name="name">Name of the connector</param>
         /// <param name="interval">Interval to pull in milliseconds</param>
-        /// <param name="tags">Collection of <see cref="Tag">tags</see> the connector has</param>
         public PullConnector(
             ConnectorId id,
             string name,
-            int interval,
-            IEnumerable<Tag> tags)
+            int interval)
         {
             Id = id;
             Name = name;
             Interval = interval;
-            Tags = tags;
         }
 
         /// <summary>
@@ -44,10 +41,5 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         /// Interval to pull in milliseconds
         /// </summary>
         public int Interval { get; }
-
-        /// <summary>
-        /// Gets the collection of <see cref="Tag">tags</see> this connector exposes
-        /// </summary>
-        public IEnumerable<Tag> Tags { get; }
     }
 }
