@@ -10,11 +10,6 @@ using static Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.StreamConnectors
 using System;
 using Dolittle.Logging;
 using Google.Protobuf.WellKnownTypes;
-using Dolittle.Collections;
-using Dolittle.TimeSeries.Runtime.Identity;
-using Dolittle.TimeSeries.Runtime.DataPoints;
-using Dolittle.TimeSeries.DataTypes.Protobuf;
-using Dolittle.Protobuf;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
@@ -24,33 +19,25 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
     /// </summary>
     public class StreamConnectorsService : StreamConnectorsBase
     {
-        readonly ITimeSeriesMapper _timeSeriesMapper;
         readonly IStreamConnectors _streamConnectors;
-        readonly IOutputStreams _outputStreams;
         readonly ILogger _logger;
-        readonly ITimeSeriesState _timeSeriesState;
+        readonly ITagDataPointCoordinator _tagDataPointCoordinator;
 
 
         /// <summary>
         /// Initializes a new instance of <see cref="PullConnectorsService"/>
         /// </summary>
         /// <param name="streamConnectors">Actual <see cref="IStreamConnectors"/></param>
-        /// <param name="timeSeriesMapper"><see cref="ITimeSeriesMapper"/> for mapping data points</param>
-        /// <param name="outputStreams">All <see cref="IOutputStreams"/></param>
-        /// <param name="timeSeriesState"></param>
+        /// <param name="tagDataPointCoordinator"><see cref="ITagDataPointCoordinator"/> for coordinator datapoints</param>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
         public StreamConnectorsService(
             IStreamConnectors streamConnectors,
-            ITimeSeriesMapper timeSeriesMapper,
-            IOutputStreams outputStreams,
-            ITimeSeriesState timeSeriesState,
+            ITagDataPointCoordinator tagDataPointCoordinator,
             ILogger logger)
         {
-            _logger = logger;
             _streamConnectors = streamConnectors;
-            _timeSeriesMapper = timeSeriesMapper;
-            _outputStreams = outputStreams;
-            _timeSeriesState = timeSeriesState;
+            _tagDataPointCoordinator = tagDataPointCoordinator;
+            _logger = logger;
         }
 
         /// <inheritdoc/>
@@ -60,7 +47,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
             if (string.IsNullOrEmpty(streamConnectorIdAsString)) throw new MissingConnectorIdentifierOnRequestHeader();
             var streamConnectorName = context.RequestHeaders.SingleOrDefault(_ => string.Equals(_.Key, "streamconnectorname", StringComparison.InvariantCultureIgnoreCase))?.Value;
             if (string.IsNullOrEmpty(streamConnectorName)) throw new MissingConnectorNameOnRequestHeader();
-            var id = (ConnectorId) Guid.Parse(streamConnectorIdAsString);
+            var id = (ConnectorId)Guid.Parse(streamConnectorIdAsString);
 
             StreamConnector streamConnector = null;
             try
@@ -71,32 +58,12 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
 
                 while (await requestStream.MoveNext().ConfigureAwait(false))
                 {
-                    requestStream.Current.DataPoints.ForEach(tagDataPoint =>
-                    {
-                        if (!_timeSeriesMapper.HasTimeSeriesFor(streamConnectorName, tagDataPoint.Tag))
-                        {
-                            _logger.Information($"Unidentified tag '{tagDataPoint.Tag}' from '{streamConnectorName}'");
-                        }
-                        else
-                        {
-                            _logger.Information("DataPoint received");
-                            var timeSeriesId = _timeSeriesMapper.GetTimeSeriesFor(streamConnectorName, tagDataPoint.Tag);
-
-                            var dataPoint = new DataPoint
-                            {
-                                TimeSeries = timeSeriesId.ToProtobuf(),
-                                Value = tagDataPoint.Value,
-                                Timestamp = Timestamp.FromDateTimeOffset(DateTimeOffset.UtcNow)
-                            };
-                            _outputStreams.Write(dataPoint);
-                            _timeSeriesState.Set(timeSeriesId, dataPoint.Value);
-                        }
-                    });
-               }
+                    _tagDataPointCoordinator.Handle(streamConnector.Name, requestStream.Current.DataPoints);
+                }
             }
             finally
             {
-                if( streamConnector != null ) _streamConnectors.Unregister(streamConnector);
+                if (streamConnector != null) _streamConnectors.Unregister(streamConnector);
             }
 
             return new Empty();
