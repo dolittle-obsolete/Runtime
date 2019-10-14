@@ -28,7 +28,8 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         readonly IStreamConnectors _streamConnectors;
         readonly IOutputStreams _outputStreams;
         readonly ILogger _logger;
-        
+        readonly ITimeSeriesState _timeSeriesState;
+
 
         /// <summary>
         /// Initializes a new instance of <see cref="PullConnectorsService"/>
@@ -36,55 +37,59 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         /// <param name="streamConnectors">Actual <see cref="IStreamConnectors"/></param>
         /// <param name="timeSeriesMapper"><see cref="ITimeSeriesMapper"/> for mapping data points</param>
         /// <param name="outputStreams">All <see cref="IOutputStreams"/></param>
+        /// <param name="timeSeriesState"></param>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
         public StreamConnectorsService(
             IStreamConnectors streamConnectors,
             ITimeSeriesMapper timeSeriesMapper,
             IOutputStreams outputStreams,
+            ITimeSeriesState timeSeriesState,
             ILogger logger)
         {
             _logger = logger;
             _streamConnectors = streamConnectors;
             _timeSeriesMapper = timeSeriesMapper;
             _outputStreams = outputStreams;
+            _timeSeriesState = timeSeriesState;
         }
 
         /// <inheritdoc/>
         public override async Task<Empty> Open(IAsyncStreamReader<StreamTagDataPoints> requestStream, ServerCallContext context)
         {
-            var streamConnectorIdAsString = context.RequestHeaders.SingleOrDefault(_ => _.Key.ToLowerInvariant() == "streamconnectorid")?.Value;
+            var streamConnectorIdAsString = context.RequestHeaders.SingleOrDefault(_ => string.Equals(_.Key, "streamconnectorid", StringComparison.InvariantCultureIgnoreCase))?.Value;
             if (string.IsNullOrEmpty(streamConnectorIdAsString)) throw new MissingConnectorIdentifierOnRequestHeader();
-            var streamConnectorName = context.RequestHeaders.SingleOrDefault(_ => _.Key.ToLowerInvariant() == "streamconnectorname")?.Value;
+            var streamConnectorName = context.RequestHeaders.SingleOrDefault(_ => string.Equals(_.Key, "streamconnectorname", StringComparison.InvariantCultureIgnoreCase))?.Value;
             if (string.IsNullOrEmpty(streamConnectorName)) throw new MissingConnectorNameOnRequestHeader();
-            var tagsString = context.RequestHeaders.SingleOrDefault(_ => _.Key.ToLowerInvariant() == "tags")?.Value;
-            if (string.IsNullOrEmpty(tagsString)) throw new MissingConnectorNameOnRequestHeader();
-            var tags = tagsString.Split(',');
             var id = (ConnectorId) Guid.Parse(streamConnectorIdAsString);
 
             StreamConnector streamConnector = null;
             try
             {
                 _logger.Information($"Register connector : '{streamConnectorName}' with Id: '{id}'");
-                streamConnector = new StreamConnector(id, streamConnectorName, tags.Select(_ => (Tag) _));
+                streamConnector = new StreamConnector(id, streamConnectorName);
                 _streamConnectors.Register(streamConnector);
 
-                while (await requestStream.MoveNext())
+                while (await requestStream.MoveNext().ConfigureAwait(false))
                 {
                     requestStream.Current.DataPoints.ForEach(tagDataPoint =>
                     {
                         if (!_timeSeriesMapper.HasTimeSeriesFor(streamConnectorName, tagDataPoint.Tag))
+                        {
                             _logger.Information($"Unidentified tag '{tagDataPoint.Tag}' from '{streamConnectorName}'");
+                        }
                         else
                         {
                             _logger.Information("DataPoint received");
+                            var timeSeriesId = _timeSeriesMapper.GetTimeSeriesFor(streamConnectorName, tagDataPoint.Tag);
 
                             var dataPoint = new DataPoint
                             {
-                                TimeSeries = _timeSeriesMapper.GetTimeSeriesFor(streamConnectorName, tagDataPoint.Tag).ToProtobuf(),
+                                TimeSeries = timeSeriesId.ToProtobuf(),
                                 Value = tagDataPoint.Value,
                                 Timestamp = Timestamp.FromDateTimeOffset(DateTimeOffset.UtcNow)
                             };
                             _outputStreams.Write(dataPoint);
+                            _timeSeriesState.Set(timeSeriesId, dataPoint.Value);
                         }
                     });
                }

@@ -16,15 +16,12 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         /// </summary>
         /// <param name="id">Unique <see cref="ConnectorId"/></param>
         /// <param name="name">Name of the connector</param>
-        /// <param name="tags">Collection of <see cref="Tag">tags</see> the connector has</param>
         public StreamConnector(
             ConnectorId id,
-            string name,
-            IEnumerable<Tag> tags)
+            string name)
         {
             Id = id;
             Name = name;
-            Tags = tags;
         }
 
         /// <summary>
@@ -36,10 +33,5 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         /// Gets the name of the <see cref="PullConnector"/>
         /// </summary>
         public string Name { get; }
-
-        /// <summary>
-        /// Gets the collection of <see cref="Tag">tags</see> this connector exposes
-        /// </summary>
-        public IEnumerable<Tag> Tags { get; }
-    }
+   }
 }
