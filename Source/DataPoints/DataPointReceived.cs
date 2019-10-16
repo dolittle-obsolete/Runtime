@@ -2,7 +2,8 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using Dolittle.TimeSeries.DataTypes.Protobuf;
+extern alias contracts;
+using contracts::Dolittle.TimeSeries.Runtime.DataTypes;
 
 namespace Dolittle.TimeSeries.Runtime.DataPoints
 {

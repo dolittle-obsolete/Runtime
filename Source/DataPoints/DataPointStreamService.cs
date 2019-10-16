@@ -2,12 +2,13 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+extern alias contracts;
 using System.Threading.Tasks;
 using Dolittle.Logging;
-using Dolittle.TimeSeries.DataTypes.Protobuf;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
-using static Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.DataPointStream;
+using contracts::Dolittle.TimeSeries.Runtime.DataTypes;
+using static contracts::Dolittle.TimeSeries.Runtime.DataPoints.DataPointStream;
 
 namespace Dolittle.TimeSeries.Runtime.DataPoints
 {
@@ -16,17 +17,19 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
     /// </summary>
     public class DataPointStreamService : DataPointStreamBase
     {
-        readonly IOutputStreams _outputStreams;
+        readonly ITimeSeriesState _timeSeriesState;
         readonly ILogger _logger;
 
         /// <summary>
         /// Initializes an instance of <see cref="DataPointStreamService"/>
         /// </summary>
-        /// <param name="outputStreams"><see cref="IOutputStreams"/> to write any incoming datapoints to</param>
+        /// <param name="timeSeriesState"><see cref="ITimeSeriesState"/> for working with state</param>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
-        public DataPointStreamService(IOutputStreams outputStreams, ILogger logger)
+        public DataPointStreamService(
+            ITimeSeriesState timeSeriesState,
+            ILogger logger)
         {
-            _outputStreams = outputStreams;
+            _timeSeriesState = timeSeriesState;
             _logger = logger;
         }
 
@@ -37,7 +40,7 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
             _logger.Information($"DataPointStream opened");
             while( await requestStream.MoveNext() )
             {
-                _outputStreams.Write(requestStream.Current);
+                //_timeSeriesState.Set(requestStream.Current.TimeSeries, requestStream.Current.Value);
             }
             _logger.Information($"DataPointStream closed");
 

@@ -12,6 +12,5 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
     /// </summary>
     public interface ICanBindDataPointServices : ICanBindServices
     {
-
     }
 }

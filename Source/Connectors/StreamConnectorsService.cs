@@ -1,15 +1,16 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+*  Copyright (c) Dolittle. All rights reserved.
+*  Licensed under the MIT License. See LICENSE in the project root for license information.
+*--------------------------------------------------------------------------------------------*/
+extern alias contracts;
 using System.Linq;
 using System.Threading.Tasks;
-using Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server;
 using Grpc.Core;
-using static Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.StreamConnectors;
 using System;
 using Dolittle.Logging;
 using Google.Protobuf.WellKnownTypes;
+using static contracts::Dolittle.TimeSeries.Runtime.Connectors.StreamConnectors;
+using grpc = contracts::Dolittle.TimeSeries.Runtime.Connectors;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
@@ -41,7 +42,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         }
 
         /// <inheritdoc/>
-        public override async Task<Empty> Open(IAsyncStreamReader<StreamTagDataPoints> requestStream, ServerCallContext context)
+        public override async Task<Empty> Open(IAsyncStreamReader<grpc.StreamTagDataPoints> requestStream, ServerCallContext context)
         {
             var streamConnectorIdAsString = context.RequestHeaders.SingleOrDefault(_ => string.Equals(_.Key, "streamconnectorid", StringComparison.InvariantCultureIgnoreCase))?.Value;
             if (string.IsNullOrEmpty(streamConnectorIdAsString)) throw new MissingConnectorIdentifierOnRequestHeader();

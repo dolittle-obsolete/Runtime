@@ -1,16 +1,16 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+*  Copyright (c) Dolittle. All rights reserved.
+*  Licensed under the MIT License. See LICENSE in the project root for license information.
+*--------------------------------------------------------------------------------------------*/
+extern alias contracts;
 using System.Threading.Tasks;
 using Dolittle.Logging;
 using Grpc.Core;
-using static Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server.PullConnectors;
-using grpc = Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server;
 using Dolittle.Protobuf;
 using Dolittle.Scheduling;
-using Dolittle.TimeSeries.Runtime.Connectors.Grpc.Server;
 using Google.Protobuf.WellKnownTypes;
+using static contracts::Dolittle.TimeSeries.Runtime.Connectors.PullConnectors;
+using grpc = contracts::Dolittle.TimeSeries.Runtime.Connectors;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
@@ -44,7 +44,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         }
 
         /// <inheritdoc/>
-        public override Task Connect(grpc.PullConnector request, IServerStreamWriter<PullRequest> responseStream, ServerCallContext context)
+        public override Task Connect(grpc.PullConnector request, IServerStreamWriter<grpc.PullRequest> responseStream, ServerCallContext context)
         {
             var id = request.Id.ToGuid();
             var pullConnector = new PullConnector(id, request.Name, request.Interval);
@@ -57,7 +57,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
 
                 timer = _timers.Every(pullConnector.Interval, () =>
                 {
-                    var pullRequest = new PullRequest();
+                    var pullRequest = new grpc.PullRequest();
                     responseStream.WriteAsync(pullRequest);
                 });
 
@@ -76,7 +76,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         }
 
         /// <inheritdoc/>
-        public override Task<Empty> Write(WriteMessage request, ServerCallContext context)
+        public override Task<Empty> Write(grpc.WriteMessage request, ServerCallContext context)
         {
             var connectorId = request.ConnectorId.To<ConnectorId>();
             if (!_pullConnectors.Has(connectorId)) return Task.FromResult(new Empty());

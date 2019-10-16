@@ -2,14 +2,14 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using Dolittle.TimeSeries.Runtime.Identity;
-using Dolittle.Lifecycle;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using Dolittle.TimeSeries.DataTypes.Protobuf;
+using Dolittle.Lifecycle;
+using Dolittle.TimeSeries.Runtime.DataTypes;
+using Dolittle.TimeSeries.Runtime.Identity;
 
-namespace Dolittle.TimeSeries.Runtime.Connectors
+namespace Dolittle.TimeSeries.Runtime.TimeSeries
 {
     /// <summary>
     /// Represents an implementation of <see cref="ITimeSeriesState"/>

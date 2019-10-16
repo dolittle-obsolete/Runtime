@@ -2,13 +2,14 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+extern alias contracts;
 using System.Threading.Tasks;
 using Dolittle.Logging;
 using Dolittle.Protobuf;
-using Dolittle.TimeSeries.DataTypes.Protobuf;
-using grpc = Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server;
 using Grpc.Core;
-using static Dolittle.TimeSeries.Runtime.DataPoints.Grpc.Server.DataPointProcessors;
+using contracts::Dolittle.TimeSeries.Runtime.DataTypes;
+using static contracts::Dolittle.TimeSeries.Runtime.DataPoints.DataPointProcessors;
+using grpc = contracts::Dolittle.TimeSeries.Runtime.DataPoints;
 
 namespace Dolittle.TimeSeries.Runtime.DataPoints
 {
@@ -19,22 +20,18 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
     {
         readonly IDataPointProcessors _dataPointProcessors;
         readonly ILogger _logger;
-        private readonly IInputStreams _inputStreams;
 
         /// <summary>
         /// Initializes a new instance of <see cref="DataPointProcessorsService"/>
         /// </summary>
         /// <param name="dataPointProcessors">Actual <see cref="IDataPointProcessors"/></param>
-        /// <param name="inputStreams"></param>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
         public DataPointProcessorsService(
             IDataPointProcessors dataPointProcessors,
-            IInputStreams inputStreams,
             ILogger logger)
         {
             _dataPointProcessors = dataPointProcessors;
             _logger = logger;
-            _inputStreams = inputStreams;
         }
 
         /// <inheritdoc/>
@@ -43,22 +40,17 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
             DataPointProcessor dataPointProcessor = null;
             var id = request.Id.To<DataPointProcessorId>();
 
-            void received(DataPoint dataPoint) => Process(responseStream, dataPoint);
-
             try
             {
                 _logger.Information($"Register processor with identifier '{id}'");
                 dataPointProcessor = new DataPointProcessor(id);
                 _dataPointProcessors.Register(dataPointProcessor);
 
-                _inputStreams.DataPointReceived += received;
-
                 context.CancellationToken.ThrowIfCancellationRequested();
                 context.CancellationToken.WaitHandle.WaitOne();
             }
             finally
             {
-                _inputStreams.DataPointReceived -= received;
                 if (dataPointProcessor != null)
                 {
                     _logger.Information($"Unregister processor with identifier '{id}'");

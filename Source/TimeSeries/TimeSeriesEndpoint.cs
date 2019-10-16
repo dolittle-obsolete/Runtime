@@ -6,10 +6,10 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Dolittle.TimeSeries.DataTypes.Protobuf;
+using Dolittle.TimeSeries.Runtime.DataTypes;
 using Dolittle.TimeSeries.Runtime.Identity;
 
-namespace Dolittle.TimeSeries.Runtime.Connectors
+namespace Dolittle.TimeSeries.Runtime
 {
     /// <summary>
     /// Represents an endpoint for getting timeseries
@@ -75,17 +75,23 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
             {
                 case Value.ValueOneofCase.MeasurementValue:
                     AddValueString(value.MeasurementValue.Value);
+                    AddValueString(value.MeasurementValue.Error, "error");
                     break;
 
                 case Value.ValueOneofCase.Vector2Value:
-                    AddValueString(value.Vector2Value.X.Value);
-                    AddValueString(value.Vector2Value.Y.Value);
+                    AddValueString(value.Vector2Value.X.Value,"x");
+                    AddValueString(value.Vector2Value.Y.Value,"y");
+                    AddValueString(value.Vector2Value.X.Error,"x:error");
+                    AddValueString(value.Vector2Value.Y.Error,"y:error");
                     break;
 
                 case Value.ValueOneofCase.Vector3Value:
-                    AddValueString(value.Vector3Value.X.Value);
-                    AddValueString(value.Vector3Value.Y.Value);
-                    AddValueString(value.Vector3Value.Y.Value);
+                    AddValueString(value.Vector3Value.X.Value,"x");
+                    AddValueString(value.Vector3Value.Y.Value,"y");
+                    AddValueString(value.Vector3Value.Z.Value,"z");
+                    AddValueString(value.Vector3Value.X.Error,"x:error");
+                    AddValueString(value.Vector3Value.Y.Error,"y:error");
+                    AddValueString(value.Vector3Value.Z.Error,"z:error");
                     break;
             }
 

@@ -1,8 +1,9 @@
 {
-    "MyPullConnector": {
-        "first": "9592772e-5ac6-406f-bcf6-01de2f4a1c7c",
-        "second": "1c89215e-a333-453c-a2ed-c2fb347f0e2f",
-        "third": "3202969d-38be-4941-b97e-657bbba3ae34"
+    "Modbus": {
+        "1:2": "9592772e-5ac6-406f-bcf6-01de2f4a1c7c",
+        "1:4": "1c89215e-a333-453c-a2ed-c2fb347f0e2f",
+        "1:6": "3202969d-38be-4941-b97e-657bbba3ae34",
+        "1:8": "35dc7c4a-5b5a-41e0-9f08-a045af94ec93"
     },
     "MyStreamConnector": {
         "first": "b00ef8b8-a4e1-4778-b302-b89fb427621d",
