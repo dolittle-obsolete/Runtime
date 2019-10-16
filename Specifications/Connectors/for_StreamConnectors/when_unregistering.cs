@@ -19,12 +19,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.for_StreamConnectors
         Establish context = () =>
         {
             connector_id = Guid.NewGuid();
-            stream_connector = new StreamConnector(connector_id, "Fourty Two", new []
-            { 
-                (Tag)
-                "Fourty", (Tag)
-                "Two"
-            });
+            stream_connector = new StreamConnector(connector_id, "Fourty Two");
             stream_connectors = new StreamConnectors(Mock.Of<ILogger>());
             stream_connectors.Register(stream_connector);
         };
@@ -34,3 +29,4 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.for_StreamConnectors
         It should_not_consider_having_the_connector = () => stream_connectors.Has(connector_id).ShouldBeFalse();
     }    
 }
+

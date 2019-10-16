@@ -19,12 +19,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.for_PullConnectors
         Establish context = () =>
         {
             connector_id = Guid.NewGuid();
-            pull_connector = new PullConnector(connector_id, "Fourty Two", 42, new []
-            { 
-                (Tag)
-                "Fourty", (Tag)
-                "Two"
-            });
+            pull_connector = new PullConnector(connector_id, "Fourty Two", 42);
             pull_connectors = new PullConnectors(Mock.Of<ILogger>());
         };
 

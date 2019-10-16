@@ -9,7 +9,7 @@ using Dolittle.Lifecycle;
 using Dolittle.TimeSeries.Runtime.DataTypes;
 using Dolittle.TimeSeries.Runtime.Identity;
 
-namespace Dolittle.TimeSeries.Runtime.TimeSeries
+namespace Dolittle.TimeSeries.Runtime
 {
     /// <summary>
     /// Represents an implementation of <see cref="ITimeSeriesState"/>
