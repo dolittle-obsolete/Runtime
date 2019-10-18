@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 using Dolittle.Booting;
 
-namespace Dolittle.TimeSeries.Runtime
+namespace Dolittle.TimeSeries.Runtime.State
 {
     /// <summary>
     /// Represents the <see cref="ICanPerformBootProcedure">boot procedure</see> 

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Dolittle.TimeSeries.Runtime.DataTypes;
 using Dolittle.TimeSeries.Runtime.Identity;
 
-namespace Dolittle.TimeSeries.Runtime
+namespace Dolittle.TimeSeries.Runtime.State
 {
     /// <summary>
     /// Defines a system that holds the current state of any <see cref="TimeSeriesId">TimeSeries</see>

@@ -9,7 +9,7 @@
     <ItemGroup>
         <ProjectReference Include="../DataPoints/DataPoints.csproj"/>
         <ProjectReference Include="../Identity/Identity.csproj"/>
-        <ProjectReference Include="../TimeSeries/TimeSeries.csproj"/>
+        <ProjectReference Include="../State/State.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

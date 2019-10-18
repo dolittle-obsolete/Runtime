@@ -16,7 +16,7 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
     public class MicroserviceServices : ICanBindMicroserviceServices
     {
         /// <summary>
-        /// 
+        /// Initializes an instance of <see cref="MicroserviceServices"/>
         /// </summary>
         public MicroserviceServices()
         {

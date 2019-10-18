@@ -10,6 +10,7 @@ using Dolittle.Lifecycle;
 using Dolittle.Logging;
 using Dolittle.Protobuf;
 using Dolittle.TimeSeries.Runtime.Identity;
+using Dolittle.TimeSeries.Runtime.State;
 using Google.Protobuf.WellKnownTypes;
 using grpc = contracts::Dolittle.TimeSeries.Runtime.DataPoints;
 using grpcDataTypes = contracts::Dolittle.TimeSeries.Runtime.DataTypes;

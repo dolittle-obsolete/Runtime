@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Dolittle.Logging;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
+using Dolittle.TimeSeries.Runtime.State;
 using contracts::Dolittle.TimeSeries.Runtime.DataTypes;
 using static contracts::Dolittle.TimeSeries.Runtime.DataPoints.DataPointStream;
 

@@ -20,10 +20,10 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
         readonly DataPointStreamService _dataPointStreamService;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of <see cref="RuntimeServices"/>
         /// </summary>
-        /// <param name="dataPointProcessorsService"></param>
-        /// <param name="dataPointStreamService"></param>
+        /// <param name="dataPointProcessorsService"><see cref="DataPointProcessorsService"/> service</param>
+        /// <param name="dataPointStreamService"><see cref="DataPointStreamService"/> service</param>
         public RuntimeServices(
             DataPointProcessorsService dataPointProcessorsService,
             DataPointStreamService dataPointStreamService)
