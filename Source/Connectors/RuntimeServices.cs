@@ -2,11 +2,10 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-extern alias contracts;
 using System.Collections.Generic;
 using Dolittle.Runtime.Applications;
 using Dolittle.Services;
-using grpc = contracts::Dolittle.TimeSeries.Runtime.Connectors;
+using grpc = Dolittle.TimeSeries.Connectors.Runtime;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {

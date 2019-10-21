@@ -6,7 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Dolittle.TimeSeries.Runtime.DataTypes;
+using Dolittle.TimeSeries.DataTypes.Microservice;
 using Dolittle.TimeSeries.Runtime.Identity;
 
 namespace Dolittle.TimeSeries.Runtime.State

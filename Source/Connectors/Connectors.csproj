@@ -13,9 +13,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Dolittle.Runtime.Applications" Version="3.*"/>
-        <PackageReference Include="Dolittle.Protobuf" Version="3.*"/>
-        <PackageReference Include="Dolittle.TimeSeries.Runtime.Contracts" Version="1.*" Alias="contracts"/>
+        <PackageReference Include="Dolittle.Runtime.Applications" Version="4.0.0-beta*"/>
+        <PackageReference Include="Dolittle.Protobuf" Version="4.0.0-beta*"/>
+        <PackageReference Include="Dolittle.TimeSeries.Runtime.Contracts" Version="1.*" />
     </ItemGroup>
 
 </Project>

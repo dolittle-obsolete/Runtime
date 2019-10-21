@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
-using Dolittle.TimeSeries.Runtime.DataTypes;
+using Dolittle.TimeSeries.DataTypes.Microservice;
 using Dolittle.TimeSeries.Runtime.Identity;
 
 namespace Dolittle.TimeSeries.Runtime.State

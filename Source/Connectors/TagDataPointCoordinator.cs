@@ -2,7 +2,6 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-extern alias contracts;
 using System;
 using System.Collections.Generic;
 using Dolittle.Collections;
@@ -12,8 +11,8 @@ using Dolittle.Protobuf;
 using Dolittle.TimeSeries.Runtime.Identity;
 using Dolittle.TimeSeries.Runtime.State;
 using Google.Protobuf.WellKnownTypes;
-using grpc = contracts::Dolittle.TimeSeries.Runtime.DataPoints;
-using grpcDataTypes = contracts::Dolittle.TimeSeries.Runtime.DataTypes;
+using grpc = Dolittle.TimeSeries.DataPoints.Runtime;
+using grpcDataTypes = Dolittle.TimeSeries.DataTypes.Runtime;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
@@ -63,7 +62,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
                         Value = tagDataPoint.Value,
                         Timestamp = Timestamp.FromDateTimeOffset(DateTimeOffset.UtcNow)
                     };
-                    _timeSeriesState.Set(timeSeriesId, dataPoint.Value);
+                    _timeSeriesState.Set(timeSeriesId, dataPoint.Value.ToMicroservice());
                 }
             });
         }
