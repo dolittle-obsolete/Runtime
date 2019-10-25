@@ -4,31 +4,31 @@
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using Dolittle.Lifecycle;
+using Dolittle.Protobuf;
 using Dolittle.TimeSeries.DataTypes.Microservice;
 using Dolittle.TimeSeries.Runtime.Identity;
 
 namespace Dolittle.TimeSeries.Runtime.State
 {
     /// <summary>
-    /// Represents an implementation of <see cref="ITimeSeriesState"/>
+    /// Represents an implementation of <see cref="IDataPointsState"/>
     /// </summary>
     [Singleton]
-    public class TimeSeriesState : ITimeSeriesState
+    public class DataPointsState : IDataPointsState
     {
-        readonly ConcurrentDictionary<TimeSeriesId, Value> _dataPointsPerTimeSeries = new ConcurrentDictionary<TimeSeriesId, Value>();
+        readonly ConcurrentDictionary<TimeSeriesId, DataPoint> _dataPointsPerTimeSeries = new ConcurrentDictionary<TimeSeriesId, DataPoint>();
 
         /// <inheritdoc/>
-        public IDictionary<TimeSeriesId, Value> GetAll()
+        public IEnumerable<DataPoint> GetAll()
         {
-            return _dataPointsPerTimeSeries.ToDictionary(_ => _.Key, _ => _.Value);
+            return _dataPointsPerTimeSeries.Values;
         }
 
         /// <inheritdoc/>
-        public void Set(TimeSeriesId timeSeriesId, Value value)
+        public void Set(DataPoint dataPoint)
         {
-            _dataPointsPerTimeSeries[timeSeriesId] = value;
+            _dataPointsPerTimeSeries[dataPoint.TimeSeries.ToGuid()] = dataPoint;
         }
     }
 }

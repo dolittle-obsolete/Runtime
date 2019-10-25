@@ -3,14 +3,14 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System.Collections.Generic;
-using Dolittle.Runtime.Applications;
+using Dolittle.Runtime.Heads;
 using Dolittle.Services;
 using grpc = Dolittle.TimeSeries.Connectors.Runtime;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
     /// <summary>
-    /// Represents an implementation of <see cref="ICanBindRuntimeServices"/> - providing application services
+    /// Represents an implementation of <see cref="ICanBindRuntimeServices"/> - providing runtime services
     /// for working with connectors
     /// </summary>
     public class RuntimeServices : ICanBindRuntimeServices

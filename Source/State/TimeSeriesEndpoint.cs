@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Dolittle.TimeSeries.DataTypes.Microservice;
 using Dolittle.TimeSeries.Runtime.Identity;
+using Dolittle.Collections;
+using Dolittle.Protobuf;
 
 namespace Dolittle.TimeSeries.Runtime.State
 {
@@ -16,13 +18,13 @@ namespace Dolittle.TimeSeries.Runtime.State
     /// </summary>
     public class TimeSeriesEndpoint
     {
-        readonly ITimeSeriesState _timeSeriesState;
+        readonly IDataPointsState _timeSeriesState;
 
         /// <summary>
         /// Initializes a new instance of <see cref="TimeSeriesEndpoint"/>
         /// </summary>
-        /// <param name="timeSeriesState"><see cref="ITimeSeriesState"/> for working with the state</param>
-        public TimeSeriesEndpoint(ITimeSeriesState timeSeriesState)
+        /// <param name="timeSeriesState"><see cref="IDataPointsState"/> for working with the state</param>
+        public TimeSeriesEndpoint(IDataPointsState timeSeriesState)
         {
             _timeSeriesState = timeSeriesState;
         }
@@ -42,17 +44,16 @@ namespace Dolittle.TimeSeries.Runtime.State
                         var context = listener.GetContext();
                         var response = context.Response;
 
-                        var state = _timeSeriesState.GetAll();
-                        foreach ((var timeSeriesId, var value) in state)
-                        {
-                            List<string> valueStrings = GetValueStrings(timeSeriesId, value);
+                        _timeSeriesState.GetAll().ForEach(dataPoint => {
+
+                            var valueStrings = GetValueStrings(dataPoint.TimeSeries.ToGuid(), dataPoint);
 
                             valueStrings.ForEach(_ =>
                             {
                                 var bytes = Encoding.UTF8.GetBytes(_);
                                 response.OutputStream.Write(bytes, 0, bytes.Length);
                             });
-                        }
+                        });
 
                         response.OutputStream.Close();
                     }
@@ -60,7 +61,7 @@ namespace Dolittle.TimeSeries.Runtime.State
             });
         }
 
-        List<string> GetValueStrings(TimeSeriesId timeSeriesId, Value value)
+        IEnumerable<string> GetValueStrings(TimeSeriesId timeSeriesId, DataPoint dataPoint)
         {
             var valueStrings = new List<string>();
 
@@ -71,27 +72,27 @@ namespace Dolittle.TimeSeries.Runtime.State
                 valueStrings.Add($"id:{idAsString} {actualValue}\n");
             }
 
-            switch (value.ValueCase)
+            switch (dataPoint.Value.ValueCase)
             {
                 case Value.ValueOneofCase.MeasurementValue:
-                    AddValueString(value.MeasurementValue.Value);
-                    AddValueString(value.MeasurementValue.Error, "error");
+                    AddValueString(dataPoint.Value.MeasurementValue.Value);
+                    AddValueString(dataPoint.Value.MeasurementValue.Error, "error");
                     break;
 
                 case Value.ValueOneofCase.Vector2Value:
-                    AddValueString(value.Vector2Value.X.Value,"x");
-                    AddValueString(value.Vector2Value.Y.Value,"y");
-                    AddValueString(value.Vector2Value.X.Error,"x:error");
-                    AddValueString(value.Vector2Value.Y.Error,"y:error");
+                    AddValueString(dataPoint.Value.Vector2Value.X.Value,"x");
+                    AddValueString(dataPoint.Value.Vector2Value.Y.Value,"y");
+                    AddValueString(dataPoint.Value.Vector2Value.X.Error,"x:error");
+                    AddValueString(dataPoint.Value.Vector2Value.Y.Error,"y:error");
                     break;
 
                 case Value.ValueOneofCase.Vector3Value:
-                    AddValueString(value.Vector3Value.X.Value,"x");
-                    AddValueString(value.Vector3Value.Y.Value,"y");
-                    AddValueString(value.Vector3Value.Z.Value,"z");
-                    AddValueString(value.Vector3Value.X.Error,"x:error");
-                    AddValueString(value.Vector3Value.Y.Error,"y:error");
-                    AddValueString(value.Vector3Value.Z.Error,"z:error");
+                    AddValueString(dataPoint.Value.Vector3Value.X.Value,"x");
+                    AddValueString(dataPoint.Value.Vector3Value.Y.Value,"y");
+                    AddValueString(dataPoint.Value.Vector3Value.Z.Value,"z");
+                    AddValueString(dataPoint.Value.Vector3Value.X.Error,"x:error");
+                    AddValueString(dataPoint.Value.Vector3Value.Y.Error,"y:error");
+                    AddValueString(dataPoint.Value.Vector3Value.Z.Error,"z:error");
                     break;
             }
 

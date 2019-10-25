@@ -3,14 +3,16 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-using Dolittle.Services;
-
 namespace Dolittle.TimeSeries.Runtime.DataPoints
 {
     /// <summary>
-    /// Defines a system that can bind a gRPC service for data point purpose
+    /// Defines a system that is capable of pulling data point state from other Microservice runtimes
     /// </summary>
-    public interface ICanBindDataPointServices : ICanBindServices
+    public interface IDataPointsStatePullers
     {
+        /// <summary>
+        /// Start the puller mechanism
+        /// </summary>
+        void Start();
     }
 }

@@ -12,19 +12,19 @@ namespace Dolittle.TimeSeries.Runtime.State
     /// Defines a system that holds the current state of any <see cref="TimeSeriesId">TimeSeries</see>
     /// going through the runtime
     /// </summary>
-    public interface ITimeSeriesState
+    public interface IDataPointsState
     {
         /// <summary>
         /// Set the value for a <see cref="TimeSeriesId"/>
         /// </summary>
-        /// <param name="timeSeriesId"><see cref="TimeSeriesId"/> to set for</param>
-        /// <param name="value">Value to set</param>
-        void Set(TimeSeriesId timeSeriesId, Value value);
+        /// <param name="dataPoint">DataPoint to set</param>
+        void Set(DataPoint dataPoint);
 
         /// <summary>
-        /// Get state for all <see cref="TimeSeriesId">TimeSeries</see>
+        /// Get state for all <see cref="TimeSeriesId">TimeSeries</see> - one <see cref="DataPoint"/> for each
+        /// <see cref="TimeSeriesId"/>
         /// </summary>
-        /// <returns><see cref="IDictionary{TKey,TValue}"/></returns>
-        IDictionary<TimeSeriesId, Value> GetAll();
+        /// <returns><see cref="IEnumerable{T}"/> of <see cref="DataPoint"/></returns>
+        IEnumerable<DataPoint> GetAll();
     }
 }

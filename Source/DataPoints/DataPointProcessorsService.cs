@@ -9,6 +9,7 @@ using Grpc.Core;
 using Dolittle.TimeSeries.DataTypes.Runtime;
 using static Dolittle.TimeSeries.DataPoints.Runtime.DataPointProcessors;
 using grpc = Dolittle.TimeSeries.DataPoints.Runtime;
+using System;
 
 namespace Dolittle.TimeSeries.Runtime.DataPoints
 {
@@ -39,11 +40,15 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
             DataPointProcessor dataPointProcessor = null;
             var id = request.Id.To<DataPointProcessorId>();
 
+            void Received(DataPoint dataPoint) => Process(responseStream, dataPoint);
+
             try
             {
                 _logger.Information($"Register processor with identifier '{id}'");
                 dataPointProcessor = new DataPointProcessor(id);
                 _dataPointProcessors.Register(dataPointProcessor);
+
+                dataPointProcessor.Received += Received;
 
                 context.CancellationToken.ThrowIfCancellationRequested();
                 context.CancellationToken.WaitHandle.WaitOne();
@@ -52,6 +57,8 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
             {
                 if (dataPointProcessor != null)
                 {
+                    dataPointProcessor.Received -= Received;
+
                     _logger.Information($"Unregister processor with identifier '{id}'");
                     _dataPointProcessors.Unregister(dataPointProcessor);
                 }
@@ -64,7 +71,14 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
         {
             _logger.Information("Process datapoint");
 
-            responseStream.WriteAsync(dataPoint);
+            try
+            {
+                responseStream.WriteAsync(dataPoint);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Couldn't write datapoint");
+            }
         }
     }
 }

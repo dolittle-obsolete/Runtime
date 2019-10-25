@@ -13,6 +13,7 @@ using Dolittle.TimeSeries.Runtime.State;
 using Google.Protobuf.WellKnownTypes;
 using grpc = Dolittle.TimeSeries.DataPoints.Runtime;
 using grpcDataTypes = Dolittle.TimeSeries.DataTypes.Runtime;
+using Dolittle.TimeSeries.Runtime.DataTypes;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
@@ -23,23 +24,23 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
     public class TagDataPointCoordinator : ITagDataPointCoordinator
     {
         readonly ITimeSeriesMapper _timeSeriesMapper;
-        readonly ITimeSeriesState _timeSeriesState;
+        readonly IDataPointsState _dataPointsState;
         readonly ILogger _logger;
 
         /// <summary>
         /// Initializes a new instance of <see cref="TagDataPointCoordinator"/>
         /// </summary>
         /// <param name="timeSeriesMapper"><see cref="ITimeSeriesMapper"/> for identity mapping of TimeSeries</param>
-        /// <param name="timeSeriesState"><see cref="ITimeSeriesState"/> for working with the state</param>
+        /// <param name="dataPointsState"><see cref="IDataPointsState"/> for working with the state</param>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
         public TagDataPointCoordinator(
             ITimeSeriesMapper timeSeriesMapper,
-            ITimeSeriesState timeSeriesState,
+            IDataPointsState dataPointsState,
             ILogger logger)
         {
             _timeSeriesMapper = timeSeriesMapper;
             _logger = logger;
-            _timeSeriesState = timeSeriesState;
+            _dataPointsState = dataPointsState;
         }
 
         /// <inheritdoc/>
@@ -62,7 +63,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
                         Value = tagDataPoint.Value,
                         Timestamp = Timestamp.FromDateTimeOffset(DateTimeOffset.UtcNow)
                     };
-                    _timeSeriesState.Set(timeSeriesId, dataPoint.Value.ToMicroservice());
+                    _dataPointsState.Set(dataPoint.ToMicroservice());
                 }
             });
         }

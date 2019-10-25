@@ -9,6 +9,7 @@ using Grpc.Core;
 using Dolittle.TimeSeries.Runtime.State;
 using Dolittle.TimeSeries.DataTypes.Runtime;
 using static Dolittle.TimeSeries.DataPoints.Runtime.DataPointStream;
+using Dolittle.TimeSeries.Runtime.DataTypes;
 
 namespace Dolittle.TimeSeries.Runtime.DataPoints
 {
@@ -17,19 +18,19 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
     /// </summary>
     public class DataPointStreamService : DataPointStreamBase
     {
-        readonly ITimeSeriesState _timeSeriesState;
+        readonly IDataPointsState _dataPointsState;
         readonly ILogger _logger;
 
         /// <summary>
         /// Initializes an instance of <see cref="DataPointStreamService"/>
         /// </summary>
-        /// <param name="timeSeriesState"><see cref="ITimeSeriesState"/> for working with state</param>
+        /// <param name="dataPointsState"><see cref="IDataPointsState"/> for working with state</param>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
         public DataPointStreamService(
-            ITimeSeriesState timeSeriesState,
+            IDataPointsState dataPointsState,
             ILogger logger)
         {
-            _timeSeriesState = timeSeriesState;
+            _dataPointsState = dataPointsState;
             _logger = logger;
         }
 
@@ -40,7 +41,7 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
             _logger.Information($"DataPointStream opened");
             while( await requestStream.MoveNext() )
             {
-                //_timeSeriesState.Set(requestStream.Current.TimeSeries, requestStream.Current.Value);
+                _dataPointsState.Set(requestStream.Current.ToMicroservice());
             }
             _logger.Information($"DataPointStream closed");
 
