@@ -72,27 +72,27 @@ namespace Dolittle.TimeSeries.Runtime.State
                 valueStrings.Add($"id:{idAsString} {actualValue}\n");
             }
 
-            switch (dataPoint.Value.ValueCase)
+            switch (dataPoint.MeasurementCase)
             {
-                case Value.ValueOneofCase.MeasurementValue:
-                    AddValueString(dataPoint.Value.MeasurementValue.Value);
-                    AddValueString(dataPoint.Value.MeasurementValue.Error, "error");
+                case DataPoint.MeasurementOneofCase.SingleValue:
+                    AddValueString(dataPoint.SingleValue.Value);
+                    AddValueString(dataPoint.SingleValue.Error, "error");
                     break;
 
-                case Value.ValueOneofCase.Vector2Value:
-                    AddValueString(dataPoint.Value.Vector2Value.X.Value,"x");
-                    AddValueString(dataPoint.Value.Vector2Value.Y.Value,"y");
-                    AddValueString(dataPoint.Value.Vector2Value.X.Error,"x:error");
-                    AddValueString(dataPoint.Value.Vector2Value.Y.Error,"y:error");
+                case DataPoint.MeasurementOneofCase.Vector2Value:
+                    AddValueString(dataPoint.Vector2Value.X.Value,"x");
+                    AddValueString(dataPoint.Vector2Value.Y.Value,"y");
+                    AddValueString(dataPoint.Vector2Value.X.Error,"x:error");
+                    AddValueString(dataPoint.Vector2Value.Y.Error,"y:error");
                     break;
 
-                case Value.ValueOneofCase.Vector3Value:
-                    AddValueString(dataPoint.Value.Vector3Value.X.Value,"x");
-                    AddValueString(dataPoint.Value.Vector3Value.Y.Value,"y");
-                    AddValueString(dataPoint.Value.Vector3Value.Z.Value,"z");
-                    AddValueString(dataPoint.Value.Vector3Value.X.Error,"x:error");
-                    AddValueString(dataPoint.Value.Vector3Value.Y.Error,"y:error");
-                    AddValueString(dataPoint.Value.Vector3Value.Z.Error,"z:error");
+                case DataPoint.MeasurementOneofCase.Vector3Value:
+                    AddValueString(dataPoint.Vector3Value.X.Value,"x");
+                    AddValueString(dataPoint.Vector3Value.Y.Value,"y");
+                    AddValueString(dataPoint.Vector3Value.Z.Value,"z");
+                    AddValueString(dataPoint.Vector3Value.X.Error,"x:error");
+                    AddValueString(dataPoint.Vector3Value.Y.Error,"y:error");
+                    AddValueString(dataPoint.Vector3Value.Z.Error,"z:error");
                     break;
             }
 

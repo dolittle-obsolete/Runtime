@@ -13,6 +13,7 @@ using Dolittle.TimeSeries.Runtime.State;
 using Google.Protobuf.WellKnownTypes;
 using grpc = Dolittle.TimeSeries.DataPoints.Runtime;
 using grpcDataTypes = Dolittle.TimeSeries.DataTypes.Runtime;
+using microserviceDataTypes = Dolittle.TimeSeries.DataTypes.Microservice;
 using Dolittle.TimeSeries.Runtime.DataTypes;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
@@ -57,13 +58,35 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
                     _logger.Information("DataPoint received");
                     var timeSeriesId = _timeSeriesMapper.GetTimeSeriesFor(connectorName, tagDataPoint.Tag);
 
-                    var dataPoint = new grpcDataTypes.DataPoint
+                    var dataPoint = new microserviceDataTypes.DataPoint
                     {
                         TimeSeries = timeSeriesId.ToProtobuf(),
-                        Value = tagDataPoint.Value,
                         Timestamp = Timestamp.FromDateTimeOffset(DateTimeOffset.UtcNow)
                     };
-                    _dataPointsState.Set(dataPoint.ToMicroservice());
+
+                    switch (tagDataPoint.MeasurementCase)
+                    {
+                        case grpc.TagDataPoint.MeasurementOneofCase.SingleValue:
+                            dataPoint.SingleValue = tagDataPoint.SingleValue.ToMicroservice();
+                            break;
+                        case grpc.TagDataPoint.MeasurementOneofCase.Vector2Value:
+                            dataPoint.Vector2Value = new microserviceDataTypes.Vector2
+                            {
+                                X = tagDataPoint.Vector2Value.X.ToMicroservice(),
+                                Y = tagDataPoint.Vector2Value.Y.ToMicroservice()
+                            };
+                            break;
+                        case grpc.TagDataPoint.MeasurementOneofCase.Vector3Value:
+                            dataPoint.Vector3Value = new microserviceDataTypes.Vector3
+                            {
+                                X = tagDataPoint.Vector3Value.X.ToMicroservice(),
+                                Y = tagDataPoint.Vector3Value.Y.ToMicroservice(),
+                                Z = tagDataPoint.Vector3Value.Z.ToMicroservice()
+                            };
+                            break;
+                    }
+
+                    _dataPointsState.Set(dataPoint);
                 }
             });
         }
