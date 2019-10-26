@@ -3,6 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+using System.Linq;
 using System.Threading.Tasks;
 using Dolittle.Collections;
 using Dolittle.Logging;
@@ -52,7 +53,9 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
         {
             _logger.Information($"Pull from '{_endPoint.Target}'");
             var dataPoints = await _client.GetAllAsync(new Empty());
-            dataPoints.DataPoints_.ForEach(_ => _processors.Process(_.ToRuntime()));
+
+            var converted = dataPoints.DataPoints_.Select(_ => _.ToRuntime());
+            _processors.Process(converted);
         }
     }
 }

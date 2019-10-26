@@ -48,11 +48,11 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
         }
 
         /// <inheritdoc/>
-        public void Process(DataPoint dataPoint)
+        public void Process(IEnumerable<DataPoint> dataPoints)
         {
             lock (_processors)
             {
-                _scheduler.PerformForEach(_processors, _ => _.OnDataPointReceived(dataPoint));
+                _scheduler.PerformForEach(_processors, _ => _.OnDataPointReceived(dataPoints));
             }
         }
     }

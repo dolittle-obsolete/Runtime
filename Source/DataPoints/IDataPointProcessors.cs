@@ -2,6 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+using System.Collections.Generic;
 using Dolittle.TimeSeries.DataTypes.Runtime;
 
 namespace Dolittle.TimeSeries.Runtime.DataPoints
@@ -24,10 +25,10 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
         void Unregister(DataPointProcessor dataPointProcessor);
 
         /// <summary>
-        /// Process a <see cref="DataPoint"/> with any of the <see cref="DataPointProcessor"/> that
+        /// Process a series of <see cref="DataPoint"/> with any of the <see cref="DataPointProcessor"/> that
         /// is interested
         /// </summary>
-        void Process(DataPoint dataPoint);
+        void Process(IEnumerable<DataPoint> dataPoints);
     }
 
 }

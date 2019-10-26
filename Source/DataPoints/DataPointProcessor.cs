@@ -2,6 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+using System.Collections.Generic;
 using Dolittle.TimeSeries.DataTypes.Runtime;
 
 namespace Dolittle.TimeSeries.Runtime.DataPoints
@@ -23,16 +24,16 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
         /// <summary>
         /// Event that gets fired when a <see cref="DataPoint"/> is received for processing
         /// </summary>
-        public event DataPointReceived  Received;
+        public event DataPointsReceived  Received;
 
         /// <summary>
         /// Gets the unique identifier for a <see cref="DataPointProcessor"/>
         /// </summary>
         public DataPointProcessorId Id {  get; }
 
-        internal void OnDataPointReceived(DataPoint dataPoint)
+        internal void OnDataPointReceived(IEnumerable<DataPoint> dataPoints)
         {
-            Received?.Invoke(dataPoint);
+            Received?.Invoke(dataPoints);
         }
     }
 }

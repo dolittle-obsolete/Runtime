@@ -10,6 +10,7 @@ using Dolittle.TimeSeries.DataTypes.Runtime;
 using static Dolittle.TimeSeries.DataPoints.Runtime.DataPointProcessors;
 using grpc = Dolittle.TimeSeries.DataPoints.Runtime;
 using System;
+using System.Collections.Generic;
 
 namespace Dolittle.TimeSeries.Runtime.DataPoints
 {
@@ -35,12 +36,12 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
         }
 
         /// <inheritdoc/>
-        public override Task Open(grpc.DataPointProcessor request, IServerStreamWriter<DataPoint> responseStream, ServerCallContext context)
+        public override Task Open(grpc.DataPointProcessor request, IServerStreamWriter<grpc.DataPoints> responseStream, ServerCallContext context)
         {
             DataPointProcessor dataPointProcessor = null;
             var id = request.Id.To<DataPointProcessorId>();
 
-            void Received(DataPoint dataPoint) => Process(responseStream, dataPoint);
+            void Received(IEnumerable<DataPoint> dataPoints) => Process(responseStream, dataPoints);
 
             try
             {
@@ -67,13 +68,15 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
             return Task.CompletedTask;
         }
 
-        void Process(IServerStreamWriter<DataPoint> responseStream, DataPoint dataPoint)
+        void Process(IServerStreamWriter<grpc.DataPoints> responseStream, IEnumerable<DataPoint> dataPoints)
         {
             _logger.Information("Process datapoint");
 
             try
             {
-                responseStream.WriteAsync(dataPoint);
+                var message = new grpc.DataPoints();
+                message.DataPoints_.Add(dataPoints);
+                responseStream.WriteAsync(message);
             }
             catch (Exception ex)
             {

@@ -2,13 +2,14 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+using System.Collections.Generic;
 using Dolittle.TimeSeries.DataTypes.Runtime;
 
 namespace Dolittle.TimeSeries.Runtime.DataPoints
 {
     /// <summary>
-    /// Delegate that represents the callback for when a <see cref="DataPoint"/> has received
+    /// Delegate that represents the callback for when a series of <see cref="DataPoint"/> has been received
     /// </summary>
     /// <param name="dataPoint"></param>
-    public delegate void DataPointReceived(DataPoint dataPoint);
+    public delegate void DataPointsReceived(IEnumerable<DataPoint> dataPoint);
 }
