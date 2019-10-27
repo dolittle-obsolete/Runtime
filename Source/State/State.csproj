@@ -11,8 +11,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Dolittle.Runtime.Heads" Version="4.0.0-beta*"/>
-        <PackageReference Include="Dolittle.Runtime.Microservices" Version="4.0.0-beta*"/>
+        <PackageReference Include="Dolittle.Runtime.Heads" Version="4.*"/>
+        <PackageReference Include="Dolittle.Runtime.Microservices" Version="4.*"/>
         <PackageReference Include="Dolittle.Protobuf" Version="4.*"/>
         <PackageReference Include="Dolittle.TimeSeries.Runtime.Contracts" Version="1.*"/>
         <PackageReference Include="Dolittle.TimeSeries.Microservice.Contracts" Version="1.*"/>
