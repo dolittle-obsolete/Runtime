@@ -16,17 +16,17 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
     public class RuntimeServices : ICanBindRuntimeServices
     {
         readonly PullConnectorsService _pullConnectorsService;
-        readonly StreamConnectorsService _streamConnectorsService;
+        readonly PushConnectorsService _pushConnectorsService;
 
         /// <summary>
         /// Initializes a new instance of <see cref="RuntimeServices"/>
         /// </summary>
         /// <param name="pullConnectorsService">Instance of <see cref="PullConnectorsService"/></param>
-        /// <param name="streamConnectorsService">Instance of <see cref="StreamConnectorsService"/></param>
-        public RuntimeServices(PullConnectorsService pullConnectorsService, StreamConnectorsService streamConnectorsService)
+        /// <param name="pushConnectorsService">Instance of <see cref="PushConnectorsService"/></param>
+        public RuntimeServices(PullConnectorsService pullConnectorsService, PushConnectorsService pushConnectorsService)
         {
             _pullConnectorsService = pullConnectorsService;
-            _streamConnectorsService = streamConnectorsService;
+            _pushConnectorsService = pushConnectorsService;
         }
 
         /// <inheritdoc/>
@@ -37,7 +37,7 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         {
             return new Service[] {
                 new Service(_pullConnectorsService, grpc.PullConnectors.BindService(_pullConnectorsService), grpc.PullConnectors.Descriptor),
-                new Service(_streamConnectorsService, grpc.StreamConnectors.BindService(_streamConnectorsService), grpc.StreamConnectors.Descriptor)
+                new Service(_pushConnectorsService, grpc.PushConnectors.BindService(_pushConnectorsService), grpc.PushConnectors.Descriptor)
             };
         }
     }

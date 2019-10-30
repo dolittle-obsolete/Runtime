@@ -5,31 +5,30 @@
 using Dolittle.Lifecycle;
 using Dolittle.Logging;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
 
     /// <summary>
-    /// Represent an implementation of <see cref="IStreamConnectors"/>
+    /// Represent an implementation of <see cref="IPushConnectors"/>
     /// </summary>
     [Singleton]
-    public class StreamConnectors : IStreamConnectors
+    public class PushConnectors : IPushConnectors
     {
-        readonly ConcurrentDictionary<ConnectorId, StreamConnector> _connectors = new ConcurrentDictionary<ConnectorId, StreamConnector>();
+        readonly ConcurrentDictionary<ConnectorId, PushConnector> _connectors = new ConcurrentDictionary<ConnectorId, PushConnector>();
         readonly ILogger _logger;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="StreamConnectors"/>
+        /// Initializes a new instance of <see cref="PushConnectors"/>
         /// </summary>
         /// <param name="logger"><see cref="ILogger"/> for logging</param>
-        public StreamConnectors(ILogger logger)
+        public PushConnectors(ILogger logger)
         {
             _logger = logger;
         }
 
         /// <inheritdoc/>
-        public void Register(StreamConnector connector)
+        public void Register(PushConnector connector)
         {
             _logger.Information($"Register '{connector.Id}'");
             _connectors[connector.Id] = connector;
@@ -42,19 +41,19 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         }
 
         /// <inheritdoc/>
-        public StreamConnector GetById(ConnectorId connectorId)
+        public PushConnector GetById(ConnectorId connectorId)
         {
             return _connectors[connectorId];
         }
 
 
         /// <inheritdoc/>
-        public void Unregister(StreamConnector connector)
+        public void Unregister(PushConnector connector)
         {
              if (_connectors.ContainsKey(connector.Id))
             {
                 _logger.Information($"Unregister '{connector.Id}'");
-                _connectors.TryRemove(connector.Id, out StreamConnector _);
+                _connectors.TryRemove(connector.Id, out PushConnector _);
             }
             else
             {

@@ -8,25 +8,25 @@ using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Dolittle.TimeSeries.Runtime.Connectors.for_StreamConnectors
+namespace Dolittle.TimeSeries.Runtime.Connectors.for_PushConnectors
 {
     public class when_unregistering
     {
         static ConnectorId connector_id;
-        static StreamConnector stream_connector;
-        static StreamConnectors stream_connectors;
+        static PushConnector push_connector;
+        static PushConnectors push_connectors;
 
         Establish context = () =>
         {
             connector_id = Guid.NewGuid();
-            stream_connector = new StreamConnector(connector_id, "Fourty Two");
-            stream_connectors = new StreamConnectors(Mock.Of<ILogger>());
-            stream_connectors.Register(stream_connector);
+            push_connector = new PushConnector(connector_id, "Fourty Two");
+            push_connectors = new PushConnectors(Mock.Of<ILogger>());
+            push_connectors.Register(push_connector);
         };
 
-        Because of = () => stream_connectors.Unregister(stream_connector);
+        Because of = () => push_connectors.Unregister(push_connector);
 
-        It should_not_consider_having_the_connector = () => stream_connectors.Has(connector_id).ShouldBeFalse();
-    }    
+        It should_not_consider_having_the_connector = () => push_connectors.Has(connector_id).ShouldBeFalse();
+    }
 }
 

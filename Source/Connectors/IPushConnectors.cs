@@ -7,34 +7,34 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
     /// <summary>
     /// Defines a system for working with all available stream connectors
     /// </summary>
-    public interface IStreamConnectors
+    public interface IPushConnectors
     {
         /// <summary>
         /// Register a stream connector
         /// </summary>
-        /// <param name="streamConnector"><see cref="StreamConnector"/> to register</param>
-        void Register(StreamConnector streamConnector);
+        /// <param name="pushConnector"><see cref="PushConnector"/> to register</param>
+        void Register(PushConnector pushConnector);
 
         /// <summary>
-        /// Check if is registered <see cref="StreamConnector"/> by its identifier
+        /// Check if is registered <see cref="PushConnector"/> by its identifier
         /// </summary>
         /// <param name="connectorId"><see cref="ConnectorId"/> to check</param>
         /// <returns>True if it is registered, false if not</returns>
         bool Has(ConnectorId connectorId);
 
         /// <summary>
-        /// Get a <see cref="StreamConnector"/> by its identifier
+        /// Get a <see cref="PushConnector"/> by its identifier
         /// </summary>
         /// <param name="connectorId"><see cref="ConnectorId"/> to get</param>
-        /// <returns><see cref="StreamConnector"/></returns>
-        StreamConnector GetById(ConnectorId connectorId);
+        /// <returns><see cref="PushConnector"/></returns>
+        PushConnector GetById(ConnectorId connectorId);
 
 
 
         /// <summary>
         /// Unregister a stream connector
         /// </summary>
-        /// <param name="streamConnector"><see cref="StreamConnector"/> to unregister</param>
-        void Unregister(StreamConnector streamConnector);
+        /// <param name="pushConnector"><see cref="PushConnector"/> to unregister</param>
+        void Unregister(PushConnector pushConnector);
     }
 }

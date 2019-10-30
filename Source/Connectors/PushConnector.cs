@@ -7,16 +7,16 @@ using System.Collections.Generic;
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
     /// <summary>
-    /// Defines a pull connector
+    /// Defines a push connector
     /// </summary>
-    public class StreamConnector
+    public class PushConnector
     {
         /// <summary>
         /// Initializes a new instance of <see cref="PullConnector"/>
         /// </summary>
         /// <param name="id">Unique <see cref="ConnectorId"/></param>
         /// <param name="name">Name of the connector</param>
-        public StreamConnector(
+        public PushConnector(
             ConnectorId id,
             string name)
         {

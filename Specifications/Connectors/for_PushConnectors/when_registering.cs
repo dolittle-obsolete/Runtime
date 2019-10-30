@@ -8,24 +8,24 @@ using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Dolittle.TimeSeries.Runtime.Connectors.for_StreamConnectors
+namespace Dolittle.TimeSeries.Runtime.Connectors.for_PushConnectors
 {
     public class when_registering
     {
         static ConnectorId connector_id;
-        static StreamConnector stream_connector;
-        static StreamConnectors stream_connectors;
+        static PushConnector push_connector;
+        static PushConnectors push_connectors;
 
         Establish context = () =>
         {
             connector_id = Guid.NewGuid();
-            stream_connector = new StreamConnector(connector_id, "Fourty Two");
-            stream_connectors = new StreamConnectors(Mock.Of<ILogger>());
+            push_connector = new PushConnector(connector_id, "Fourty Two");
+            push_connectors = new pushConnectors(Mock.Of<ILogger>());
         };
 
-        Because of = () => stream_connectors.Register(stream_connector);
+        Because of = () => push_connectors.Register(push_connector);
 
-        It should_consider_having_the_connector = () => stream_connectors.Has(connector_id).ShouldBeTrue();
-        It should_have_the_connector = () => stream_connectors.GetById(connector_id).ShouldEqual(stream_connector);
+        It should_consider_having_the_connector = () => push_connectors.Has(connector_id).ShouldBeTrue();
+        It should_have_the_connector = () => push_connectors.GetById(connector_id).ShouldEqual(push_connector);
     }
 }

@@ -11,6 +11,7 @@ using static Dolittle.TimeSeries.DataPoints.Runtime.DataPointProcessors;
 using grpc = Dolittle.TimeSeries.DataPoints.Runtime;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Dolittle.TimeSeries.Runtime.DataPoints
 {
@@ -70,6 +71,8 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
 
         void Process(IServerStreamWriter<grpc.DataPoints> responseStream, IEnumerable<DataPoint> dataPoints)
         {
+            if(!dataPoints.Any()) return;
+
             _logger.Information("Process datapoint");
 
             try
