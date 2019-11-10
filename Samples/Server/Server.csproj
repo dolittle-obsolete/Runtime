@@ -1,6 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <Import Project="../../Build/MSBuild/default.props" />
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -14,6 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Dolittle.Common" Version="1.*" />
         <PackageReference Include="Dolittle.Runtime.Server" Version="4.*" />
         <!--<PackageReference Include="Dolittle.DependencyInversion.Management" Version="4.*" />-->
     </ItemGroup>
