@@ -2,10 +2,13 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Dolittle.Lifecycle;
+using Dolittle.Logging;
 using Dolittle.Protobuf;
+using Dolittle.Runtime.Metrics;
 using Dolittle.TimeSeries.DataTypes.Microservice;
 using Dolittle.TimeSeries.Runtime.Identity;
 
@@ -17,7 +20,28 @@ namespace Dolittle.TimeSeries.Runtime.State
     [Singleton]
     public class DataPointsState : IDataPointsState
     {
+        const string ValueTrait = "value";
+        const string ErrorTrait = "error";
+        const string XProperty = "x";
+        const string YProperty = "y";
+        const string ZProperty = "z";
+
         readonly ConcurrentDictionary<TimeSeriesId, DataPoint> _dataPointsPerTimeSeries = new ConcurrentDictionary<TimeSeriesId, DataPoint>();
+        readonly IMetricFactory _metricFactory;
+        readonly ILogger _logger;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="metricFactory"></param>
+        /// <param name="logger"></param>
+        public DataPointsState(
+            IMetricFactory metricFactory,
+            ILogger logger)
+        {
+            _metricFactory = metricFactory;
+            _logger = logger;
+        }
 
         /// <inheritdoc/>
         public IEnumerable<DataPoint> GetAll()
@@ -28,7 +52,40 @@ namespace Dolittle.TimeSeries.Runtime.State
         /// <inheritdoc/>
         public void Set(DataPoint dataPoint)
         {
-            _dataPointsPerTimeSeries[dataPoint.TimeSeries.ToGuid()] = dataPoint;
+            try
+            {
+                var timeSeries = dataPoint.TimeSeries.ToGuid();
+                _dataPointsPerTimeSeries[timeSeries] = dataPoint;
+                var gauge = _metricFactory.Gauge("datapoint", "This is a timeseries datapoint", "timeseries", "property", "trait");
+
+                switch (dataPoint.MeasurementCase)
+                {
+                    case DataPoint.MeasurementOneofCase.SingleValue:
+                        gauge.WithLabels(timeSeries.ToString(), string.Empty, ValueTrait).Set(dataPoint.SingleValue.Value);
+                        gauge.WithLabels(timeSeries.ToString(), string.Empty, ErrorTrait).Set(dataPoint.SingleValue.Error);
+                        break;
+
+                    case DataPoint.MeasurementOneofCase.Vector2Value:
+                        gauge.WithLabels(timeSeries.ToString(), XProperty, ValueTrait).Set(dataPoint.Vector2Value.X.Value);
+                        gauge.WithLabels(timeSeries.ToString(), XProperty, ErrorTrait).Set(dataPoint.Vector2Value.X.Error);
+                        gauge.WithLabels(timeSeries.ToString(), YProperty, ValueTrait).Set(dataPoint.Vector2Value.Y.Value);
+                        gauge.WithLabels(timeSeries.ToString(), YProperty, ErrorTrait).Set(dataPoint.Vector2Value.Y.Error);
+                        break;
+
+                    case DataPoint.MeasurementOneofCase.Vector3Value:
+                        gauge.WithLabels(timeSeries.ToString(), XProperty, ValueTrait).Set(dataPoint.Vector3Value.X.Value);
+                        gauge.WithLabels(timeSeries.ToString(), XProperty, ErrorTrait).Set(dataPoint.Vector3Value.X.Error);
+                        gauge.WithLabels(timeSeries.ToString(), YProperty, ValueTrait).Set(dataPoint.Vector3Value.Y.Value);
+                        gauge.WithLabels(timeSeries.ToString(), YProperty, ErrorTrait).Set(dataPoint.Vector3Value.Y.Error);
+                        gauge.WithLabels(timeSeries.ToString(), ZProperty, ValueTrait).Set(dataPoint.Vector3Value.Z.Value);
+                        gauge.WithLabels(timeSeries.ToString(), ZProperty, ErrorTrait).Set(dataPoint.Vector3Value.Z.Error);
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error setting datapoint gauges");
+            }
         }
     }
 }

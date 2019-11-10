@@ -12,7 +12,7 @@ namespace Dolittle.TimeSeries.Runtime.Identity
     /// Represents the configuration for timeseries and their relationship to source and tags
     /// </summary>
     [Name("timeseriesmap")]
-    public class TimeSeriesMap : 
+    public class TimeSeriesMap :
         ReadOnlyDictionary<Source, TimeSeriesByTag>,
         IConfigurationObject
     {

@@ -10,7 +10,7 @@ using grpc = Dolittle.TimeSeries.DataPoints.Runtime;
 namespace Dolittle.TimeSeries.Runtime.DataPoints
 {
     /// <summary>
-    /// Represents an implementation of <see cref="ICanBindRuntimeServices"/> - providing application services
+    /// Represents an implementation of <see cref="ICanBindRuntimeServices"/> - providing runtime services
     /// for working with datapoints
     /// </summary>
     public class RuntimeServices : ICanBindRuntimeServices

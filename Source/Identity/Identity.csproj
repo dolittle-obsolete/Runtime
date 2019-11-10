@@ -9,6 +9,8 @@
     <ItemGroup>
         <PackageReference Include="Dolittle.Concepts" Version="4.*"/>
         <PackageReference Include="Dolittle.Configuration" Version="4.*"/>
+        <PackageReference Include="Dolittle.Runtime.Heads" Version="4.*"/>
+        <PackageReference Include="Dolittle.TimeSeries.Runtime.Contracts" Version="1.*" />
     </ItemGroup>
 
 </Project>

@@ -11,4 +11,8 @@
     <ProjectReference Include="../../Source/Identity/Identity.csproj"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Dolittle.Types.Testing" Version="4.*"/> 
+  </ItemGroup>
+
 </Project>

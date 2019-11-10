@@ -2,6 +2,10 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+using System.Collections.Generic;
+using System.Linq;
+using Dolittle.Types;
+
 namespace Dolittle.TimeSeries.Runtime.Identity
 {
     /// <summary>
@@ -9,41 +13,42 @@ namespace Dolittle.TimeSeries.Runtime.Identity
     /// </summary>
     public class TimeSeriesMapper : ITimeSeriesMapper
     {
-        readonly TimeSeriesMap _timeSeriesMap;
+        readonly IInstancesOf<ICanIdentifyTimeSeries> _identifiers;
 
         /// <summary>
         /// Initializes a new instance of <see cref="TimeSeriesMapper"/>
         /// </summary>
-        /// <param name="timeSeriesMap"><see cref="TimeSeriesMap"/></param>
-        public TimeSeriesMapper(TimeSeriesMap timeSeriesMap)
+        /// <param name="identifiers"></param>
+        public TimeSeriesMapper(IInstancesOf<ICanIdentifyTimeSeries> identifiers)
         {
-            _timeSeriesMap = timeSeriesMap;
+            _identifiers = identifiers;
         }
 
         /// <inheritdoc/>
-        public TimeSeriesId GetTimeSeriesFor(Source source, Tag tag)
+        public TimeSeriesId Identify(Source source, Tag tag)
         {
-            ThrowIfMissingSystem(source);
-            ThrowIfTagIsMissingInSystem(source, tag);
-            return _timeSeriesMap[source][tag];
+            var identifiers = _identifiers.Where(_ => _.CanIdentify(source, tag)).ToArray();
+            ThrowIfAmbiguousTimeSeriesIdentifiers(source, tag, identifiers);
+            ThrowIfNoTimeSeriesIdentifierCanIdentify(source, tag, identifiers);
+            return identifiers[0].Identify(source, tag);
         }
 
         /// <inheritdoc/>
-        public bool HasTimeSeriesFor(Source source, Tag tag)
+        public bool CanIdentify(Source source, Tag tag)
         {
-            if( !_timeSeriesMap.ContainsKey(source)) return false;
-            if( !_timeSeriesMap[source].ContainsKey(tag)) return false;
-            return true;
+            var identifiers = _identifiers.Where(_ => _.CanIdentify(source, tag)).ToArray();
+            ThrowIfAmbiguousTimeSeriesIdentifiers(source, tag, identifiers);
+            return identifiers.Length > 0;
         }
 
-        void ThrowIfMissingSystem(Source source)
+        void ThrowIfAmbiguousTimeSeriesIdentifiers(Source source, Tag tag, IEnumerable<ICanIdentifyTimeSeries> identifiers)
         {
-            if( !_timeSeriesMap.ContainsKey(source)) throw new MissingSource(source);
+            if( identifiers.Count() > 1 ) throw new AmbiguousTimeSeriesIdentifiers(source, tag, identifiers);
         }
 
-        void ThrowIfTagIsMissingInSystem(Source source, Tag tag)
+        void ThrowIfNoTimeSeriesIdentifierCanIdentify(Source source, Tag tag, IEnumerable<ICanIdentifyTimeSeries> identifiers)
         {
-            if( !_timeSeriesMap[source].ContainsKey(tag)) throw new MissingTagInSource(source, tag);
+            if (!identifiers.Any()) throw new NoTimeSeriesIdentifierCanIdentify(source, tag);
         }
     }
 }

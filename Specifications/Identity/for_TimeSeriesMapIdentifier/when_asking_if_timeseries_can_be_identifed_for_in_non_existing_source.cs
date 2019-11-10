@@ -8,28 +8,20 @@ using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Dolittle.TimeSeries.Runtime.Identity.for_TimeSeriesMapper
+namespace Dolittle.TimeSeries.Runtime.Identity.for_TimeSeriesMapIdentifier
 {
-    public class when_asking_if_timeseries_exists_for_non_existing_tag_in_existing_source
+    public class when_asking_if_timeseries_can_be_identifed_for_in_non_existing_source
     {
         const string source = "MySource";
         const string tag = "MyTag";
 
         static bool result;
 
-        static TimeSeriesMapper mapper;
-        Establish context = () =>
-        {
-            mapper = new TimeSeriesMapper(new TimeSeriesMap(
-                new Dictionary<Source, TimeSeriesByTag>
-                {
-                    { source, new TimeSeriesByTag(new Dictionary<Tag, TimeSeriesId>()) }
-                }
-            ));
-        };
+        static TimeSeriesMapIdentifier identifier;
 
+        Establish context = () => identifier = new TimeSeriesMapIdentifier(new TimeSeriesMap(new Dictionary<Source, TimeSeriesByTag>()));
 
-        Because of = () => result = mapper.HasTimeSeriesFor(source,tag);
+        Because of = () => result = identifier.CanIdentify(source, tag);
 
         It should_consider_not_having_it = () => result.ShouldBeFalse();
     }

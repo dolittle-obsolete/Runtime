@@ -7,14 +7,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="../Identity/Identity.csproj"/>
+        <ProjectReference Include="../Identity/Identity.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Dolittle.Runtime.Heads" Version="4.*"/>
-        <PackageReference Include="Dolittle.Runtime.Microservices" Version="4.*"/>
-        <PackageReference Include="Dolittle.Protobuf" Version="4.*"/>
-        <PackageReference Include="Dolittle.TimeSeries.Runtime.Contracts" Version="1.*"/>
-        <PackageReference Include="Dolittle.TimeSeries.Microservice.Contracts" Version="1.*"/>
+        <PackageReference Include="Dolittle.Runtime.Heads" Version="4.*" />
+        <PackageReference Include="Dolittle.Runtime.Metrics" Version="4.*" />
+        <PackageReference Include="Dolittle.Runtime.Microservices" Version="4.*" />
+        <PackageReference Include="Dolittle.Protobuf" Version="4.*" />
+        <PackageReference Include="Dolittle.TimeSeries.Runtime.Contracts" Version="1.*" />
+        <PackageReference Include="Dolittle.TimeSeries.Microservice.Contracts" Version="1.*" />
+        <PackageReference Include="prometheus-net" Version="3.3.0" />
     </ItemGroup>
 </Project>

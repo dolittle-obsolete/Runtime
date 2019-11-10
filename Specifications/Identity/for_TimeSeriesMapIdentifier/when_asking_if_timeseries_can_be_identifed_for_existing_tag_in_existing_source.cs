@@ -8,9 +8,9 @@ using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Dolittle.TimeSeries.Runtime.Identity.for_TimeSeriesMapper
+namespace Dolittle.TimeSeries.Runtime.Identity.for_TimeSeriesMapIdentifier
 {
-    public class when_getting_timeseries_for_existing_tag_in_existing_source
+    public class when_asking_if_timeseries_can_be_identifed_for_existing_tag_in_existing_source
     {
         const string source = "MySource";
         const string other_source = "MyOtherSource";
@@ -18,14 +18,12 @@ namespace Dolittle.TimeSeries.Runtime.Identity.for_TimeSeriesMapper
         const string other_tag = "MyOtherTag";
         static Guid time_series = Guid.NewGuid();
         static Guid other_time_series = Guid.NewGuid();
+        static bool result;
+        static TimeSeriesMapIdentifier identifier;
 
-        static TimeSeriesId result;
-
-
-        static TimeSeriesMapper mapper;
         Establish context = () =>
         {
-            mapper = new TimeSeriesMapper(new TimeSeriesMap(
+            identifier = new TimeSeriesMapIdentifier(new TimeSeriesMap(
                 new Dictionary<Source, TimeSeriesByTag>
                 {
                     { source, new TimeSeriesByTag(new Dictionary<Tag, TimeSeriesId> {{ tag, time_series }} )},
@@ -34,8 +32,8 @@ namespace Dolittle.TimeSeries.Runtime.Identity.for_TimeSeriesMapper
             ));
         };
 
-        Because of = () => result = mapper.GetTimeSeriesFor(source,tag);
+        Because of = () => result = identifier.CanIdentify(source, tag);
 
-        It should_return_the_timeseries = () => result.ShouldEqual((TimeSeriesId)time_series);
+        It should_consider_having_it = () => result.ShouldBeTrue();
     }
 }

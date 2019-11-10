@@ -8,20 +8,19 @@ using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Dolittle.TimeSeries.Runtime.Identity.for_TimeSeriesMapper
+namespace Dolittle.TimeSeries.Runtime.Identity.for_TimeSeriesMapIdentifier
 {
-    public class when_getting_timeseries_for_non_existing_source
+    public class when_identifying_timeseries_for_non_existing_source
     {
         const string source = "MySource";
         const string tag = "MyTag";
-
         static Exception result;
-        static TimeSeriesMapper mapper;
+        static TimeSeriesMapIdentifier identifier;
 
-        Establish context = () => mapper = new TimeSeriesMapper(new TimeSeriesMap(new Dictionary<Source, TimeSeriesByTag>()));
+        Establish context = () => identifier = new TimeSeriesMapIdentifier(new TimeSeriesMap(new Dictionary<Source, TimeSeriesByTag>()));
 
 
-        Because of = () => result = Catch.Exception(() => mapper.GetTimeSeriesFor(source,tag));
+        Because of = () => result = Catch.Exception(() => identifier.Identify(source,tag));
 
         It should_throw_missing_source = () => result.ShouldBeOfExactType<MissingSource>();
     }

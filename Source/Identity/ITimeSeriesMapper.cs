@@ -15,7 +15,7 @@ namespace Dolittle.TimeSeries.Runtime.Identity
         /// <param name="source"><see cref="Source"/> the <see cref="Tag"/> belongs to</param>
         /// <param name="tag">The actual <see cref="Tag"/></param>
         /// <returns>True if it exists, false if not</returns>
-        bool HasTimeSeriesFor(Source source, Tag tag);        
+        bool CanIdentify(Source source, Tag tag);
 
         /// <summary>
         /// Get the <see cref="TimeSeries"/> for a <see cref="Tag"/> in a <see cref="System"/>
@@ -23,6 +23,6 @@ namespace Dolittle.TimeSeries.Runtime.Identity
         /// <param name="source"><see cref="Source"/> the <see cref="Tag"/> belongs to</param>
         /// <param name="tag">The actual <see cref="Tag"/></param>
         /// <returns><see cref="TimeSeriesId"/></returns>
-        TimeSeriesId GetTimeSeriesFor(Source source, Tag tag);        
+        TimeSeriesId Identify(Source source, Tag tag);
     }
 }
