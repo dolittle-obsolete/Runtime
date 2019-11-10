@@ -49,14 +49,14 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         {
             dataPoints.ForEach(tagDataPoint =>
             {
-                if (!_timeSeriesMapper.HasTimeSeriesFor(connectorName, tagDataPoint.Tag))
+                if (!_timeSeriesMapper.CanIdentify(connectorName, tagDataPoint.Tag))
                 {
                     _logger.Information($"Unidentified tag '{tagDataPoint.Tag}' from '{connectorName}'");
                 }
                 else
                 {
                     _logger.Information("DataPoint received");
-                    var timeSeriesId = _timeSeriesMapper.GetTimeSeriesFor(connectorName, tagDataPoint.Tag);
+                    var timeSeriesId = _timeSeriesMapper.Identify(connectorName, tagDataPoint.Tag);
 
                     var dataPoint = new microserviceDataTypes.DataPoint
                     {
