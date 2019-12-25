@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="../../default.props"></Import>
+
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
         <AssemblyName>Dolittle.TimeSeries.Runtime.DataPoints</AssemblyName>
     </PropertyGroup>
 
@@ -10,11 +11,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Dolittle.Common" Version="1.*" />
         <PackageReference Include="Dolittle.Runtime.Heads" Version="4.*"/>
         <PackageReference Include="Dolittle.Runtime.Microservices" Version="4.*"/>
         <PackageReference Include="Dolittle.Protobuf" Version="4.*"/>
         <PackageReference Include="Dolittle.TimeSeries.Runtime.Contracts" Version="1.*" />
     </ItemGroup>
-
 </Project>
