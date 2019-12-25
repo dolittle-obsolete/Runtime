@@ -1,20 +1,18 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 namespace Dolittle.TimeSeries.Runtime.DataTypes
 {
     /// <summary>
-    /// Holds converters to convert between different Protobuf representations of types
+    /// Holds converters to convert between different Protobuf representations of types.
     /// </summary>
     public static class TypeConversion
     {
         /// <summary>
-        /// Convert from a <see cref="TimeSeries.DataTypes.Runtime.DataPoint"/> to <see cref="TimeSeries.DataTypes.Microservice.DataPoint"/>
+        /// Convert from a <see cref="TimeSeries.DataTypes.Runtime.DataPoint"/> to <see cref="TimeSeries.DataTypes.Microservice.DataPoint"/>.
         /// </summary>
-        /// <param name="dataPoint"><see cref="TimeSeries.DataTypes.Runtime.DataPoint"/> to convert from</param>
-        /// <returns>Converted <see cref="TimeSeries.DataTypes.Microservice.DataPoint"/></returns>
+        /// <param name="dataPoint"><see cref="TimeSeries.DataTypes.Runtime.DataPoint"/> to convert from.</param>
+        /// <returns>Converted <see cref="TimeSeries.DataTypes.Microservice.DataPoint"/>.</returns>
         public static TimeSeries.DataTypes.Microservice.DataPoint ToMicroservice(this TimeSeries.DataTypes.Runtime.DataPoint dataPoint)
         {
             var converted = new TimeSeries.DataTypes.Microservice.DataPoint
@@ -48,12 +46,11 @@ namespace Dolittle.TimeSeries.Runtime.DataTypes
             return converted;
         }
 
-
         /// <summary>
-        /// Convert from a <see cref="TimeSeries.DataTypes.Runtime.Single"/> to <see cref="TimeSeries.DataTypes.Microservice.Single"/>
+        /// Convert from a <see cref="TimeSeries.DataTypes.Runtime.Single"/> to <see cref="TimeSeries.DataTypes.Microservice.Single"/>.
         /// </summary>
-        /// <param name="measurement"><see cref="TimeSeries.DataTypes.Runtime.Single"/> to convert from</param>
-        /// <returns>Converted <see cref="TimeSeries.DataTypes.Microservice.Single"/></returns>
+        /// <param name="measurement"><see cref="TimeSeries.DataTypes.Runtime.Single"/> to convert from.</param>
+        /// <returns>Converted <see cref="TimeSeries.DataTypes.Microservice.Single"/>.</returns>
         public static TimeSeries.DataTypes.Microservice.Single ToMicroservice(this TimeSeries.DataTypes.Runtime.Single measurement)
         {
             return new TimeSeries.DataTypes.Microservice.Single
@@ -64,10 +61,10 @@ namespace Dolittle.TimeSeries.Runtime.DataTypes
         }
 
         /// <summary>
-        /// Convert from a <see cref="TimeSeries.DataTypes.Microservice.DataPoint"/> to <see cref="TimeSeries.DataTypes.Runtime.DataPoint"/>
+        /// Convert from a <see cref="TimeSeries.DataTypes.Microservice.DataPoint"/> to <see cref="TimeSeries.DataTypes.Runtime.DataPoint"/>.
         /// </summary>
-        /// <param name="dataPoint"><see cref="TimeSeries.DataTypes.Microservice.DataPoint"/> to convert from</param>
-        /// <returns>Converted <see cref="TimeSeries.DataTypes.Runtime.DataPoint"/></returns>
+        /// <param name="dataPoint"><see cref="TimeSeries.DataTypes.Microservice.DataPoint"/> to convert from.</param>
+        /// <returns>Converted <see cref="TimeSeries.DataTypes.Runtime.DataPoint"/>.</returns>
         public static TimeSeries.DataTypes.Runtime.DataPoint ToRuntime(this TimeSeries.DataTypes.Microservice.DataPoint dataPoint)
         {
             var converted = new TimeSeries.DataTypes.Runtime.DataPoint
@@ -102,10 +99,10 @@ namespace Dolittle.TimeSeries.Runtime.DataTypes
         }
 
         /// <summary>
-        /// Convert from a <see cref="TimeSeries.DataTypes.Microservice.Single"/> to <see cref="TimeSeries.DataTypes.Runtime.Single"/>
+        /// Convert from a <see cref="TimeSeries.DataTypes.Microservice.Single"/> to <see cref="TimeSeries.DataTypes.Runtime.Single"/>.
         /// </summary>
-        /// <param name="measurement"><see cref="TimeSeries.DataTypes.Microservice.Single"/> to convert from</param>
-        /// <returns>Converted <see cref="TimeSeries.DataTypes.Runtime.Single"/></returns>
+        /// <param name="measurement"><see cref="TimeSeries.DataTypes.Microservice.Single"/> to convert from.</param>
+        /// <returns>Converted <see cref="TimeSeries.DataTypes.Runtime.Single"/>.</returns>
         public static TimeSeries.DataTypes.Runtime.Single ToRuntime(this TimeSeries.DataTypes.Microservice.Single measurement)
         {
             return new TimeSeries.DataTypes.Runtime.Single
