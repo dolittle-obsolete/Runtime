@@ -1,7 +1,6 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 using Dolittle.Types.Testing;
 using Machine.Specifications;
@@ -26,8 +25,7 @@ namespace Dolittle.TimeSeries.Runtime.Identity.for_TimeSeriesMapper
             identifier.Setup(_ => _.Identify(source, tag)).Returns(time_series_id);
 
             mapper = new TimeSeriesMapper(new StaticInstancesOf<ICanIdentifyTimeSeries>(
-                identifier.Object
-            ));
+                identifier.Object));
         };
 
         Because of = () => result = mapper.Identify(source, tag);

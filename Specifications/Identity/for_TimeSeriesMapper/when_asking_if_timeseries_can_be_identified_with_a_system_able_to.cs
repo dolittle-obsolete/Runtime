@@ -1,7 +1,6 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using Dolittle.Types.Testing;
 using Machine.Specifications;
 using Moq;
@@ -17,14 +16,13 @@ namespace Dolittle.TimeSeries.Runtime.Identity.for_TimeSeriesMapper
         static Mock<ICanIdentifyTimeSeries> identifier;
         static bool result;
 
-        Establish context = () => 
+        Establish context = () =>
         {
             identifier = new Mock<ICanIdentifyTimeSeries>();
             identifier.Setup(_ => _.CanIdentify(source, tag)).Returns(true);
-            
+
             mapper = new TimeSeriesMapper(new StaticInstancesOf<ICanIdentifyTimeSeries>(
-                identifier.Object
-            ));
+                identifier.Object));
         };
 
         Because of = () => result = mapper.CanIdentify(source, tag);

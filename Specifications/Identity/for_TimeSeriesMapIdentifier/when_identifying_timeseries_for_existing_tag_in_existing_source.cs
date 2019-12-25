@@ -1,11 +1,9 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 using System.Collections.Generic;
 using Machine.Specifications;
-using Moq;
 using It = Machine.Specifications.It;
 
 namespace Dolittle.TimeSeries.Runtime.Identity.for_TimeSeriesMapIdentifier
@@ -26,13 +24,12 @@ namespace Dolittle.TimeSeries.Runtime.Identity.for_TimeSeriesMapIdentifier
             identifier = new TimeSeriesMapIdentifier(new TimeSeriesMap(
                 new Dictionary<Source, TimeSeriesByTag>
                 {
-                    { source, new TimeSeriesByTag(new Dictionary<Tag, TimeSeriesId> {{ tag, time_series }} )},
-                    { other_source, new TimeSeriesByTag(new Dictionary<Tag, TimeSeriesId> {{ other_tag, other_time_series }} )}
-                }
-            ));
+                    { source, new TimeSeriesByTag(new Dictionary<Tag, TimeSeriesId> { { tag, time_series } }) },
+                    { other_source, new TimeSeriesByTag(new Dictionary<Tag, TimeSeriesId> { { other_tag, other_time_series } }) }
+                }));
         };
 
-        Because of = () => result = identifier.Identify(source,tag);
+        Because of = () => result = identifier.Identify(source, tag);
 
         It should_return_the_timeseries = () => result.ShouldEqual((TimeSeriesId)time_series);
     }

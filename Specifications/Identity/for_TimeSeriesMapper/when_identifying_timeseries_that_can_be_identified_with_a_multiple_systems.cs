@@ -9,25 +9,29 @@ using It = Machine.Specifications.It;
 
 namespace Dolittle.TimeSeries.Runtime.Identity.for_TimeSeriesMapper
 {
-    public class when_identifying_timeseries_that_can_not_be_identified
+    public class when_identifying_timeseries_that_can_be_identified_with_a_multiple_systems
     {
         const string source = "Some source";
         const string tag = "Some tag";
         static TimeSeriesMapper mapper;
-        static Mock<ICanIdentifyTimeSeries> identifier;
+        static Mock<ICanIdentifyTimeSeries> first_identifier;
+        static Mock<ICanIdentifyTimeSeries> second_identifier;
         static Exception result;
 
         Establish context = () =>
         {
-            identifier = new Mock<ICanIdentifyTimeSeries>();
-            identifier.Setup(_ => _.CanIdentify(source, tag)).Returns(false);
+            first_identifier = new Mock<ICanIdentifyTimeSeries>();
+            first_identifier.Setup(_ => _.CanIdentify(source, tag)).Returns(true);
+            second_identifier = new Mock<ICanIdentifyTimeSeries>();
+            second_identifier.Setup(_ => _.CanIdentify(source, tag)).Returns(true);
 
             mapper = new TimeSeriesMapper(new StaticInstancesOf<ICanIdentifyTimeSeries>(
-                identifier.Object));
+                first_identifier.Object,
+                second_identifier.Object));
         };
 
         Because of = () => result = Catch.Exception(() => mapper.Identify(source, tag));
 
-        It should_throw_no_time_series_identifier_can_identify = () => result.ShouldBeOfExactType<NoTimeSeriesIdentifierCanIdentify>();
+        It should_throw_ambiguous_time_series_identifiers = () => result.ShouldBeOfExactType<AmbiguousTimeSeriesIdentifiers>();
     }
 }

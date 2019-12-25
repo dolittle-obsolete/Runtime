@@ -1,7 +1,6 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 using Dolittle.Logging;
 using Machine.Specifications;
@@ -27,5 +26,5 @@ namespace Dolittle.TimeSeries.Runtime.Connectors.for_PullConnectors
         Because of = () => pull_connectors.Unregister(pull_connector);
 
         It should_not_consider_having_the_connector = () => pull_connectors.Has(connector_id).ShouldBeFalse();
-    }    
+    }
 }

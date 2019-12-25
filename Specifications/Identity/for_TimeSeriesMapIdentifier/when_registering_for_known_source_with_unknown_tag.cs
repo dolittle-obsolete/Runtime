@@ -1,7 +1,6 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 using System.Collections.Generic;
 using Machine.Specifications;
@@ -13,8 +12,8 @@ namespace Dolittle.TimeSeries.Runtime.Identity.for_TimeSeriesMapIdentifier
     {
         const string source = "Some Source";
         const string other_tag = "MyOtherTag";
-        static TimeSeriesId other_time_series = Guid.NewGuid();
         const string tag = "Some Tag";
+        static TimeSeriesId other_time_series = Guid.NewGuid();
         static TimeSeriesId time_series_id = Guid.NewGuid();
         static TimeSeriesMapIdentifier identifier;
 
@@ -23,9 +22,8 @@ namespace Dolittle.TimeSeries.Runtime.Identity.for_TimeSeriesMapIdentifier
            identifier = new TimeSeriesMapIdentifier(new TimeSeriesMap(
                new Dictionary<Source, TimeSeriesByTag>
                {
-                    { source, new TimeSeriesByTag(new Dictionary<Tag, TimeSeriesId> {{ other_tag, other_time_series }} )},
-               }
-           ));
+                    { source, new TimeSeriesByTag(new Dictionary<Tag, TimeSeriesId> { { other_tag, other_time_series } }) },
+               }));
        };
 
         Because of = () => identifier.Register(source, tag, time_series_id);

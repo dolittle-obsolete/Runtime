@@ -1,11 +1,8 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-using System;
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System.Collections.Generic;
 using Machine.Specifications;
-using Moq;
 using It = Machine.Specifications.It;
 
 namespace Dolittle.TimeSeries.Runtime.Identity.for_TimeSeriesMapIdentifier
@@ -16,20 +13,18 @@ namespace Dolittle.TimeSeries.Runtime.Identity.for_TimeSeriesMapIdentifier
         const string tag = "MyTag";
 
         static bool result;
-
         static TimeSeriesMapIdentifier identifier;
+
         Establish context = () =>
         {
             identifier = new TimeSeriesMapIdentifier(new TimeSeriesMap(
                 new Dictionary<Source, TimeSeriesByTag>
                 {
                     { source, new TimeSeriesByTag(new Dictionary<Tag, TimeSeriesId>()) }
-                }
-            ));
+                }));
         };
 
-
-        Because of = () => result = identifier.CanIdentify(source,tag);
+        Because of = () => result = identifier.CanIdentify(source, tag);
 
         It should_consider_not_having_it = () => result.ShouldBeFalse();
     }
