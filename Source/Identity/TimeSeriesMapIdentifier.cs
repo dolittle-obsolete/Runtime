@@ -1,29 +1,28 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-using System.Collections.Generic;
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using Dolittle.Collections;
 using Dolittle.Lifecycle;
 
 namespace Dolittle.TimeSeries.Runtime.Identity
 {
     /// <summary>
-    /// Represents a <see cref="ICanIdentifyTimeSeries"/> for an well known <see cref="TimeSeriesId"/>
+    /// Represents a <see cref="ICanIdentifyTimeSeries"/> for an well known <see cref="TimeSeriesId"/>.
     /// </summary>
     [Singleton]
     public class TimeSeriesMapIdentifier : ICanIdentifyTimeSeries
     {
-        readonly ConcurrentDictionary<Source, ConcurrentDictionary<Tag,TimeSeriesId>>  _map = new ConcurrentDictionary<Source, ConcurrentDictionary<Tag,TimeSeriesId>>();
+        readonly ConcurrentDictionary<Source, ConcurrentDictionary<Tag, TimeSeriesId>> _map = new ConcurrentDictionary<Source, ConcurrentDictionary<Tag, TimeSeriesId>>();
 
         /// <summary>
-        /// Initializes a new instance of <see cref="TimeSeriesMapIdentifier"/>
+        /// Initializes a new instance of the <see cref="TimeSeriesMapIdentifier"/> class.
         /// </summary>
-        /// <param name="map"><see cref="TimeSeriesMap"/> configuration object</param>
+        /// <param name="map"><see cref="TimeSeriesMap"/> configuration object.</param>
         public TimeSeriesMapIdentifier(TimeSeriesMap map)
         {
-            foreach( (var source, var timeSeriesByTag) in map )
+            foreach ((var source, var timeSeriesByTag) in map)
             {
                 var tagToTimeSeries = new ConcurrentDictionary<Tag, TimeSeriesId>();
                 timeSeriesByTag.ForEach(_ => tagToTimeSeries[_.Key] = _.Value);
@@ -34,7 +33,7 @@ namespace Dolittle.TimeSeries.Runtime.Identity
         /// <inheritdoc/>
         public bool CanIdentify(Source source, Tag tag)
         {
-            if( !_map.ContainsKey(source) ) return false;
+            if (!_map.ContainsKey(source)) return false;
             return _map[source].ContainsKey(tag);
         }
 
@@ -47,26 +46,26 @@ namespace Dolittle.TimeSeries.Runtime.Identity
         }
 
         /// <summary>
-        /// Register a mapping between <see cref="Source"/> and <see cref="Tag"/> to <see cref="TimeSeriesId"/>
+        /// Register a mapping between <see cref="Source"/> and <see cref="Tag"/> to <see cref="TimeSeriesId"/>.
         /// </summary>
-        /// <param name="source"><see cref="Source"/> to register for</param>
-        /// <param name="tag"><see cref="Tag"/> to register for</param>
-        /// <param name="timeSeriesId"><see cref="TimeSeriesId"/> to register for</param>
+        /// <param name="source"><see cref="Source"/> to register for.</param>
+        /// <param name="tag"><see cref="Tag"/> to register for.</param>
+        /// <param name="timeSeriesId"><see cref="TimeSeriesId"/> to register for.</param>
         public void Register(Source source, Tag tag, TimeSeriesId timeSeriesId)
         {
-            if( !_map.ContainsKey(source)) _map[source] = new ConcurrentDictionary<Tag, TimeSeriesId>();
+            if (!_map.ContainsKey(source)) _map[source] = new ConcurrentDictionary<Tag, TimeSeriesId>();
             var tagToTimeSeries = _map[source];
             tagToTimeSeries[tag] = timeSeriesId;
         }
 
         void ThrowIfMissingSource(Source source)
         {
-            if( !_map.ContainsKey(source)) throw new MissingSource(source);
+            if (!_map.ContainsKey(source)) throw new MissingSource(source);
         }
 
         void ThrowIfTagIsMissingInSource(Source source, Tag tag)
         {
-            if( !_map[source].ContainsKey(tag)) throw new MissingTagInSource(source, tag);
+            if (!_map[source].ContainsKey(tag)) throw new MissingTagInSource(source, tag);
         }
     }
 }

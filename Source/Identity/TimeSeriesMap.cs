@@ -1,7 +1,6 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Dolittle.Configuration;
@@ -9,7 +8,7 @@ using Dolittle.Configuration;
 namespace Dolittle.TimeSeries.Runtime.Identity
 {
     /// <summary>
-    /// Represents the configuration for timeseries and their relationship to source and tags
+    /// Represents the configuration for timeseries and their relationship to source and tags.
     /// </summary>
     [Name("timeseriesmap")]
     public class TimeSeriesMap :
@@ -17,9 +16,12 @@ namespace Dolittle.TimeSeries.Runtime.Identity
         IConfigurationObject
     {
         /// <summary>
-        /// Initializes a new instace of <see cref="TimeSeriesMap"/>
+        /// Initializes a new instance of the <see cref="TimeSeriesMap"/> class.
         /// </summary>
-        /// <param name="timeSeriesByTag">Dictionary to initialize configuration with</param>
-        public TimeSeriesMap(IDictionary<Source, TimeSeriesByTag> timeSeriesByTag) : base(timeSeriesByTag){}
+        /// <param name="timeSeriesByTag">Dictionary to initialize configuration with.</param>
+        public TimeSeriesMap(IDictionary<Source, TimeSeriesByTag> timeSeriesByTag)
+            : base(timeSeriesByTag)
+        {
+        }
     }
 }

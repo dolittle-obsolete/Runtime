@@ -1,25 +1,27 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-using System.Threading.Tasks;
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Dolittle.Protobuf;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using static Dolittle.TimeSeries.Identity.Runtime.TimeSeriesMapIdentifier;
 using grpc = Dolittle.TimeSeries.Identity.Runtime;
-using Dolittle.Protobuf;
 
 namespace Dolittle.TimeSeries.Runtime.Identity
 {
     /// <summary>
-    /// Represents an implementation of <see cref="TimeSeriesMapIdentifierBase"/>
+    /// Represents an implementation of <see cref="TimeSeriesMapIdentifierBase"/>.
     /// </summary>
     public class TimeSeriesMapIdentifierService : TimeSeriesMapIdentifierBase
     {
         readonly TimeSeriesMapIdentifier _timeSeriesMapIdentifier;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TimeSeriesMapIdentifierService"/> class.
+        /// </summary>
+        /// <param name="timeSeriesMapIdentifier"><see cref="TimeSeriesMapIdentifier"/> for identifying TimeSeries.</param>
         public TimeSeriesMapIdentifierService(TimeSeriesMapIdentifier timeSeriesMapIdentifier)
         {
             _timeSeriesMapIdentifier = timeSeriesMapIdentifier;
@@ -28,7 +30,7 @@ namespace Dolittle.TimeSeries.Runtime.Identity
         /// <inheritdoc/>
         public override Task<Empty> Register(grpc.TimeSeriesMap request, ServerCallContext context)
         {
-            foreach( (var tag, var timeSeriesId) in request.TagToTimeSeriesId )
+            foreach ((var tag, var timeSeriesId) in request.TagToTimeSeriesId)
             {
                 _timeSeriesMapIdentifier.Register(request.Source, tag, timeSeriesId.To<TimeSeriesId>());
             }

@@ -1,7 +1,6 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System.Collections.Generic;
 using System.Linq;
 using Dolittle.Types;
@@ -9,16 +8,16 @@ using Dolittle.Types;
 namespace Dolittle.TimeSeries.Runtime.Identity
 {
     /// <summary>
-    /// Represents an implementation of <see cref="ITimeSeriesMapper"/>
+    /// Represents an implementation of <see cref="ITimeSeriesMapper"/>.
     /// </summary>
     public class TimeSeriesMapper : ITimeSeriesMapper
     {
         readonly IInstancesOf<ICanIdentifyTimeSeries> _identifiers;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="TimeSeriesMapper"/>
+        /// Initializes a new instance of the <see cref="TimeSeriesMapper"/> class.
         /// </summary>
-        /// <param name="identifiers"></param>
+        /// <param name="identifiers"><see cref="IInstancesOf{T}"/> of <see cref="ICanIdentifyTimeSeries"/>.</param>
         public TimeSeriesMapper(IInstancesOf<ICanIdentifyTimeSeries> identifiers)
         {
             _identifiers = identifiers;
@@ -43,7 +42,7 @@ namespace Dolittle.TimeSeries.Runtime.Identity
 
         void ThrowIfAmbiguousTimeSeriesIdentifiers(Source source, Tag tag, IEnumerable<ICanIdentifyTimeSeries> identifiers)
         {
-            if( identifiers.Count() > 1 ) throw new AmbiguousTimeSeriesIdentifiers(source, tag, identifiers);
+            if (identifiers.Count() > 1) throw new AmbiguousTimeSeriesIdentifiers(source, tag, identifiers);
         }
 
         void ThrowIfNoTimeSeriesIdentifierCanIdentify(Source source, Tag tag, IEnumerable<ICanIdentifyTimeSeries> identifiers)
