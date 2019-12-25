@@ -1,7 +1,6 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System.Collections.Generic;
 using Dolittle.Lifecycle;
 using Dolittle.Logging;
@@ -11,7 +10,7 @@ using Dolittle.TimeSeries.DataTypes.Runtime;
 namespace Dolittle.TimeSeries.Runtime.DataPoints
 {
     /// <summary>
-    /// Represents an implementation of <see cref="IDataPointProcessors"/>
+    /// Represents an implementation of <see cref="IDataPointProcessors"/>.
     /// </summary>
     [Singleton]
     public class DataPointProcessors : IDataPointProcessors
@@ -21,10 +20,10 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
         readonly IScheduler _scheduler;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="DataPointProcessors"/>
+        /// Initializes a new instance of the <see cref="DataPointProcessors"/> class.
         /// </summary>
-        /// <param name="logger"><see cref="ILogger"/> for logging</param>
-        /// <param name="scheduler"></param>
+        /// <param name="logger"><see cref="ILogger"/> for logging.</param>
+        /// <param name="scheduler"><see cref="IScheduler"/> for scheduling work.</param>
         public DataPointProcessors(
             ILogger logger,
             IScheduler scheduler)

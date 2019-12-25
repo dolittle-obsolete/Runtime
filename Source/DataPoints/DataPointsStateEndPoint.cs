@@ -1,20 +1,18 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 namespace Dolittle.TimeSeries.Runtime.DataPoints
 {
     /// <summary>
-    /// Represents the configuration for a data points state endpoint 
+    /// Represents the configuration for a data points state endpoint.
     /// </summary>
     public class DataPointsStateEndPoint
     {
         /// <summary>
-        /// Initializes a new instance of <see cref="DataPointsStateEndPoint"/>
+        /// Initializes a new instance of the <see cref="DataPointsStateEndPoint"/> class.
         /// </summary>
-        /// <param name="target">The target endpoint</param>
-        /// <param name="interval">Interval to pull in milliseconds</param>
+        /// <param name="target">The target endpoint.</param>
+        /// <param name="interval">Interval to pull in milliseconds.</param>
         public DataPointsStateEndPoint(string target, double interval)
         {
             Target = target;
@@ -22,12 +20,12 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
         }
 
         /// <summary>
-        /// Gets the target where the endpoint is hosted
+        /// Gets the target where the endpoint is hosted.
         /// </summary>
         public string Target { get; }
 
         /// <summary>
-        /// Ges the interval for pulling from the endpoint
+        /// Gets the interval for pulling from the endpoint.
         /// </summary>
         public double Interval { get; }
     }

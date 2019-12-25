@@ -1,7 +1,7 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using System.Collections.Generic;
 using System.Linq;
 using Dolittle.Collections;
 using Dolittle.Lifecycle;
@@ -11,7 +11,7 @@ using Dolittle.Scheduling;
 namespace Dolittle.TimeSeries.Runtime.DataPoints
 {
     /// <summary>
-    /// Represents an implementation of <see cref="IDataPointsStatePullers"/>
+    /// Represents an implementation of <see cref="IDataPointsStatePullers"/>.
     /// </summary>
     [Singleton]
     public class DataPointsStatePullers : IDataPointsStatePullers
@@ -21,13 +21,15 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
         readonly IDataPointProcessors _processors;
         readonly ILogger _logger;
 
+        readonly List<DataPointsStatePuller> _pullers = new List<DataPointsStatePuller>();
+
         /// <summary>
-        /// Initializes a new instance of <see cref="DataPointsStatePullers"/>
+        /// Initializes a new instance of the <see cref="DataPointsStatePullers"/> class.
         /// </summary>
-        /// <param name="configuration">The <see cref="DataPointsStatePullersConfiguration"/></param>
-        /// <param name="processors"><see cref="IDataPointProcessors"/> for processing</param>
-        /// <param name="timers"><see cref="ITimers"/> for scheduling</param>
-        /// <param name="logger"><see cref="ILogger"/> for logging</param>
+        /// <param name="configuration">The <see cref="DataPointsStatePullersConfiguration"/>.</param>
+        /// <param name="processors"><see cref="IDataPointProcessors"/> for processing.</param>
+        /// <param name="timers"><see cref="ITimers"/> for scheduling.</param>
+        /// <param name="logger"><see cref="ILogger"/> for logging.</param>
         public DataPointsStatePullers(
             DataPointsStatePullersConfiguration configuration,
             IDataPointProcessors processors,
@@ -44,10 +46,10 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
         public void Start()
         {
             _logger.Information($"Setting up DataPointsStatePullers for {_configuration.EndPoints.Count()} endpoints");
-            _configuration.EndPoints.ForEach(_ => 
+            _configuration.EndPoints.ForEach(_ =>
             {
                 _logger.Information($"Starting a DataPointsStatePuller to pull from '{_.Target}' with interval {_.Interval}");
-                new DataPointsStatePuller(_, _processors, _timers, _logger);
+                _pullers.Add(new DataPointsStatePuller(_, _processors, _timers, _logger));
             });
         }
     }
