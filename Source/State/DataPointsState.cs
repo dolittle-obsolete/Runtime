@@ -1,7 +1,6 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -15,7 +14,7 @@ using Dolittle.TimeSeries.Runtime.Identity;
 namespace Dolittle.TimeSeries.Runtime.State
 {
     /// <summary>
-    /// Represents an implementation of <see cref="IDataPointsState"/>
+    /// Represents an implementation of <see cref="IDataPointsState"/>.
     /// </summary>
     [Singleton]
     public class DataPointsState : IDataPointsState
@@ -31,10 +30,10 @@ namespace Dolittle.TimeSeries.Runtime.State
         readonly ILogger _logger;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="DataPointsState"/> class.
         /// </summary>
-        /// <param name="metricFactory"></param>
-        /// <param name="logger"></param>
+        /// <param name="metricFactory"><see cref="IMetricFactory"/> for creating stateful metrics.</param>
+        /// <param name="logger"><see cref="ILogger"/> for logging.</param>
         public DataPointsState(
             IMetricFactory metricFactory,
             ILogger logger)
