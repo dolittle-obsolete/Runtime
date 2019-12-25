@@ -1,22 +1,19 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-using System.Collections.Generic;
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
     /// <summary>
-    /// Defines a pull connector
+    /// Defines a pull connector.
     /// </summary>
     public class PullConnector
     {
         /// <summary>
-        /// Initializes a new instance of <see cref="PullConnector"/>
+        /// Initializes a new instance of the <see cref="PullConnector"/> class.
         /// </summary>
-        /// <param name="id">Unique <see cref="ConnectorId"/></param>
-        /// <param name="name">Name of the connector</param>
-        /// <param name="interval">Interval to pull in milliseconds</param>
+        /// <param name="id">Unique <see cref="ConnectorId"/>.</param>
+        /// <param name="name">Name of the connector.</param>
+        /// <param name="interval">Interval to pull in milliseconds.</param>
         public PullConnector(
             ConnectorId id,
             string name,
@@ -28,17 +25,17 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         }
 
         /// <summary>
-        /// Gets the <see cref="ConnectorId"/> for the <see cref="PullConnector"/>
+        /// Gets the <see cref="ConnectorId"/> for the <see cref="PullConnector"/>.
         /// </summary>
         public ConnectorId Id { get; }
 
         /// <summary>
-        /// Gets the name of the <see cref="PullConnector"/>
+        /// Gets the name of the <see cref="PullConnector"/>.
         /// </summary>
         public string Name { get; }
 
         /// <summary>
-        /// Interval to pull in milliseconds
+        /// Gets the interval to pull in milliseconds.
         /// </summary>
         public int Interval { get; }
     }

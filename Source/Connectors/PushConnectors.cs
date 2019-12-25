@@ -1,16 +1,14 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using System.Collections.Concurrent;
 using Dolittle.Lifecycle;
 using Dolittle.Logging;
-using System.Collections.Concurrent;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
-
     /// <summary>
-    /// Represent an implementation of <see cref="IPushConnectors"/>
+    /// Represent an implementation of <see cref="IPushConnectors"/>.
     /// </summary>
     [Singleton]
     public class PushConnectors : IPushConnectors
@@ -19,9 +17,9 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         readonly ILogger _logger;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="PushConnectors"/>
+        /// Initializes a new instance of the <see cref="PushConnectors"/> class.
         /// </summary>
-        /// <param name="logger"><see cref="ILogger"/> for logging</param>
+        /// <param name="logger"><see cref="ILogger"/> for logging.</param>
         public PushConnectors(ILogger logger)
         {
             _logger = logger;
@@ -46,11 +44,10 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
             return _connectors[connectorId];
         }
 
-
         /// <inheritdoc/>
         public void Unregister(PushConnector connector)
         {
-             if (_connectors.ContainsKey(connector.Id))
+            if (_connectors.ContainsKey(connector.Id))
             {
                 _logger.Information($"Unregister '{connector.Id}'");
                 _connectors.TryRemove(connector.Id, out PushConnector _);
@@ -59,6 +56,6 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
             {
                 _logger.Warning($"Connector with id '{connector.Id}' is not registered");
             }
-       }
+        }
     }
 }

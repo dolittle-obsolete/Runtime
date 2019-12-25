@@ -1,20 +1,19 @@
-/*---------------------------------------------------------------------------------------------
-*  Copyright (c) Dolittle. All rights reserved.
-*  Licensed under the MIT License. See LICENSE in the project root for license information.
-*--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Grpc.Core;
-using System;
 using Dolittle.Logging;
 using Google.Protobuf.WellKnownTypes;
+using Grpc.Core;
 using static Dolittle.TimeSeries.Connectors.Runtime.PushConnectors;
 using grpc = Dolittle.TimeSeries.Connectors.Runtime;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
     /// <summary>
-    /// Represents an implementation of <see cref="PushConnectorsBase"/>
+    /// Represents an implementation of <see cref="PushConnectorsBase"/>.
     /// </summary>
     public class PushConnectorsService : PushConnectorsBase
     {
@@ -22,13 +21,12 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         readonly ILogger _logger;
         readonly ITagDataPointCoordinator _tagDataPointCoordinator;
 
-
         /// <summary>
-        /// Initializes a new instance of <see cref="PullConnectorsService"/>
+        /// Initializes a new instance of the <see cref="PushConnectorsService"/> class.
         /// </summary>
-        /// <param name="pushConnectors">Actual <see cref="IPushConnectors"/></param>
-        /// <param name="tagDataPointCoordinator"><see cref="ITagDataPointCoordinator"/> for coordinator datapoints</param>
-        /// <param name="logger"><see cref="ILogger"/> for logging</param>
+        /// <param name="pushConnectors">Actual <see cref="IPushConnectors"/>.</param>
+        /// <param name="tagDataPointCoordinator"><see cref="ITagDataPointCoordinator"/> for coordinator datapoints.</param>
+        /// <param name="logger"><see cref="ILogger"/> for logging.</param>
         public PushConnectorsService(
             IPushConnectors pushConnectors,
             ITagDataPointCoordinator tagDataPointCoordinator,

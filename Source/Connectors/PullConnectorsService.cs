@@ -1,20 +1,19 @@
-/*---------------------------------------------------------------------------------------------
-*  Copyright (c) Dolittle. All rights reserved.
-*  Licensed under the MIT License. See LICENSE in the project root for license information.
-*--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System.Threading.Tasks;
 using Dolittle.Logging;
-using Grpc.Core;
 using Dolittle.Protobuf;
 using Dolittle.Scheduling;
 using Google.Protobuf.WellKnownTypes;
+using Grpc.Core;
 using static Dolittle.TimeSeries.Connectors.Runtime.PullConnectors;
 using grpc = Dolittle.TimeSeries.Connectors.Runtime;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
     /// <summary>
-    /// Represents an implementation of <see cref="PullConnectorsBase"/>
+    /// Represents an implementation of <see cref="PullConnectorsBase"/>.
     /// </summary>
     public class PullConnectorsService : PullConnectorsBase
     {
@@ -24,12 +23,12 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         readonly ILogger _logger;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="PullConnectorsService"/>
+        /// Initializes a new instance of the <see cref="PullConnectorsService"/> class.
         /// </summary>
-        /// <param name="pullConnectors">Actual <see cref="IPullConnectors"/></param>
-        /// <param name="timers"><see cref="ITimers"/> for scheduling work</param>
-        /// <param name="tagDataPointCoordinator"><see cref="ITagDataPointCoordinator"/> for coordinator datapoints</param>
-        /// <param name="logger"><see cref="ILogger"/> for logging</param>
+        /// <param name="pullConnectors">Actual <see cref="IPullConnectors"/>.</param>
+        /// <param name="timers"><see cref="ITimers"/> for scheduling work.</param>
+        /// <param name="tagDataPointCoordinator"><see cref="ITagDataPointCoordinator"/> for coordinator datapoints.</param>
+        /// <param name="logger"><see cref="ILogger"/> for logging.</param>
         public PullConnectorsService(
             IPullConnectors pullConnectors,
             ITimers timers,

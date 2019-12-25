@@ -1,15 +1,14 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// Copyright (c) Dolittle. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using System.Collections.Concurrent;
 using Dolittle.Lifecycle;
 using Dolittle.Logging;
-using System.Collections.Concurrent;
 
 namespace Dolittle.TimeSeries.Runtime.Connectors
 {
     /// <summary>
-    /// Represent an implementation of <see cref="IPullConnectors"/>
+    /// Represent an implementation of <see cref="IPullConnectors"/>.
     /// </summary>
     [Singleton]
     public class PullConnectors : IPullConnectors
@@ -18,9 +17,9 @@ namespace Dolittle.TimeSeries.Runtime.Connectors
         readonly ILogger _logger;
 
         /// <summary>
-        /// Initalizes a new instance of <see cref="PullConnectors"/>
+        /// Initializes a new instance of the <see cref="PullConnectors"/> class.
         /// </summary>
-        /// <param name="logger"><see cref="ILogger"/> for logging</param>
+        /// <param name="logger"><see cref="ILogger"/> for logging.</param>
         public PullConnectors(
             ILogger logger)
         {
