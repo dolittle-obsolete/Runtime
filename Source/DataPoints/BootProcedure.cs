@@ -10,7 +10,7 @@ namespace Dolittle.TimeSeries.Runtime.DataPoints
     /// </summary>
     public class BootProcedure : ICanPerformBootProcedure
     {
-        private readonly IDataPointsStatePullers _dataPointsStatePullers;
+        readonly IDataPointsStatePullers _dataPointsStatePullers;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BootProcedure"/> class.
